@@ -1,10 +1,10 @@
-package com.groupe_4_ODK.RoyaleStock;
+package com.royalestockback;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class RoyaleStockApplicationTests {
+class RoyaleStockBackApplicationTests {
 
   @Test
   void contextLoads() {
