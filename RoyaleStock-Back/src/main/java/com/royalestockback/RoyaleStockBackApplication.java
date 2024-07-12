@@ -1,13 +1,13 @@
-package com.groupe_4_ODK.RoyaleStock;
+package com.royalestockback;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class RoyaleStockApplication {
+public class RoyaleStockBackApplication {
 
   public static void main(String[] args) {
-    SpringApplication.run(RoyaleStockApplication.class, args);
+    SpringApplication.run(RoyaleStockBackApplication.class, args);
   }
 
 }
