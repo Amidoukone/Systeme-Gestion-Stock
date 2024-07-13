@@ -11,7 +11,7 @@ import java.util.List;
 @Table(name = "bonsortie") @Entity @AllArgsConstructor @NoArgsConstructor @Data
 public class BonSorties {
 
-  @Id @GeneratedValue(strategy = GenerationType.AUTO)
+  @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 
   private Long id;
 

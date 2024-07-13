@@ -11,7 +11,7 @@ import java.util.List;
 @Table(name = "entrepot") @Data @AllArgsConstructor @NoArgsConstructor
 public class Entrepots {
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long Id;
 
   private String nom;
