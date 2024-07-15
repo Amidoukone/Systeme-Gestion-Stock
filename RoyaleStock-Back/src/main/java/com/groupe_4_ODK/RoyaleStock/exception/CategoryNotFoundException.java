@@ -1,4 +1,4 @@
-package odk.kalanso.stock.exception;
+package com.groupe_4_ODK.RoyaleStock.exception;
 
 public class CategoryNotFoundException extends RuntimeException {
     public CategoryNotFoundException(String message) {
