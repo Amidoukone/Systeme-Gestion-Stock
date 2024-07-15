@@ -13,8 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-
-class BonEntrees {
+public class BonEntrees {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
