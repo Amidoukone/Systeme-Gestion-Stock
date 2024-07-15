@@ -18,18 +18,20 @@ public class SecurityConfig {
 
 
   private final BCryptPasswordEncoder bCryptPasswordEncoder;
+  private final UserDetailsService userDetailsService;
 
-  public SecurityConfig(BCryptPasswordEncoder bCryptPasswordEncoder) {
+  public SecurityConfig(BCryptPasswordEncoder bCryptPasswordEncoder, UserDetailsService userDetailsService) {
     this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    this.userDetailsService = userDetailsService;
   }
 
+  //script pour poser un filter sur mes endpointes
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http
       .csrf(csrf -> csrf.disable())
       .authorizeHttpRequests(authz -> authz
-        .requestMatchers("utilisateur").permitAll()
-        .requestMatchers( "admin/**","personne", "formateur").hasRole("Admin")
+        .requestMatchers("auth/connexion", "auth/deconnexion").permitAll()
         .anyRequest().authenticated()
       )
       .httpBasic(withDefaults());
@@ -37,6 +39,7 @@ public class SecurityConfig {
     return http.build();
   }
 
+  //script pour le cryptage de mots de passe
   @Bean
   public AuthenticationProvider authenticationProvider(UserDetailsService userDetailsService){
     DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
