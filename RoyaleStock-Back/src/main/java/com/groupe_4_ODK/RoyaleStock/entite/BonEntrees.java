@@ -13,17 +13,16 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-
-class BonEntrees {
+public class BonEntrees {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
 
   private Long Id;
   private Date dateCommande;
   private  int quantite;
   private  Double prixTotal;
-  private String statut;
+  private  String statut;
 
   @ManyToOne
   @JoinColumn(name = "fournisseur_id")
@@ -31,4 +30,6 @@ class BonEntrees {
 
   @OneToMany
   private List<DetailsEntrees> detailsEntrees;
+
+
 }

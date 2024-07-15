@@ -17,6 +17,4 @@ public class Role {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
   private String nom;
-  @OneToMany
-  private List<Utilisateur> utilisateurs;
 }
