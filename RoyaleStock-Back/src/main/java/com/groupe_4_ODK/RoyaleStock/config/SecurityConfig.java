@@ -1,5 +1,6 @@
 package com.groupe_4_ODK.RoyaleStock.config;
 
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -14,6 +15,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
 
 
@@ -31,7 +33,7 @@ public class SecurityConfig {
     http
       .csrf(csrf -> csrf.disable())
       .authorizeHttpRequests(authz -> authz
-        .requestMatchers("auth/connexion", "auth/deconnexion").permitAll()
+        .requestMatchers("auth/connexion", "auth/deconnexion", "/api/fournisseurs/**").permitAll()
         .anyRequest().authenticated()
       )
       .httpBasic(withDefaults());
@@ -47,5 +49,6 @@ public class SecurityConfig {
     daoAuthenticationProvider.setPasswordEncoder(bCryptPasswordEncoder);
     return daoAuthenticationProvider;
   }
+
 
 }
