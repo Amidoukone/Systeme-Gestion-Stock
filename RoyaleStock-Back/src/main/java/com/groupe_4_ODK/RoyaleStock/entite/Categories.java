@@ -19,4 +19,5 @@ public class Categories {
 
   @OneToMany
   private List<Produits> produits;
+
 }
