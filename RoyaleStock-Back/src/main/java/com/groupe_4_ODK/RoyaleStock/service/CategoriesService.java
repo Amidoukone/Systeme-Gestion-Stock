@@ -21,6 +21,11 @@ public class CategoriesService {
     return categoriesRepository.findAll();
   }
 
+  public Categories categories(Long id) {
+    return categoriesRepository.findById(id)
+      .orElseThrow(() -> new RuntimeException("Categorie non trouvée !"));
+  }
+
   public Categories modifierCategories(Long id, Categories categories) {
     return categoriesRepository.findById(id)
       .map(ct-> {
