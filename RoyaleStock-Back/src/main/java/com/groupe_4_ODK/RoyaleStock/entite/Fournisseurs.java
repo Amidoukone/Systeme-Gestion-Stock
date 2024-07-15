@@ -22,4 +22,6 @@ public class Fournisseurs {
 
   @OneToMany
   private List<BonEntrees> bonEntrees;
+
+
 }
