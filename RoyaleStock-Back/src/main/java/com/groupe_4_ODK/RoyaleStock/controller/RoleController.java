@@ -18,7 +18,7 @@ public class RoleController {
     return roleService.createRole(role);
   }
 
-  @PutMapping("/update")
+  @PutMapping("/update/{id}")
   public Role updateRole(@RequestBody Role role, @PathVariable int id) {
     return roleService.updateRole(role,id);
   }
