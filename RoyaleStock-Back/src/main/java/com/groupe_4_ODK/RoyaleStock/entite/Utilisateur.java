@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,6 +27,7 @@ public class Utilisateur implements UserDetails {
 
   private String nom;
   private String contact;
+  @Email
   private String email;
   private String password;
   private boolean actif=true;

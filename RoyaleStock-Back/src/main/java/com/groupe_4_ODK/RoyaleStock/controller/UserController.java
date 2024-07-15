@@ -2,9 +2,11 @@ package com.groupe_4_ODK.RoyaleStock.controller;
 
 import com.groupe_4_ODK.RoyaleStock.entite.Admin;
 import com.groupe_4_ODK.RoyaleStock.entite.Manager;
+import com.groupe_4_ODK.RoyaleStock.entite.Utilisateur;
 import com.groupe_4_ODK.RoyaleStock.entite.Vendeur;
 import com.groupe_4_ODK.RoyaleStock.service.AdminService;
 import com.groupe_4_ODK.RoyaleStock.service.ManagerService;
+import com.groupe_4_ODK.RoyaleStock.service.UtilisateurService;
 import com.groupe_4_ODK.RoyaleStock.service.VendeurService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +23,18 @@ public class UserController {
 
   @Autowired
   private AdminService adminService;
+  @Autowired
+  private UtilisateurService utilisateurService;
 
+  @GetMapping("list")
+  public List<Utilisateur> listUtilisateur(){
+    return utilisateurService.getAllUtilisateurs();
+  }
+  //Liste des user by Name
+  @GetMapping("user")
+  public Utilisateur getUtilisateurbyName(@RequestParam String name){
+    return utilisateurService.findUtilisateurByName(name);
+  }
   @GetMapping("/admin/all")
   public List<Admin> allAdmin(){
     return  adminService.allAdmin();
