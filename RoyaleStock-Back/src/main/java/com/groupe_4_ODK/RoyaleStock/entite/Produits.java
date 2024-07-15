@@ -10,7 +10,9 @@ import java.util.List;
 
 
 @Entity
-@Table(name="produit") @Data @AllArgsConstructor @NoArgsConstructor
+@Table(name="produit")
+@Data @AllArgsConstructor
+@NoArgsConstructor
 public class Produits {
 
   @Id
@@ -31,10 +33,8 @@ public class Produits {
   private List<DetailsSorties> detailsSorties;
 
   @ManyToOne
-  @JoinColumn(name = "categorie_id")
   private Categories categories;
 
   @ManyToOne
-  @JoinColumn(name = "produit_id")
   private Entrepots entrepots;
 }

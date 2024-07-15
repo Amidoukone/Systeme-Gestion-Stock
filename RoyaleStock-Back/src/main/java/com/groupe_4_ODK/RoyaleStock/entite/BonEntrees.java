@@ -25,7 +25,6 @@ public class BonEntrees {
   private String statut;
 
   @ManyToOne
-  @JoinColumn(name = "fournisseur_id")
   private Fournisseurs fournisseurs;
 
   @OneToMany

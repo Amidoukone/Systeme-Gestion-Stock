@@ -8,7 +8,10 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Entity
-@Table(name = "entrepot") @Data @AllArgsConstructor @NoArgsConstructor
+@Table(name = "entrepot")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Entrepots {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

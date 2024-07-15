@@ -7,7 +7,10 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@Entity @Table(name = "fournisseur") @Data @NoArgsConstructor @AllArgsConstructor
+@Entity @Table(name = "fournisseur")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Fournisseurs {
 
   @Id

@@ -22,11 +22,9 @@ public class DetailsEntrees {
   private Date dateExpiration;
 
   @ManyToOne
-  @JoinColumn(name = "bonEntre_id")
   private BonEntrees bonEntrees;
 
   @ManyToOne
-  @JoinColumn(name = "produit_id")
   private Produits produits;
 
 }
