@@ -30,6 +30,10 @@ public class BonEntrees {
 
   @OneToMany
   private List<DetailsEntrees> detailsEntrees;
+  @ManyToOne
+  private Manager manager;
+  @ManyToOne
+  private Admin admin;
 
 
 }

@@ -15,10 +15,17 @@ public class BonSorties {
 
   private Long id;
 
-  private String motif;
-
   private Date dateSortie;
 
   @OneToMany
   private List<DetailsSorties> detailsSorties;
+  @ManyToOne
+  private Manager manager;
+  @ManyToOne
+  private Admin admin;
+  @ManyToOne
+  private Motif motif;
+  @ManyToOne
+  private Vendeur vendeur;
+
 }
