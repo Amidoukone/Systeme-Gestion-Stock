@@ -28,6 +28,16 @@ public class CategoriesController {
     return categoriesService.lireCategories();
   }
 
+  public Categories categories(Long id) {
+    return categoriesRepository.findById(id)
+      .orElseThrow(() -> new RuntimeException("Categorie non trouvée !"));
+  }
+
+  public Categories categories(String libelle) {
+    return categoriesRepository.findByLibelle(libelle)
+      .orElseThrow(() -> new RuntimeException("Categorie non trouvée !"));
+  }
+
   @PutMapping(value = "/modifier/{id}", consumes = APPLICATION_JSON_VALUE)
   public Categories modifierCategories(@PathVariable Long id, @RequestBody Categories categories){
     return categoriesService.modifierCategories(id, categories);

@@ -31,8 +31,13 @@ public class ProduitsService {
   }
 
   public Produits produits(String nom) {
-    return produitsRepository.findById(nom)
+    return produitsRepository.findByProduits(nom)
       .orElseThrow(() -> new RuntimeException("Produit non trouvée !"));
+  }
+
+  public Produits produits(String categories) {
+    return produitsRepository.findByCategories(categories)
+      .orElseThrow(() -> new RuntimeException("Categorie de produit non trouvée !"));
   }
 
   public Produits modifierProduits(Long id, Produits produits) {

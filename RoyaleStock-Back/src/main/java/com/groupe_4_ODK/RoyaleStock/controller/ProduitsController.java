@@ -31,6 +31,21 @@ public class ProduitsController {
     return produitsService.lireProduits();
   }
 
+  public Produits produits(Long id) {
+    return produitsRepository.findById(id)
+      .orElseThrow(() -> new RuntimeException("Produit non trouvée !"));
+  }
+
+  public Produits produits(String nom) {
+    return produitsRepository.findByLibelle(nom)
+      .orElseThrow(() -> new RuntimeException("Produit non trouvée !"));
+  }
+
+  public Produits produits(String categorie) {
+    return produitsRepository.findByLibelle(categorie)
+      .orElseThrow(() -> new RuntimeException("Categorie de produit non trouvée !"));
+  }
+
   @PutMapping(value = "/modifier/{id}", consumes = APPLICATION_JSON_VALUE)
   public Produits modifierProduits(@PathVariable Long id, @RequestBody Produits produits){
     return produitsService.modifierProduits(id, produits);
