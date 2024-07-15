@@ -11,20 +11,18 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
-@RequiredArgsConstructor
 public class SecurityConfig {
 
 
-  private final BCryptPasswordEncoder bCryptPasswordEncoder;
-  private final UserDetailsService userDetailsService;
+  private final BCryptPasswordEncoder bCryptPasswordEncoder; 
 
-  public SecurityConfig(BCryptPasswordEncoder bCryptPasswordEncoder, UserDetailsService userDetailsService) {
-    this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-    this.userDetailsService = userDetailsService;
+  public SecurityConfig(BCryptPasswordEncoder bCryptPasswordEncoder) {
+    this.bCryptPasswordEncoder = bCryptPasswordEncoder; 
   }
 
   //script pour poser un filter sur mes endpointes
@@ -33,7 +31,7 @@ public class SecurityConfig {
     http
       .csrf(csrf -> csrf.disable())
       .authorizeHttpRequests(authz -> authz
-        .requestMatchers("auth/connexion", "auth/deconnexion", "/api/fournisseurs/**").permitAll()
+        .requestMatchers("auth/connexion", "auth/deconnexion", "/api/fournisseurs/**", "/api/entrepots/**").permitAll()
         .anyRequest().authenticated()
       )
       .httpBasic(withDefaults());
