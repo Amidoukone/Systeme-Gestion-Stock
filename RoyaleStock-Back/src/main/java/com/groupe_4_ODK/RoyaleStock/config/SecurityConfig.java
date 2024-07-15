@@ -1,4 +1,4 @@
-package com.groupe_4_ODK.RoyaleStock.Config;
+package com.groupe_4_ODK.RoyaleStock.config;
 
 
 import org.springframework.context.annotation.Bean;
@@ -19,10 +19,10 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class SecurityConfig {
 
 
-  private final BCryptPasswordEncoder bCryptPasswordEncoder;
+  private final BCryptPasswordEncoder bCryptPasswordEncoder; 
 
   public SecurityConfig(BCryptPasswordEncoder bCryptPasswordEncoder) {
-    this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    this.bCryptPasswordEncoder = bCryptPasswordEncoder; 
   }
 
   //script pour poser un filter sur mes endpointes
@@ -31,7 +31,7 @@ public class SecurityConfig {
     http
       .csrf(csrf -> csrf.disable())
       .authorizeHttpRequests(authz -> authz
-        .requestMatchers("auth/connexion", "auth/deconnexion", "/api/fournisseurs/**", "/role/**", "/api/entrepots/**", "api/user/**").permitAll()
+        .requestMatchers("auth/connexion", "auth/deconnexion", "/api/fournisseurs/**", "/api/entrepots/**").permitAll()
         .anyRequest().authenticated()
       )
       .httpBasic(withDefaults());

@@ -44,17 +44,20 @@ public class UserController {
     return  vendeurService.allVendeurs();
   }
 
+  //Creer Vendeur
   @PostMapping("/vendeur/create")
   public Vendeur createVendeur(@RequestBody Vendeur vendeur){
     return vendeurService.addVendeur(vendeur);
   }
 
+  //updateVendeur
   @PutMapping("vendeur/update/{id}")
   public Vendeur updateVendeur(@PathVariable Integer id, @RequestBody Vendeur vendeur) {
 
     return vendeurService.updateVendeur(id, vendeur);
   }
 
+  //delete VENDEUR
   @DeleteMapping("/vendeur/delete/{id}")
   public void deleteVendeur(@PathVariable long id){
     managerService.deleteManager(id);
