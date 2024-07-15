@@ -1,12 +1,49 @@
 package com.groupe_4_ODK.RoyaleStock.service;
-
 import com.groupe_4_ODK.RoyaleStock.entite.Role;
+import com.groupe_4_ODK.RoyaleStock.repository.RoleRepository;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
-public interface RoleService {
-  Role createRole(Role role);
-  Role updateRole(Role role, int id);
-  String deleteRole(int id);
-  List<Role> readRole();
+@Service
+@AllArgsConstructor
+public class RoleService{
+  private final RoleRepository roleRepository;
+
+
+  public Role createRole(Role role) {
+    return roleRepository.save(role);
+  }
+
+
+  public Role updateRole(Role role, int id) {
+    Optional<Role> roles = roleRepository.findById(id);
+    if (roles.isPresent()) {
+      Role r  = roles.get();
+      r.setNom(role.getNom());
+      Role updateRole = roleRepository.save(r);
+      return updateRole;
+    }
+    else {
+      return null;
+    }
+  }
+
+
+  public String deleteRole(int id) {
+    if (roleRepository.existsById(id)) {
+      roleRepository.deleteById(id);
+      return "Supprimé avec succès";
+    } else {
+      return "Non trouvé";
+    }
+
+  }
+
+
+  public List<Role> readRole() {
+    return  roleRepository.findAll();
+  }
 }
