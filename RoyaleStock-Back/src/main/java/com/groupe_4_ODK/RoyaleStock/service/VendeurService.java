@@ -22,13 +22,14 @@ public class VendeurService {
   public List<Vendeur> allVendeurs() {
     return  vendeurRepository.findAll();
   }
+
   //GET BY id
   public Optional<Vendeur> getVendeurById(Integer id) {
     return vendeurRepository.findById(id);
   }
   //Create Vendeur
   public Vendeur addVendeur(Vendeur vendeur) {
-    Role role = roleRepository.findByNom("VENDEUR");
+    Role role = roleRepository.findByNom("Vendeur");
     vendeur.setRole(role);
     return  vendeurRepository.save(vendeur);
   }
