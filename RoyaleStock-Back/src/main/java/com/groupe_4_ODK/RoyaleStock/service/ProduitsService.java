@@ -1,5 +1,6 @@
 package com.groupe_4_ODK.RoyaleStock.service;
 
+import com.groupe_4_ODK.RoyaleStock.entite.Categories;
 import com.groupe_4_ODK.RoyaleStock.entite.Produits;
 import com.groupe_4_ODK.RoyaleStock.repository.CategoriesRepository;
 import com.groupe_4_ODK.RoyaleStock.repository.ProduitsRepository;
@@ -22,6 +23,16 @@ public class ProduitsService {
   public List<Produits> lireProduits() {
 
     return produitsRepository.findAll();
+  }
+
+  public Produits produits(Long id) {
+    return produitsRepository.findById(id)
+      .orElseThrow(() -> new RuntimeException("Produit non trouvée !"));
+  }
+
+  public Produits produits(String nom) {
+    return produitsRepository.findById(nom)
+      .orElseThrow(() -> new RuntimeException("Produit non trouvée !"));
   }
 
   public Produits modifierProduits(Long id, Produits produits) {
