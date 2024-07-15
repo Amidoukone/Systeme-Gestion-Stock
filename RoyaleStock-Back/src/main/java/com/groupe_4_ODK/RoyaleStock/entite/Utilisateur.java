@@ -5,9 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Collections;
 
 @Entity
 @Table(name = "utilisateur")
@@ -40,31 +42,35 @@ public class Utilisateur implements UserDetails {
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    return null;
+    return Collections.singleton(new SimpleGrantedAuthority("ROLE_" + role.getNom()));
   }
 
   @Override
   public String getUsername() {
-    return null;
+    return email;
+  }
+  @Override
+  public String getPassword() {
+    return password;
   }
 
   @Override
   public boolean isAccountNonExpired() {
-    return UserDetails.super.isAccountNonExpired();
+    return actif;
   }
 
   @Override
   public boolean isAccountNonLocked() {
-    return UserDetails.super.isAccountNonLocked();
+    return actif;
   }
 
   @Override
   public boolean isCredentialsNonExpired() {
-    return UserDetails.super.isCredentialsNonExpired();
+    return actif;
   }
 
   @Override
   public boolean isEnabled() {
-    return UserDetails.super.isEnabled();
+    return actif;
   }
 }
