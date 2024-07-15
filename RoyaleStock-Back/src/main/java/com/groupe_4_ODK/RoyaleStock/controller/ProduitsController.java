@@ -14,7 +14,8 @@ import java.util.List;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 
-@RestController @RequestMapping("/produits")
+@RestController
+@RequestMapping("/produits")
 @AllArgsConstructor
 public class ProduitsController {
 
