@@ -1,0 +1,48 @@
+<div class="container mx-auto px-4 py-6">
+  <mat-card class="advanced-form-card">
+    <mat-card-header>
+      <mat-card-title>{{ isEditMode ? 'Modifier Utilisateur' : 'Ajouter Utilisateur' }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form id="utilisateurForm" (ngSubmit)="onSubmit($event)">
+        <div class="form-group">
+          <mat-form-field appearance="fill" class="form-field">
+            <mat-label>Nom d'utilisateur</mat-label>
+            <input matInput type="text" id="username" name="username" [(ngModel)]="utilisateur.username" required>
+          </mat-form-field>
+          <mat-form-field appearance="fill" class="form-field">
+            <mat-label>Contact</mat-label>
+            <input matInput type="text" id="contact" name="contact" [(ngModel)]="utilisateur.contact" required>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="fill" class="form-field">
+            <mat-label>Email</mat-label>
+            <input matInput type="email" id="email" name="email" [(ngModel)]="utilisateur.email" required>
+          </mat-form-field>
+          <mat-form-field appearance="fill" class="form-field">
+            <mat-label>Mot de passe</mat-label>
+            <input matInput type="password" id="password" name="password" [(ngModel)]="utilisateur.password" required>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="fill" class="form-field">
+            <mat-label>Rôle</mat-label>
+            <mat-select id="roles_id" name="roles_id" [(ngModel)]="selectedRoleId" (selectionChange)="onRoleChange($event)">
+              <mat-option *ngFor="let role of roles" [value]="role.roles_id">{{ role.name }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="fill" class="form-field">
+            <mat-label>Entrepôt</mat-label>
+            <mat-select id="entrepots_id" name="entrepots_id" [(ngModel)]="selectedEntrepotId" (selectionChange)="onEntrepotChange($event)">
+              <mat-option *ngFor="let entrepot of entrepots" [value]="entrepot.entrepots_id">{{ entrepot.entrepot_name }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="button-container">
+          <button mat-raised-button color="primary" type="submit">{{ isEditMode ? 'Modifier' : 'Ajouter' }}</button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

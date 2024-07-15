@@ -1,0 +1,48 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav mode="side" opened fixedInViewport="true" class="sidenav">
+    <div class="logo-container">
+      <img src="./assets/logo.png" alt="Logo" class="logo">
+    </div>
+    <mat-nav-list>
+      <a mat-list-item href="/dashboard">
+        <mat-icon mat-list-icon>dashboard</mat-icon>
+        <span mat-line>Dashboard</span>
+      </a>
+      <a mat-list-item href="/bon-entree">
+        <mat-icon mat-list-icon>input</mat-icon>
+        <span mat-line>Bons d'Entrée</span>
+      </a>
+      <a mat-list-item href="/bon-sortie">
+        <mat-icon mat-list-icon>output</mat-icon>
+        <span mat-line>Bons de Sortie</span>
+      </a>
+      <a mat-list-item href="/categories">
+        <mat-icon mat-list-icon>category</mat-icon>
+        <span mat-line>Catégories</span>
+      </a>
+      <a mat-list-item href="/entrepots">
+        <mat-icon mat-list-icon>warehouse</mat-icon>
+        <span mat-line>Entrepôts</span>
+      </a>
+      <a mat-list-item href="/fournisseurs">
+        <mat-icon mat-list-icon>local_shipping</mat-icon>
+        <span mat-line>Fournisseurs</span>
+      </a>
+      <a mat-list-item href="/produits">
+        <mat-icon mat-list-icon>inventory</mat-icon>
+        <span mat-line>Produits</span>
+      </a>
+      <a mat-list-item href="/roles">
+        <mat-icon mat-list-icon>security</mat-icon>
+        <span mat-line>Rôles</span>
+      </a>
+      <a mat-list-item href="/utilisateurs">
+        <mat-icon mat-list-icon>people</mat-icon>
+        <span mat-line>Utilisateurs</span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

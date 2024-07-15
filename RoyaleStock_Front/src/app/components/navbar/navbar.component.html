@@ -1,0 +1,21 @@
+<mat-toolbar color="primary">
+  <button mat-icon-button (click)="toggleSidebar()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span class="title">Gestion de Stock</span>
+  <span class="spacer"></span>
+  <div class="relative">
+    <button mat-icon-button (click)="toggleNotifications()">
+      <mat-icon>notifications</mat-icon>
+      <span class="notification-count" *ngIf="notifications.length">{{ notifications.length }}</span>
+    </button>
+    <div class="notifications-dropdown" *ngIf="showNotifications">
+      <div *ngFor="let notification of notifications" class="notification-item">
+        {{ notification.message }}
+      </div>
+    </div>
+  </div>
+  <button mat-icon-button>
+    <mat-icon>account_circle</mat-icon>
+  </button>
+</mat-toolbar>

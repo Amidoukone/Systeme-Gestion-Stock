@@ -1,0 +1,7 @@
+<app-navbar (sidebarToggle)="sidebar.toggleSidebar()"></app-navbar>
+<app-sidebar #sidebar [isExpanded]="true">
+  <div class="main-content">
+    <router-outlet></router-outlet>
+  </div>
+</app-sidebar>
+<app-footer></app-footer>
