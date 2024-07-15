@@ -28,8 +28,7 @@ public class CategoriesService {
   }
 
   public Categories categories(String libelle) {
-    return categoriesRepository.findById(libelle)
-      .orElseThrow(() -> new RuntimeException("Categorie non trouvée !"));
+    return categoriesRepository.findByLibelle(libelle);
   }
 
   public Categories modifierCategories(Long id, Categories categories) {
