@@ -22,11 +22,13 @@ public class BonEntrees {
   private Date dateCommande;
   private  int quantite;
   private  Double prixTotal;
-  private String statut;
+  private  String statut;
 
   @ManyToOne
   private Fournisseurs fournisseurs;
 
   @OneToMany
   private List<DetailsEntrees> detailsEntrees;
+
+
 }
