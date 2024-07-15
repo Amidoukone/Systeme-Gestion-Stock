@@ -7,7 +7,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service @AllArgsConstructor
+@Service
+@AllArgsConstructor
 public class CategoriesService {
 
   private final CategoriesRepository categoriesRepository;
