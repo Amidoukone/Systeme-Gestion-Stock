@@ -23,7 +23,7 @@ public class UtilisateurService implements UserDetailsService {
     return utilisateurRepository.findAll();
   }
   public Utilisateur findUtilisateurByName(String name) {
-    return utilisateurRepository.findByName(name);
+    return utilisateurRepository.findByNom(name);
   }
 
   //script pour permettre a l'utilisateur de s'auth

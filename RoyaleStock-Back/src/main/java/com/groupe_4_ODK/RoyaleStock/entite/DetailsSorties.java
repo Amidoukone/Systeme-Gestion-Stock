@@ -20,8 +20,6 @@ public class DetailsSorties {
 
   private  int quantite;
 
-  private String motif;
-
   private Float prix_unitaire;
 
   private  Float prix_total;

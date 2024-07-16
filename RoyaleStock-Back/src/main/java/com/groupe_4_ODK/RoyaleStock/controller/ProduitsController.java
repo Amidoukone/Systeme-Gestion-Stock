@@ -1,5 +1,7 @@
 package com.groupe_4_ODK.RoyaleStock.controller;
 
+import com.groupe_4_ODK.RoyaleStock.dto.TopEntreeDTO;
+import com.groupe_4_ODK.RoyaleStock.dto.TopVenduDTO;
 import com.groupe_4_ODK.RoyaleStock.entite.Produits;
 import com.groupe_4_ODK.RoyaleStock.repository.CategoriesRepository;
 import com.groupe_4_ODK.RoyaleStock.repository.ProduitsRepository;
@@ -40,6 +42,16 @@ public class ProduitsController {
   @DeleteMapping(value = "/supprimer/{id}")
   public String supprimerApprenant(@PathVariable Long id){
     return produitsService.supprimerProduit(id);
+  }
+//
+//  @GetMapping("/top-vendus")
+//  public List<TopVenduDTO> getTopVendus() {
+//    return produitsService.getTopVendus();
+//  }
+  //Entre
+  @GetMapping("/top-entrees")
+  public List<TopEntreeDTO> getTopEntrees() {
+    return produitsService.getTopEntrees();
   }
 
 }

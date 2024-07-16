@@ -1,5 +1,7 @@
 package com.groupe_4_ODK.RoyaleStock.service;
 
+import com.groupe_4_ODK.RoyaleStock.dto.TopEntreeDTO;
+import com.groupe_4_ODK.RoyaleStock.dto.TopVenduDTO;
 import com.groupe_4_ODK.RoyaleStock.entite.Categories;
 import com.groupe_4_ODK.RoyaleStock.entite.Produits;
 import com.groupe_4_ODK.RoyaleStock.repository.CategoriesRepository;
@@ -50,6 +52,14 @@ public class ProduitsService {
   public String supprimerProduit(Long id) {
     produitsRepository.deleteById(id);
     return "Produit Supprimé !";
+  }
+  // Produit vendu le plus
+//  public List<TopVenduDTO> getTopVendus() {
+//    return produitsRepository.findTopVendus();
+//  }
+  //Entre
+  public List<TopEntreeDTO> getTopEntrees() {
+    return produitsRepository.findTopEntrees();
   }
 
 }

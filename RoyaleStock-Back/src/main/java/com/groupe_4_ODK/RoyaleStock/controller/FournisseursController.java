@@ -43,6 +43,10 @@ public class FournisseursController {
     fournisseursService.deleteById(id);
     return ResponseEntity.noContent().build();
   }
+  @GetMapping("/fournisseurs-count")
+  public int getFournisseursCount() {
+    return fournisseursService.getFournisseursCount();
+  }
 
 
 }

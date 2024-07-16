@@ -47,6 +47,8 @@ public class FournisseursService {
       return fournisseursRepository.save(updatedFournisseur);
     });
   }
-
+  public int getFournisseursCount() {
+    return fournisseursRepository.countFournisseurs();
+  }
 
 }
