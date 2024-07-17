@@ -19,94 +19,101 @@ public class BonEntreService {
 
   @Autowired
   private DetailsEntreRepository detailEntreRepository;
+
   @Autowired
   private ProduitsRepository produitRepository;
-  @Autowired
-  private AdminRepository adminRepository;
-  @Autowired
-  private ManagerRepository managerRepository;
-  @Autowired
-  private FournisseursRepository fournisseurRepository;
+
   @Autowired
   private DetailsEntreRepository detailsEntreRepository;
 
-
-
   // Méthode pour récupérer tous les BonEntre
-  public List<BonEntrees> getAllBonEntres() {
+  public List<BonEntrees> getAllBonEntrees() {
     return bonEntreRepository.findAll();
   }
-
   // Méthode pour récupérer un BonEntre par son ID
-  public Optional<BonEntrees> getBonEntreById(Integer id) {
-    return bonEntreRepository.findById(id);
+  public BonEntrees getBonEntreeById(Integer id) {
+    return bonEntreRepository.findById(id)
+      .orElseThrow(() -> new RuntimeException("BonEntree non trouve avec ID: " + id));
   }
+  //Creer un bon Entre
   @Transactional
   public BonEntrees creeBonEntre(BonEntrees bonEntre) {
     if (bonEntre.getDateCommande() == null) {
       bonEntre.setDateCommande(new Date()); // Utilisation de la date actuelle
     }
+    bonEntre.setStatut("encours"); // Définir le statut par défaut à "encours"
 
-    // Vérification et mise à jour des entités associées
-//    if (bonEntre.getManager() != null && bonEntre.getManager().getId() != null) {
-//      bonEntre.setManager(managerRepository.findById(bonEntre.getManager().getId()).orElse(null));
-//    }
-//    if (bonEntre.getAdmin() != null && bonEntre.getAdmin().getId() != null) {
-//      bonEntre.setAdmin(adminRepository.findById(bonEntre.getAdmin().getId()).orElse(null));
-//    }
-//    if (bonEntre.getFournisseurs() != null && bonEntre.getFournisseurs().getId() != null) {
-//      bonEntre.setFournisseurs(fournisseurRepository.findById(bonEntre.getFournisseurs().getId()).orElse(null));
-//    }
-
-    // Sauvegarder le BonEntre
+    // Sauvegarder le BonEntree sans mettre à jour les quantités
     bonEntre = bonEntreRepository.save(bonEntre);
 
-    // Mettre à jour la quantité du produit pour chaque DetailsEntre
+    // Associer les détails du BonEntree
     for (DetailsEntrees detailsEntre : bonEntre.getDetailsEntrees()) {
-      detailsEntre.setBonEntrees(bonEntre);
       if (detailsEntre.getProduits() != null && detailsEntre.getProduits().getId() != null) {
-        Produits produit = produitRepository.findById(detailsEntre.getProduits().getId()).orElse(null);
-        if (produit != null) {
-          // Ajouter la quantité spécifiée à la quantité actuelle du produit
-          produit.setQuantite(produit.getQuantite() + Integer.parseInt(String.valueOf(detailsEntre.getProduits().getQuantite())));
-          produitRepository.save(produit);
-        }
+        Produits produit = produitRepository.findById(detailsEntre.getProduits().getId())
+          .orElseThrow(() -> new RuntimeException("Pas de produit avec ce ID: " + detailsEntre.getProduits().getId()));
         detailsEntre.setProduits(produit);
+      } else {
+        throw new RuntimeException("Produit est null ou n'a pas ce ID");
       }
+      detailsEntre.setBonEntrees(bonEntre);
       detailsEntreRepository.save(detailsEntre);
     }
 
     return bonEntre;
   }
-  // Méthode pour mettre à jour un BonEntre existant
-  public BonEntrees updateBonEntre(Integer id, BonEntrees bonEntre) {
-    Optional<BonEntrees> existingBonEntreOptional = bonEntreRepository.findById(id);
-    if (existingBonEntreOptional.isEmpty()) {
-      // Gérer l'exception ou retourner null selon votre logique
-      return null;
+
+  @Transactional
+  public BonEntrees validerBonEntre(Integer bonEntreId) {
+    BonEntrees bonEntre = bonEntreRepository.findById(bonEntreId)
+      .orElseThrow(() -> new RuntimeException("BonEntree pas trouver"));
+
+    // Mettre à jour la quantité du produit pour chaque DetailsEntree
+    for (DetailsEntrees detailsEntre : bonEntre.getDetailsEntrees()) {
+      if (detailsEntre.getProduits() != null && detailsEntre.getProduits().getId() != null) {
+        Produits produit = produitRepository.findById(detailsEntre.getProduits().getId())
+          .orElseThrow(() -> new RuntimeException("Produit non trouvé avec ce ID: " + detailsEntre.getProduits().getId()));
+        // Ajouter la quantité spécifiée à la quantité actuelle du produit
+        produit.setQuantite(produit.getQuantite() + detailsEntre.getQuantite());
+        produitRepository.save(produit);
+      } else {
+        throw new RuntimeException("Produit est null ou n'a pas ce ID");
+      }
+      detailsEntreRepository.save(detailsEntre);
     }
 
-    BonEntrees existingBonEntre = existingBonEntreOptional.get();
-    existingBonEntre.setDateCommande(bonEntre.getDateCommande());
-    existingBonEntre.setStatut(bonEntre.getStatut());
-    existingBonEntre.setDetailsEntrees(bonEntre.getDetailsEntrees());
-    existingBonEntre.setManager(bonEntre.getManager());
-    existingBonEntre.setAdmin(bonEntre.getAdmin());
-    existingBonEntre.setFournisseurs(bonEntre.getFournisseurs());
+    // Changer le statut à "livré"
+    bonEntre.setStatut("livré");
+    bonEntre = bonEntreRepository.save(bonEntre);
 
-    // Sauvegarder et retourner le BonEntre mis à jour
-    return bonEntreRepository.save(existingBonEntre);
+    return bonEntre;
+  }
+  // Méthode pour mettre à jour un BonEntre existant
+  public BonEntrees updateBonEntree(Integer id, BonEntrees bonEntreeDetails) {
+    BonEntrees bonEntree = getBonEntreeById(id);
+
+    bonEntree.setDateCommande(bonEntreeDetails.getDateCommande());
+    bonEntree.setPrixTotal(bonEntreeDetails.getPrixTotal());
+    bonEntree.setStatut(bonEntreeDetails.getStatut());
+    bonEntree.setFournisseurs(bonEntreeDetails.getFournisseurs());
+    bonEntree.setDetailsEntrees(bonEntreeDetails.getDetailsEntrees());
+    bonEntree.setManager(bonEntreeDetails.getManager());
+    bonEntree.setAdmin(bonEntreeDetails.getAdmin());
+
+    return bonEntreRepository.save(bonEntree);
   }
 
-  // Méthode pour supprimer un BonEntre par son ID
-  public void deleteBonEntre(Integer id) {
-    bonEntreRepository.deleteById(id);
+  //Supprimer Un bon Entre
+  public void deleteBonEntree(Integer id) {
+    BonEntrees bonEntree = getBonEntreeById(id);
+    bonEntreRepository.delete(bonEntree);
   }
+
   // Méthode pour récupérer les DetailsEntre d'un BonEntre par son ID
   public List<DetailsEntrees> getDetailsEntresByBonEntreId(Long bonEntreId) {
     Optional<BonEntrees> bonEntreOptional = bonEntreRepository.findById(Math.toIntExact(bonEntreId));
     return bonEntreOptional.map(BonEntrees::getDetailsEntrees).orElse(null);
   }
+
   // Méthode pour récupérer un DetailsEntre par son ID
   public Optional<DetailsEntrees> getDetailsEntreById(Integer id) {
     return detailsEntreRepository.findById(id);

@@ -1,5 +1,6 @@
 package com.groupe_4_ODK.RoyaleStock.entite;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,7 +21,6 @@ public class BonEntrees {
 
   private Long Id;
   private Date dateCommande;
-  private  int quantite;
   private  Double prixTotal;
   private  String statut;
 
@@ -29,6 +29,7 @@ public class BonEntrees {
   private Fournisseurs fournisseurs;
 
   @OneToMany
+  @JsonManagedReference
   private List<DetailsEntrees> detailsEntrees;
   @ManyToOne
   private Manager manager;

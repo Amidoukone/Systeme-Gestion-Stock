@@ -12,7 +12,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 
 @RestController
-@RequestMapping("/categories")
+@RequestMapping("/api/categories")
 @AllArgsConstructor
 public class CategoriesController {
 

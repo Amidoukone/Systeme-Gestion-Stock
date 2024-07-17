@@ -22,7 +22,7 @@ public class ManagerService {
     return managerRepository.findAll();
   }
   public Manager createManager(Manager manager){
-    Role role = roleRepository.findByNom("Manager" ) ;
+    Role role = roleRepository.findByNom("manager" ) ;
     manager.setRole(role);
     return managerRepository.save(manager);
   }
@@ -30,6 +30,9 @@ public class ManagerService {
     managerRepository.deleteById(Math.toIntExact(id));
   }
 
+  public Manager getManagerById(Long id){
+    return managerRepository.findById(Math.toIntExact(id)).orElse(null);
+  }
   //update Admin
   public Manager updateManager(Long id, Manager manager) {
     if (managerRepository.existsById(Math.toIntExact(id))) {
@@ -41,10 +44,10 @@ public class ManagerService {
         if (manager.getEmail() != null && !manager.getEmail().equals(existingManager.getEmail())) {
           existingManager.setEmail(manager.getEmail());
         }
-        if (manager.getPassword() != null && ! existingManager.getPassword().equals(existingManager.getPassword())) {
+        if (manager.getPassword() != null && ! manager.getPassword().equals(existingManager.getPassword())) {
           existingManager.setPassword(manager.getPassword());
         }
-        if (manager.getContact() != null && ! existingManager.getContact().equals(existingManager.getContact())) {
+        if (manager.getContact() != null && ! manager.getContact().equals(existingManager.getContact())) {
           existingManager.setContact(manager.getContact());
         }
         return managerRepository.save(existingManager);

@@ -41,7 +41,7 @@ public class AdminService {
         if (admin.getEmail() != null && !admin.getEmail().equals(existingAdmin.getEmail())) {
           existingAdmin.setEmail(admin.getEmail());
         }
-        if (admin.getPassword() != null && ! existingAdmin.getPassword().equals(existingAdmin.getPassword())) {
+        if (admin.getPassword() != null && ! admin.getPassword().equals(existingAdmin.getPassword())) {
           existingAdmin.setPassword(admin.getPassword());
         }
         return adminRepository.save(existingAdmin);

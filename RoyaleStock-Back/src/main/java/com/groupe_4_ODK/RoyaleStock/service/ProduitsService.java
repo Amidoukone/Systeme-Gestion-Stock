@@ -54,9 +54,9 @@ public class ProduitsService {
     return "Produit Supprimé !";
   }
   // Produit vendu le plus
-//  public List<TopVenduDTO> getTopVendus() {
-//    return produitsRepository.findTopVendus();
-//  }
+  public List<TopVenduDTO> getTopVendus() {
+    return produitsRepository.findTopVendus();
+  }
   //Entre
   public List<TopEntreeDTO> getTopEntrees() {
     return produitsRepository.findTopEntrees();

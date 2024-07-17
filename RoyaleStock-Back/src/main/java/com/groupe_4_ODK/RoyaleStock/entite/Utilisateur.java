@@ -48,6 +48,14 @@ public class Utilisateur implements UserDetails {
   public Collection<? extends GrantedAuthority> getAuthorities() {
     return Collections.singleton(new SimpleGrantedAuthority("ROLE_" + role.getNom()));
   }
+//  public String getAuthorities() {
+//    if (role != null) {
+//      return role.getNom();
+//    } else {
+//      // Gérer le cas où role est nul
+//      return "Role non défini";
+//    }
+//  }
 
   @Override
   public String getUsername() {

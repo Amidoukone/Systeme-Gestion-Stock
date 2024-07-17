@@ -90,62 +90,12 @@ public class BonSortieService {
             throw new RuntimeException("Erreur lors de la création du bon de sortie", e);
         }
     }
-//  @Transactional
-//  public BonSortie createBonSortie(BonSortie bonSortie) {
-//    try {
-//      // Sauvegarder le BonSortie
-//      bonSortie = bonSortieRepository.save(bonSortie);
-//
-//      // Vérification et mise à jour des entités associées
-//
-//      if (bonSortie.getManager() != null && bonSortie.getManager().getId() != null) {
-//        bonSortie.setManager(managerRepository.findById(bonSortie.getManager().getId()).orElse(null));
-//      }
-//      if (bonSortie.getAdmin() != null && bonSortie.getAdmin().getId() != null) {
-//        bonSortie.setAdmin(adminRepository.findById(bonSortie.getAdmin().getId()).orElse(null));
-//      }
-//      // Mettre à jour la quantité du produit pour chaque DetailsSortie
-//      for (DetailsSortie detailsSortie : bonSortie.getDetailsSorties()) {
-//        detailsSortie.setBonSortie(bonSortie);
-//        if (detailsSortie.getProduit() != null && detailsSortie.getProduit().getId() != null) {
-//          Produit produit = produitRepository.findById(detailsSortie.getProduit().getId()).orElse(null);
-//          if (produit != null) {
-//            int nouveauQte = produit.getQte() - Integer.parseInt(detailsSortie.getQte());
-//            if (nouveauQte < 0) {
-//              throw new IllegalArgumentException("Quantité insuffisante pour le produit: " + produit.getNom());
-//            }
-//            produit.setQte(nouveauQte);
-//            produitRepository.save(produit);
-//
-//            // Vérifier si la quantité atteint 5 et créer une notification
-//            if (nouveauQte <= 5) {
-//              String message = "La quantité du produit " + produit.getNom() + " est maintenant " + nouveauQte + "Pensez à faire une nouvelle commande pour ce produit.";
-//              notificationService.createNotification(message, bonSortie.getManager());
-//            }
-//          }
-//          detailsSortie.setProduit(produit);
-//        }
-//        detailsSortieRepository.save(detailsSortie);
-//      }
-//
-//      return bonSortie;
-//    } catch (IllegalArgumentException e) {
-//      // Log l'exception et renvoie une réponse appropriée
-//      System.err.println("Erreur: " + e.getMessage());
-//      throw e;
-//    } catch (Exception e) {
-//      // Log l'exception et renvoie une réponse appropriée
-//      System.err.println("Erreur inconnue: " + e.getMessage());
-//      throw new RuntimeException("Erreur lors de la création du bon de sortie", e);
-//    }
-//  }
 
   // Méthode pour mettre à jour un BonSortie existant
   @Transactional
   public BonSorties updateBonSortie(Integer id, BonSorties bonSortie) {
     Optional<BonSorties> existingBonSortieOptional = bonSortieRepository.findById(id);
     if (existingBonSortieOptional.isEmpty()) {
-      // Gérer l'exception ou retourner null selon votre logique
       return null;
     }
 

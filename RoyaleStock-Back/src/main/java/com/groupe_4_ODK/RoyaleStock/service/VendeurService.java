@@ -49,7 +49,7 @@ public class VendeurService {
         if (vendeur.getEmail() != null && !vendeur.getEmail().equals(existingVendeur.getEmail())) {
           existingVendeur.setEmail(vendeur.getEmail());
         }
-        if (vendeur.getPassword() != null && ! existingVendeur.getPassword().equals(existingVendeur.getPassword())) {
+        if (vendeur.getPassword() != null && !vendeur.getPassword().equals(existingVendeur.getPassword())) {
           existingVendeur.setPassword(vendeur.getPassword());
         }
         return vendeurRepository.save(existingVendeur);

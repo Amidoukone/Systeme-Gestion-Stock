@@ -17,7 +17,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 
 @RestController
-@RequestMapping("/produits")
+@RequestMapping("api/produits")
 @AllArgsConstructor
 public class ProduitsController {
 
@@ -43,11 +43,11 @@ public class ProduitsController {
   public String supprimerApprenant(@PathVariable Long id){
     return produitsService.supprimerProduit(id);
   }
-//
-//  @GetMapping("/top-vendus")
-//  public List<TopVenduDTO> getTopVendus() {
-//    return produitsService.getTopVendus();
-//  }
+
+  @GetMapping("/top-vendus")
+  public List<TopVenduDTO> getTopVendus() {
+    return produitsService.getTopVendus();
+  }
   //Entre
   @GetMapping("/top-entrees")
   public List<TopEntreeDTO> getTopEntrees() {

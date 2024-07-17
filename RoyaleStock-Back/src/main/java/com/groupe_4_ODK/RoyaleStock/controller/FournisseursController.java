@@ -27,7 +27,7 @@ public class FournisseursController {
     return fournisseur.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
   }
 
-  @PostMapping
+  @PostMapping("/creer")
   public Fournisseurs createFournisseur(@RequestBody Fournisseurs fournisseur) {
     return fournisseursService.save(fournisseur);
   }

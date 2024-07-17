@@ -1,5 +1,6 @@
 package com.groupe_4_ODK.RoyaleStock.entite;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,6 +19,7 @@ public class BonSorties {
   private Date dateSortie;
 
   @OneToMany
+  @JsonManagedReference
   private List<DetailsSorties> detailsSorties;
   @ManyToOne
   private Manager manager;

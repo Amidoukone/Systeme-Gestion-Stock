@@ -16,56 +16,45 @@ import java.util.Optional;
 public class BonEntreController {
   @Autowired
   private BonEntreService bonEntreService;
+  //BonEntre
   //Create BonEntre
-
-  @PostMapping("creer")
-  public ResponseEntity<BonEntrees> createBonEntre(@RequestBody BonEntrees bonEntre) {
-    BonEntrees createdBonEntre = bonEntreService.creeBonEntre(bonEntre);
-    return new ResponseEntity<>(createdBonEntre, HttpStatus.CREATED);
-  }
-  // Endpoint pour récupérer les DetailsEntre d'un BonEntre par son ID
-  @GetMapping("/{id}/details-entres")
-  public ResponseEntity<List<DetailsEntrees>> getDetailsEntresByBonEntreId(@PathVariable("id") Long bonEntreId) {
-    List<DetailsEntrees> detailsEntres = bonEntreService.getDetailsEntresByBonEntreId(bonEntreId);
-    if (detailsEntres != null) {
-      return ResponseEntity.ok(detailsEntres);
-    } else {
-      return ResponseEntity.notFound().build();
-    }
-  }
-  // Endpoint pour récupérer tous les BonEntre
-  @GetMapping
-  public List<BonEntrees> getAllBonEntres() {
-    return bonEntreService.getAllBonEntres();
+  @PostMapping("/create")
+  public ResponseEntity<BonEntrees> createBonEntree(@RequestBody BonEntrees bonEntree) {
+    BonEntrees createdBonEntree = bonEntreService.creeBonEntre(bonEntree);
+    return ResponseEntity.ok(createdBonEntree);
   }
 
-  // Endpoint pour récupérer un BonEntre par son ID
-  @GetMapping("/entre/{id}")
-  public ResponseEntity<BonEntrees> getBonEntreById(@PathVariable("id") Integer id) {
-    Optional<BonEntrees> bonEntreOptional = bonEntreService.getBonEntreById(id);
-    return bonEntreOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+  @PutMapping("/validate/{id}")
+  public ResponseEntity<BonEntrees> validateBonEntree(@PathVariable Integer id) {
+    BonEntrees validatedBonEntree = bonEntreService.validerBonEntre(id);
+    return ResponseEntity.ok(validatedBonEntree);
+  }
+  @GetMapping("/list")
+  public ResponseEntity<List<BonEntrees>> getAllBonEntrees() {
+    List<BonEntrees> bonEntreesList = bonEntreService.getAllBonEntrees();
+    return ResponseEntity.ok(bonEntreesList);
   }
 
+  @GetMapping("/getbonById/{id}")
+  public ResponseEntity<BonEntrees> getBonEntreeById(@PathVariable Integer id) {
+    BonEntrees bonEntree = bonEntreService.getBonEntreeById(id);
+    return ResponseEntity.ok(bonEntree);
+  }
 
   // Endpoint pour mettre à jour un BonEntre existant
-  @PutMapping("/{id}")
-  public ResponseEntity<BonEntrees> updateBonEntre(@PathVariable("id") Integer id, @RequestBody BonEntrees bonEntre) {
-    BonEntrees updatedBonEntre = bonEntreService.updateBonEntre(id, bonEntre);
-    if (updatedBonEntre != null) {
-      return ResponseEntity.ok(updatedBonEntre);
-    } else {
-      return ResponseEntity.notFound().build();
-    }
+  @PutMapping("/update/{id}")
+  public ResponseEntity<BonEntrees> updateBonEntree(@PathVariable Integer id, @RequestBody BonEntrees bonEntreeDetails) {
+    BonEntrees updatedBonEntree = bonEntreService.updateBonEntree(id, bonEntreeDetails);
+    return ResponseEntity.ok(updatedBonEntree);
   }
 
-  // Endpoint pour supprimer un BonEntre par son ID
-  @DeleteMapping("/{id}")
-  public ResponseEntity<Void> deleteBonEntre(@PathVariable("id") Integer id) {
-    bonEntreService.deleteBonEntre(id);
+  @DeleteMapping("/delete/{id}")
+  public ResponseEntity<Void> deleteBonEntree(@PathVariable Integer id) {
+    bonEntreService.deleteBonEntree(id);
     return ResponseEntity.noContent().build();
   }
   // Endpoint pour récupérer un DetailsEntre par son ID
-  @GetMapping("/{id}")
+  @GetMapping("/get/{id}")
   public ResponseEntity<DetailsEntrees> getDetailsEntreById(@PathVariable("id") Integer id) {
     Optional<DetailsEntrees> detailsEntreOptional = bonEntreService.getDetailsEntreById(id);
     return detailsEntreOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
