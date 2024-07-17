@@ -31,6 +31,7 @@ public class Utilisateur implements UserDetails {
   private String email;
   private String password;
   private boolean actif=true;
+  private Long createdBy;
 
   @ManyToOne
   @JoinColumn(name = "role_id")
@@ -46,7 +47,7 @@ public class Utilisateur implements UserDetails {
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    return Collections.singleton(new SimpleGrantedAuthority("ROLE_" + role.getNom()));
+    return Collections.singleton(new SimpleGrantedAuthority("ROLE_" + role.getRole()));
   }
 //  public String getAuthorities() {
 //    if (role != null) {

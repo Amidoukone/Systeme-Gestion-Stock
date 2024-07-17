@@ -33,5 +33,7 @@ List<TopVenduDTO> findTopVendus();
     "GROUP BY p.nom, p.description " +
     "ORDER BY COUNT(p.Id) DESC")
   List<TopEntreeDTO> findTopEntrees();
+
+  List<Produits> findByEntrepotsId(Long id);
 }
 

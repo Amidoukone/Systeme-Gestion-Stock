@@ -1,2 +1,7 @@
-package com.groupe_4_ODK.RoyaleStock.enums;public class TypeRole {
+package com.groupe_4_ODK.RoyaleStock.enums;
+
+public enum TypeRole {
+  Admin,
+  Manager,
+  Vendeur
 }
