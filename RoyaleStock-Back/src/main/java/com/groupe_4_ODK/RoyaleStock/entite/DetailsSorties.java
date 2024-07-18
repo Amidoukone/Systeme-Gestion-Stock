@@ -1,5 +1,6 @@
 package com.groupe_4_ODK.RoyaleStock.entite;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,15 +13,13 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-class DetailsSorties {
+public class DetailsSorties {
 
-  @Id @GeneratedValue(strategy = GenerationType.AUTO)
+  @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 
   private Long id;
 
-  private  int quantite;
-
-  private String motif;
+  private int quantite;
 
   private Float prix_unitaire;
 
@@ -30,6 +29,7 @@ class DetailsSorties {
 
   @ManyToOne
   @JoinColumn(name = "bonSortie_id")
+  @JsonBackReference
   private BonSorties bonSorties;
 
   @ManyToOne

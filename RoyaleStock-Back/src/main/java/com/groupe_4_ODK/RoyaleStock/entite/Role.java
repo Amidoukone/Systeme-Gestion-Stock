@@ -1,5 +1,6 @@
 package com.groupe_4_ODK.RoyaleStock.entite;
 
+import com.groupe_4_ODK.RoyaleStock.enums.TypeRole;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,8 +16,6 @@ import java.util.List;
 public class Role {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private long id;
-  private String nom;
-  @OneToMany
-  private List<Utilisateur> utilisateurs;
+  private int id;
+  private TypeRole role;
 }

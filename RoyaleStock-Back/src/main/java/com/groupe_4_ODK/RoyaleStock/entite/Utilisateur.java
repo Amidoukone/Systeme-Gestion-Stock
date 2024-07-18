@@ -1,19 +1,24 @@
 package com.groupe_4_ODK.RoyaleStock.entite;
 
+import java.util.Collection;
+import java.util.Collections;
+
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import java.util.Collection;
 
 @Entity
 @Table(name = "utilisateur")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Utilisateur implements UserDetails {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,9 +27,11 @@ public class Utilisateur implements UserDetails {
 
   private String nom;
   private String contact;
+  @Email
   private String email;
   private String password;
   private boolean actif=true;
+  private Long createdBy;
 
   @ManyToOne
   @JoinColumn(name = "role_id")
@@ -40,31 +47,36 @@ public class Utilisateur implements UserDetails {
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    return null;
+    return Collections.singleton(new SimpleGrantedAuthority("ROLE_" + role.getRole()));
   }
+
 
   @Override
   public String getUsername() {
-    return null;
+    return email;
+  }
+  @Override
+  public String getPassword() {
+    return password;
   }
 
   @Override
   public boolean isAccountNonExpired() {
-    return UserDetails.super.isAccountNonExpired();
+    return actif;
   }
 
   @Override
   public boolean isAccountNonLocked() {
-    return UserDetails.super.isAccountNonLocked();
+    return actif;
   }
 
   @Override
   public boolean isCredentialsNonExpired() {
-    return UserDetails.super.isCredentialsNonExpired();
+    return actif;
   }
 
   @Override
   public boolean isEnabled() {
-    return UserDetails.super.isEnabled();
+    return actif;
   }
 }

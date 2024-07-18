@@ -1,5 +1,7 @@
 package com.groupe_4_ODK.RoyaleStock.entite;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.groupe_4_ODK.RoyaleStock.enums.Statut;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,22 +15,27 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-
-class BonEntrees {
+public class BonEntrees {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
 
   private Long Id;
   private Date dateCommande;
-  private  int quantite;
   private  Double prixTotal;
-  private String statut;
+  @Enumerated(EnumType.STRING)
+  private Statut statut;
 
   @ManyToOne
   @JoinColumn(name = "fournisseur_id")
   private Fournisseurs fournisseurs;
 
   @OneToMany
+  @JsonManagedReference
   private List<DetailsEntrees> detailsEntrees;
+  @ManyToOne
+  private Manager manager;
+  @ManyToOne
+  private Admin admin;
+
 }
