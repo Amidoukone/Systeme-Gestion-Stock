@@ -29,14 +29,14 @@ public class UtilisateurController {
 
   @ResponseStatus(HttpStatus.CREATED)
   @PostMapping(path = "/manager", consumes = APPLICATION_JSON_VALUE)
-  public void createFormateur(@RequestBody Utilisateur manager){
-    this.utilisateurService.createFormateur(manager);
+  public void createManager(@RequestBody Utilisateur manager){
+    this.utilisateurService.createManager(manager);
   }
 
   @ResponseStatus(HttpStatus.CREATED)
   @PostMapping(path = "/vendeur", consumes = APPLICATION_JSON_VALUE)
-  public void createApprenant(@RequestBody Utilisateur vendeur){
-    this.utilisateurService.createApprenant(vendeur);
+  public void createVendeur(@RequestBody Utilisateur vendeur){
+    this.utilisateurService.createVendeur(vendeur);
   }
 
   @GetMapping

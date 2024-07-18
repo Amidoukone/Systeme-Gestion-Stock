@@ -17,7 +17,7 @@ public class BonSorties {
   private Long id;
 
   private Date dateSortie;
-  private double total;
+  private double prixTotal;
   @OneToMany
   @JsonManagedReference
   private List<DetailsSorties> detailsSorties;

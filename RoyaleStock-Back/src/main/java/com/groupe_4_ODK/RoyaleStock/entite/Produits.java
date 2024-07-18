@@ -22,6 +22,7 @@ public class Produits {
   private String description;
   private Double prixAchats;
   private Double prixVente;
+  private Date dateExpiration;
   private int quantite;
 
   @OneToMany
@@ -35,6 +36,6 @@ public class Produits {
   private Categories categories;
 
   @ManyToOne
-  @JoinColumn(name = "produit_id")
+  @JoinColumn(name = "entrepot_id")
   private Entrepots entrepots;
 }

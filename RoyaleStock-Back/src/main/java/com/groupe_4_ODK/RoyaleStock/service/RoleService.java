@@ -22,7 +22,7 @@ public class RoleService{
     Optional<Role> roles = roleRepository.findById(id);
     if (roles.isPresent()) {
       Role r  = roles.get();
-      r.setRole(role.getRole());
+      r.setTypeRole(role.getTypeRole());
       Role updateRole = roleRepository.save(r);
       return updateRole;
     }

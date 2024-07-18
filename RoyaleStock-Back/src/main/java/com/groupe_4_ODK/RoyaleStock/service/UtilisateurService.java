@@ -34,12 +34,12 @@ public class UtilisateurService implements UserDetailsService {
     createUtilisateur(admin, TypeRole.Admin);
   }
 
-  public void createFormateur(Utilisateur formateur) {
-    createUtilisateur(formateur, TypeRole.Manager);
+  public void createManager(Utilisateur manager) {
+    createUtilisateur(manager, TypeRole.Manager);
   }
 
-  public void createApprenant(Utilisateur apprenant) {
-    createUtilisateur(apprenant, TypeRole.Vendeur);
+  public void createVendeur(Utilisateur vendeur) {
+    createUtilisateur(vendeur, TypeRole.Vendeur);
   }
 
   private Long getCurrentUserId() {
@@ -62,7 +62,7 @@ public class UtilisateurService implements UserDetailsService {
   public Role getOrCreateRole(TypeRole roleType) {
     return roleRepository.findByTypeRole(roleType).orElseGet(() -> {
       Role newRole = new Role();
-      newRole.setRole(roleType);
+      newRole.setTypeRole(roleType);
       return roleRepository.save(newRole);
     });
   }

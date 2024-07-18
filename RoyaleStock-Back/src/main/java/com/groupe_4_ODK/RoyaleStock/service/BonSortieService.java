@@ -55,14 +55,9 @@ public class BonSortieService {
             if (bonSortie.getDateSortie() == null) {
                 bonSortie.setDateSortie(new Date());
             }
-            // Vérification et mise à jour des entités associées
-//            if (bonSortie.getManager() != null && bonSortie.getManager().getId() != null) {
-//                bonSortie.setManager(managerRepository.findById(bonSortie.getManager().getId()).orElse(null));
-//            }
-//            if (bonSortie.getAdmin() != null && bonSortie.getAdmin().getId() != null) {
-//                bonSortie.setAdmin(adminRepository.findById(bonSortie.getAdmin().getId()).orElse(null));
-//            }
-            for (DetailsSorties detailsSortie : bonSortie.getDetailsSorties()) {
+          double totalPrix = 0.0;
+
+          for (DetailsSorties detailsSortie : bonSortie.getDetailsSorties()) {
                 Produits produit = detailsSortie.getProduits();
                 if (produit == null || produit.getId() == null) {
                     throw new IllegalArgumentException("Produit invalide pour le détail de sortie");
@@ -83,14 +78,17 @@ public class BonSortieService {
                 // Mettre à jour la quantité du produit
                 finalProduit.setQuantite(nouvelleQuantite);
                 produitRepository.save(finalProduit);
+
             }
             bonSortie = bonSortieRepository.save(bonSortie);
 
             for (DetailsSorties detailsSortie : bonSortie.getDetailsSorties()) {
                 detailsSortie.setBonSorties(bonSortie);
                 detailsSortieRepository.save(detailsSortie);
+              totalPrix += detailsSortie.getPrix_unitaire() * detailsSortie.getQuantite();
+              detailsSortie.setBonSorties(bonSortie);
             }
-
+            bonSortie.setPrixTotal(totalPrix);
             return bonSortie;
         } catch (Exception e) {
             throw new RuntimeException("Erreur lors de la création du bon de sortie", e);
@@ -205,7 +203,8 @@ public class BonSortieService {
         table.addCell(detailsSortie.getProduits().getNom());
         table.addCell(String.valueOf(detailsSortie.getQuantite()));
         table.addCell(String.valueOf(detailsSortie.getProduits().getPrixVente()));
-        table.addCell(String.valueOf(prixTotal));
+        totalGeneral =detailsSortie.getPrix_unitaire()*detailsSortie.getQuantite();
+        table.addCell(String.valueOf(totalGeneral));
       }
 
       // Ajouter une ligne vide
@@ -218,7 +217,7 @@ public class BonSortieService {
       cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
       table.addCell(cell);
 
-      table.addCell(new PdfPCell(new Paragraph(String.valueOf(bonSortie.getTotal()), FontFactory.getFont(FontFactory.HELVETICA_BOLD))));
+      table.addCell(new PdfPCell(new Paragraph(String.valueOf(totalGeneral), FontFactory.getFont(FontFactory.HELVETICA_BOLD))));
 
       // Ajouter le tableau au document
       document.add(table);

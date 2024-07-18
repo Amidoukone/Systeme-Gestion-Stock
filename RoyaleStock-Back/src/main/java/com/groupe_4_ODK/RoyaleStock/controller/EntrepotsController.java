@@ -20,8 +20,6 @@ public class EntrepotsController {
   @Autowired
   private EntrepotsService entrepotsService;
 
-
-
   @GetMapping("/{id}")
   public ResponseEntity<Entrepots> findById(@PathVariable Long id) {
     Optional<Entrepots> entrepot = entrepotsService.findById(id);

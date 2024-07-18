@@ -62,12 +62,12 @@ public class EntrepotsService {
     Utilisateur manager = utilisateurRepository.findById(userId)
       .orElseThrow(() -> new Exception("Utilisateur not found"));
 
-    if (manager.getRole().getRole() != TypeRole.Manager) {
+    if (manager.getRole().getTypeRole() != TypeRole.Manager) {
       throw new Exception("Utilisateur is not a Manager");
     }
 
     for (Utilisateur utilisateur : entrepot.getUtilisateurs()) {
-      if (utilisateur.getRole().getRole() == TypeRole.Manager) {
+      if (utilisateur.getRole().getTypeRole() == TypeRole.Manager) {
         throw new Exception("This entrepot already has a manager");
       }
     }
@@ -83,12 +83,12 @@ public class EntrepotsService {
     Utilisateur vendeur = utilisateurRepository.findById(userId)
       .orElseThrow(() -> new Exception("Utilisateur not found"));
 
-    if (vendeur.getRole().getRole() != TypeRole.Vendeur) {
+    if (vendeur.getRole().getTypeRole() != TypeRole.Vendeur) {
       throw new Exception("Utilisateur is not a Vendeur");
     }
 
     long vendeurCount = entrepot.getUtilisateurs().stream()
-      .filter(user -> user.getRole().getRole() == TypeRole.Vendeur)
+      .filter(user -> user.getRole().getTypeRole() == TypeRole.Vendeur)
       .count();
 
     if (vendeurCount >= 2) {

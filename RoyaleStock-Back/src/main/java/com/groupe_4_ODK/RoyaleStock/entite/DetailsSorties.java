@@ -21,9 +21,8 @@ public class DetailsSorties {
 
   private int quantite;
 
-  private Float prix_unitaire;
+  private double prix_unitaire;
 
-  private  Float prix_total;
 
   private Date dateSortie;
 

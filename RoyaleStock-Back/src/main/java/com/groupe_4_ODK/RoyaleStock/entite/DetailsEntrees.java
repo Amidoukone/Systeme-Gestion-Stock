@@ -23,8 +23,6 @@ public class DetailsEntrees {
   private  int quantite;
   private double prixUnitaire;
 
-  private Date dateExpiration;
-
   @ManyToOne
   @JoinColumn(name = "bonEntre_id")
   @JsonBackReference
