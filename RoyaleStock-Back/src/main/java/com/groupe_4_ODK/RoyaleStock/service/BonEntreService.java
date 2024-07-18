@@ -3,7 +3,7 @@ package com.groupe_4_ODK.RoyaleStock.service;
 import com.groupe_4_ODK.RoyaleStock.entite.BonEntrees;
 import com.groupe_4_ODK.RoyaleStock.entite.DetailsEntrees;
 import com.groupe_4_ODK.RoyaleStock.entite.Produits;
-import com.groupe_4_ODK.RoyaleStock.entite.Statut;
+import com.groupe_4_ODK.RoyaleStock.enums.Statut;
 import com.groupe_4_ODK.RoyaleStock.repository.*;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;

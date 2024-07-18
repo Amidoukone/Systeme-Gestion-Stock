@@ -1,6 +1,7 @@
 package com.groupe_4_ODK.RoyaleStock.entite;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.groupe_4_ODK.RoyaleStock.enums.Statut;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

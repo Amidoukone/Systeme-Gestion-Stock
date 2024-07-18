@@ -1,6 +1,8 @@
-package com.groupe_4_ODK.RoyaleStock.config;
+package com.groupe_4_ODK.RoyaleStock.Config;
 
 
+import com.groupe_4_ODK.RoyaleStock.service.UtilisateurService;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -19,12 +21,19 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class SecurityConfig {
 
 
-  private final BCryptPasswordEncoder bCryptPasswordEncoder; 
+  private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-  public SecurityConfig(BCryptPasswordEncoder bCryptPasswordEncoder) {
-    this.bCryptPasswordEncoder = bCryptPasswordEncoder; 
+  private final UtilisateurService utilisateurService;
+
+  public SecurityConfig(BCryptPasswordEncoder bCryptPasswordEncoder, UtilisateurService utilisateurService) {
+    this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    this.utilisateurService =utilisateurService;
   }
 
+  @Bean
+  public CommandLineRunner initAdmin() {
+    return args -> utilisateurService.createDefaultAdmin();
+  }
   //script pour poser un filter sur mes endpointes
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
