@@ -30,6 +30,18 @@ public class UtilisateurService implements UserDetailsService {
     this.passwordEncoder = passwordEncoder;
   }
 
+  public void createAdmin(Utilisateur admin) {
+    createUtilisateur(admin, TypeRole.Admin);
+  }
+
+  public void createFormateur(Utilisateur formateur) {
+    createUtilisateur(formateur, TypeRole.Manager);
+  }
+
+  public void createApprenant(Utilisateur apprenant) {
+    createUtilisateur(apprenant, TypeRole.Vendeur);
+  }
+
   private Long getCurrentUserId() {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
@@ -47,6 +59,13 @@ public class UtilisateurService implements UserDetailsService {
   public Utilisateur findUtilisateurByName(String nom) {
     return utilisateurRepository.findByNom(nom);
   }
+  public Role getOrCreateRole(TypeRole roleType) {
+    return roleRepository.findByTypeRole(roleType).orElseGet(() -> {
+      Role newRole = new Role();
+      newRole.setRole(roleType);
+      return roleRepository.save(newRole);
+    });
+  }
 
   public Utilisateur createUtilisateur(Utilisateur utilisateur, TypeRole typeRole) {
     Role role = roleRepository.findByTypeRole(typeRole)
@@ -63,8 +82,8 @@ public class UtilisateurService implements UserDetailsService {
       admin.setNom("Admin");
       admin.setEmail("admin@gmail.com");
       admin.setPassword("12345");
-      admin.setContact("0000000000");
-      admin.setRole(roleRepository.findByTypeRole(TypeRole.Admin).orElseThrow(() -> new RuntimeException("Role Admin indisponible")));
+      admin.setContact("67567854");
+      admin.setRole(getOrCreateRole(TypeRole.Admin));
       utilisateurRepository.save(admin);
     }
   }

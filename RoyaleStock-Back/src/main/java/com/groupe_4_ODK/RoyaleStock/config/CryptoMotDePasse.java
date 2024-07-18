@@ -1,4 +1,4 @@
-package com.groupe_4_ODK.RoyaleStock.Config;
+package com.groupe_4_ODK.RoyaleStock.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,4 +1,4 @@
-package com.groupe_4_ODK.RoyaleStock.Config;
+package com.groupe_4_ODK.RoyaleStock.config;
 
 
 import com.groupe_4_ODK.RoyaleStock.service.UtilisateurService;
@@ -34,6 +34,7 @@ public class SecurityConfig {
   public CommandLineRunner initAdmin() {
     return args -> utilisateurService.createDefaultAdmin();
   }
+
   //script pour poser un filter sur mes endpointes
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
