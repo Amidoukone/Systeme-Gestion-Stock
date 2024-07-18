@@ -37,4 +37,8 @@ public class Produits {
   @ManyToOne
   @JoinColumn(name = "produit_id")
   private Entrepots entrepots;
+
+  public void setCategories(Categories categories) {
+
+  }
 }

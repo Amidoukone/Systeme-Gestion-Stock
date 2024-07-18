@@ -1,9 +1,8 @@
 package com.groupe_4_ODK.RoyaleStock.service;
 
-import com.groupe_4_ODK.RoyaleStock.entite.Categories;
 import com.groupe_4_ODK.RoyaleStock.entite.Produits;
-import com.groupe_4_ODK.RoyaleStock.repository.CategoriesRepository;
 import com.groupe_4_ODK.RoyaleStock.repository.ProduitsRepository;
+import com.groupe_4_ODK.RoyaleStock.repository.CategoriesRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,40 +13,41 @@ import java.util.List;
 public class ProduitsService {
 
   private final ProduitsRepository produitsRepository;
+  private final CategoriesRepository categoriesRepository;
+
 
   public Produits creerProduits(Produits produits) {
-
     return produitsRepository.save(produits);
   }
 
   public List<Produits> lireProduits() {
-
     return produitsRepository.findAll();
   }
 
-  public Produits produits(Long id) {
+  public Produits getProduitById(Long id) {
     return produitsRepository.findById(id)
-      .orElseThrow(() -> new RuntimeException("Produit non trouvée !"));
+      .orElseThrow(() -> new RuntimeException("Produit non trouvé !"));
   }
 
-  public Produits produits(String nom) {
-    return produitsRepository.findByProduits(nom)
-      .orElseThrow(() -> new RuntimeException("Produit non trouvée !"));
+  public Produits getProduitByNom(String nom) {
+    return produitsRepository.findByNom(nom);
   }
 
-  public Produits produits(String categories) {
-    return produitsRepository.findByCategories(categories)
-      .orElseThrow(() -> new RuntimeException("Categorie de produit non trouvée !"));
+  public List<Produits> getProduitsByCategorie(String categorie) {
+    return produitsRepository.findByCategorie(categorie);
   }
+
+
 
   public Produits modifierProduits(Long id, Produits produits) {
     return produitsRepository.findById(id)
-      .map(p-> {
+      .map(p -> {
         p.setNom(produits.getNom());
         p.setDescription(produits.getDescription());
         p.setPrixAchats(produits.getPrixAchats());
         p.setPrixVente(produits.getPrixVente());
         p.setQuantite(produits.getQuantite());
+        p.setCategories(produits.getCategories());
         return produitsRepository.save(p);
       }).orElseThrow(() -> new RuntimeException("Produit non trouvé !"));
   }
@@ -56,5 +56,6 @@ public class ProduitsService {
     produitsRepository.deleteById(id);
     return "Produit Supprimé !";
   }
+
 
 }

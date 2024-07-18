@@ -17,6 +17,6 @@ public class Categories {
   private long id;
   private String libelle;
 
-  @OneToMany
+  @OneToMany(mappedBy = "produit")
   private List<Produits> produits;
 }

@@ -7,7 +7,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service @AllArgsConstructor
+@Service
+@AllArgsConstructor
 public class CategoriesService {
 
   private final CategoriesRepository categoriesRepository;
@@ -17,30 +18,28 @@ public class CategoriesService {
   }
 
   public List<Categories> lireCategories() {
-
     return categoriesRepository.findAll();
   }
 
-  public Categories categories(Long id) {
+  public Categories getCategorieById(Long id) {
     return categoriesRepository.findById(id)
       .orElseThrow(() -> new RuntimeException("Categorie non trouvée !"));
   }
 
-  public Categories categories(String libelle) {
-    return categoriesRepository.findByLibelle(libelle)
-      .orElseThrow(() -> new RuntimeException("Categorie non trouvée !"));
+  public String getCategorieByLibelle(String libelle) {
+    return categoriesRepository.findByLibelle(libelle);
   }
 
   public Categories modifierCategories(Long id, Categories categories) {
     return categoriesRepository.findById(id)
-      .map(ct-> {
+      .map(ct -> {
         ct.setLibelle(categories.getLibelle());
         return categoriesRepository.save(ct);
-      }).orElseThrow(() -> new RuntimeException("Categorie non trouvé !"));
+      }).orElseThrow(() -> new RuntimeException("Categorie non trouvée !"));
   }
 
   public String supprimerCategorie(Long id) {
     categoriesRepository.deleteById(id);
-    return "Categorie Supprimé !";
+    return "Categorie Supprimée !";
   }
 }

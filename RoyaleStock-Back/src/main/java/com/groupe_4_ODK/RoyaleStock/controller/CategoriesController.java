@@ -1,7 +1,6 @@
 package com.groupe_4_ODK.RoyaleStock.controller;
 
 import com.groupe_4_ODK.RoyaleStock.entite.Categories;
-import com.groupe_4_ODK.RoyaleStock.entite.Produits;
 import com.groupe_4_ODK.RoyaleStock.service.CategoriesService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -9,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-
 
 @RestController
 @RequestMapping("/categories")
@@ -28,14 +26,14 @@ public class CategoriesController {
     return categoriesService.lireCategories();
   }
 
-  public Categories categories(Long id) {
-    return categoriesRepository.findById(id)
-      .orElseThrow(() -> new RuntimeException("Categorie non trouvée !"));
+  @GetMapping("/{id}")
+  public Categories getCategorieById(@PathVariable Long id) {
+    return categoriesService.getCategorieById(id);
   }
 
-  public Categories categories(String libelle) {
-    return categoriesRepository.findByLibelle(libelle)
-      .orElseThrow(() -> new RuntimeException("Categorie non trouvée !"));
+  public  @GetMapping("/{libelle}")
+  String getCategorieByLibelle(@PathVariable String libelle) {
+    return categoriesService.getCategorieByLibelle(libelle);
   }
 
   @PutMapping(value = "/modifier/{id}", consumes = APPLICATION_JSON_VALUE)
