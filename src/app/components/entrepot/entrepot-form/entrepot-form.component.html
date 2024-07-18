@@ -1,0 +1,28 @@
+<div class="container mt-5 py-4">
+  <div class="card advanced-form-card">
+    <div class="card-header">
+      <h5 class="card-title">{{ isEditMode ? 'Modifier Entrepôt' : 'Ajouter Entrepôt' }}</h5>
+    </div>
+    <div class="card-body">
+      <form id="entrepotForm" (ngSubmit)="onSubmit($event)">
+        <div class="form-group">
+          <div class="mb-3">
+            <label for="entrepotName" class="form-label">Nom d'Entrepôt</label>
+            <input type="text" class="form-control" id="entrepotName" name="entrepotName" [(ngModel)]="entrepot.entrepotName" required>
+          </div>
+          <div class="mb-3">
+            <label for="lieu" class="form-label">Lieu</label>
+            <input type="text" class="form-control" id="lieu" name="lieu" [(ngModel)]="entrepot.lieu" required>
+          </div>
+          <div class="mb-3">
+            <label for="statut" class="form-label">Statut</label>
+            <input type="text" class="form-control" id="statut" name="statut" [(ngModel)]="entrepot.statut" required>
+          </div>
+        </div>
+        <div class="d-grid">
+          <button class="btn btn-primary" type="submit">{{ isEditMode ? 'Modifier' : 'Ajouter' }}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

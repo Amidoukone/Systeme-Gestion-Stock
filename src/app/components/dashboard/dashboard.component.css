@@ -1,0 +1,16 @@
+.dashboard {
+  height: calc(100vh - 4rem - 4rem); /* Ajuster la hauteur en fonction de la navbar et du footer */
+}
+
+.card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
