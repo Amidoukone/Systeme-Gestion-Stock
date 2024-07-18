@@ -22,7 +22,8 @@ public class BonEntrees {
   private Long Id;
   private Date dateCommande;
   private  Double prixTotal;
-  private  String statut;
+  @Enumerated(EnumType.STRING)
+  private Statut statut;
 
   @ManyToOne
   @JoinColumn(name = "fournisseur_id")
@@ -35,6 +36,5 @@ public class BonEntrees {
   private Manager manager;
   @ManyToOne
   private Admin admin;
-
 
 }

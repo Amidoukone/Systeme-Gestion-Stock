@@ -4,10 +4,15 @@ import com.groupe_4_ODK.RoyaleStock.entite.BonSorties;
 import com.groupe_4_ODK.RoyaleStock.entite.DetailsSorties;
 import com.groupe_4_ODK.RoyaleStock.service.BonSortieService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -53,12 +58,29 @@ public class BonSortieController {
     Map<String, Map<String, Integer>> topProductsByMotif = bonSortieService.getTopProductsByMotif();
     return ResponseEntity.ok(topProductsByMotif);
   }
-  //pour créer un nouveau BonSortie
-//    @PostMapping("sortie/create")
-//    public ResponseEntity<BonSortie> createBonSortie(@RequestBody BonSortie bonSortie) {
-//        BonSortie createdBonSortie = bonSortieService.createBonSortie(bonSortie);
-//        return ResponseEntity.status(HttpStatus.CREATED).body(createdBonSortie);
-//    }
+//Imprimer une sortie
+@GetMapping("/imprimer/{id}")
+public ResponseEntity<byte[]> imprimerBonSortie(@PathVariable Integer id) {
+  bonSortieService.imprimerBonSortie(id);
+
+  File pdfFile = new File("BonSortie_" + id + ".pdf");
+  byte[] contents = null;
+
+  try (InputStream inputStream = new FileInputStream(pdfFile)) {
+    contents = inputStream.readAllBytes();
+  } catch (IOException e) {
+    e.printStackTrace();
+    return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+  }
+
+  HttpHeaders headers = new HttpHeaders();
+  headers.setContentType(org.springframework.http.MediaType.APPLICATION_PDF);
+  headers.setContentDispositionFormData("attachment", pdfFile.getName());
+  headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+  headers.setContentLength(contents.length);
+
+  return new ResponseEntity<>(contents, headers, HttpStatus.OK);
+}
 
   // pour mettre à jour un BonSortie existant par son ID
   @PutMapping("/sortie/update/{id}")

@@ -5,11 +5,18 @@ import com.groupe_4_ODK.RoyaleStock.entite.DetailsSorties;
 import com.groupe_4_ODK.RoyaleStock.entite.Motif;
 import com.groupe_4_ODK.RoyaleStock.entite.Produits;
 import com.groupe_4_ODK.RoyaleStock.repository.*;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.*;
+import java.util.List;
 
 @Service
 public class BonSortieService {
@@ -77,7 +84,6 @@ public class BonSortieService {
                 finalProduit.setQuantite(nouvelleQuantite);
                 produitRepository.save(finalProduit);
             }
-
             bonSortie = bonSortieRepository.save(bonSortie);
 
             for (DetailsSorties detailsSortie : bonSortie.getDetailsSorties()) {
@@ -151,4 +157,79 @@ public class BonSortieService {
 
     return topProductsByMotif;
   }
+  //Imprimer BonSortie
+  public void imprimerBonSortie(Integer id) {
+    BonSorties bonSortie = getBonSortieById(id).orElse(null);
+
+    Document document = new Document();
+    try {
+      PdfWriter.getInstance(document, new FileOutputStream("BonSortie_" + id + ".pdf"));
+      document.open();
+
+      // Ajout un en-tête au document
+      document.add(new Paragraph("Bon de Sortie", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16, BaseColor.BLACK)));
+
+      // Ajout les détails en haut du document
+      assert bonSortie != null;
+      document.add(new Paragraph("ID: " + bonSortie.getId()));
+      document.add(new Paragraph("Date de Sortie: " + bonSortie.getDateSortie()));
+      document.add(new Paragraph("\n"));
+
+      // Création du tableau pour les détails de sortie
+      PdfPTable table = new PdfPTable(4); // 4 colonnes
+      table.setWidthPercentage(100);
+
+      // Ajout des en-têtes de colonnes
+      PdfPCell cell = new PdfPCell(new Paragraph("Produit", FontFactory.getFont(FontFactory.HELVETICA_BOLD)));
+      cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+      table.addCell(cell);
+
+      cell = new PdfPCell(new Paragraph("Quantité", FontFactory.getFont(FontFactory.HELVETICA_BOLD)));
+      cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+      table.addCell(cell);
+
+      cell = new PdfPCell(new Paragraph("Prix unitaire", FontFactory.getFont(FontFactory.HELVETICA_BOLD)));
+      cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+      table.addCell(cell);
+
+      cell = new PdfPCell(new Paragraph("Prix total", FontFactory.getFont(FontFactory.HELVETICA_BOLD)));
+      cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+      table.addCell(cell);
+
+      // Ajout des lignes de données
+      double totalGeneral = 0;
+      for (DetailsSorties detailsSortie : bonSortie.getDetailsSorties()) {
+        double prixTotal = detailsSortie.getProduits().getPrixVente() * detailsSortie.getQuantite();
+        totalGeneral += prixTotal;
+
+        table.addCell(detailsSortie.getProduits().getNom());
+        table.addCell(String.valueOf(detailsSortie.getQuantite()));
+        table.addCell(String.valueOf(detailsSortie.getProduits().getPrixVente()));
+        table.addCell(String.valueOf(prixTotal));
+      }
+
+      // Ajouter une ligne vide
+      cell = new PdfPCell(new Paragraph(""));
+      cell.setColspan(3);
+      table.addCell(cell);
+
+      // Ajouter le total général
+      cell = new PdfPCell(new Paragraph("Total", FontFactory.getFont(FontFactory.HELVETICA_BOLD)));
+      cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+      table.addCell(cell);
+
+      table.addCell(new PdfPCell(new Paragraph(String.valueOf(bonSortie.getTotal()), FontFactory.getFont(FontFactory.HELVETICA_BOLD))));
+
+      // Ajouter le tableau au document
+      document.add(table);
+
+
+      document.add(new Paragraph("\n\nManager: " + bonSortie.getManager().getNom()));
+
+      document.close();
+    } catch (DocumentException | IOException e) {
+      e.printStackTrace();
+    }
+  }
+
 }

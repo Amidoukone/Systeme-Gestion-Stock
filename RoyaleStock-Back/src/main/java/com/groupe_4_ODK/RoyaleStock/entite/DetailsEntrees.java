@@ -21,7 +21,7 @@ public class DetailsEntrees {
   private Long id;
 
   private  int quantite;
-
+  private double prixUnitaire;
 
   private Date dateExpiration;
 

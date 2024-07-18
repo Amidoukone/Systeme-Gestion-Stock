@@ -4,10 +4,15 @@ import com.groupe_4_ODK.RoyaleStock.entite.BonEntrees;
 import com.groupe_4_ODK.RoyaleStock.entite.DetailsEntrees;
 import com.groupe_4_ODK.RoyaleStock.service.BonEntreService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
 
@@ -58,5 +63,28 @@ public class BonEntreController {
   public ResponseEntity<DetailsEntrees> getDetailsEntreById(@PathVariable("id") Integer id) {
     Optional<DetailsEntrees> detailsEntreOptional = bonEntreService.getDetailsEntreById(id);
     return detailsEntreOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+  }
+  //Imprimer
+  @GetMapping("/imprimer/{id}")
+  public ResponseEntity<byte[]> imprimerBonEntree(@PathVariable Integer id) {
+    bonEntreService.imprimerBonEntree(id);
+
+    File pdfFile = new File("BonEntree_" + id + ".pdf");
+    byte[] contents = null;
+
+    try (InputStream inputStream = new FileInputStream(pdfFile)) {
+      contents = inputStream.readAllBytes();
+    } catch (IOException e) {
+      e.printStackTrace();
+      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    HttpHeaders headers = new HttpHeaders();
+    headers.setContentType(org.springframework.http.MediaType.APPLICATION_PDF);
+    headers.setContentDispositionFormData("attachment", pdfFile.getName());
+    headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+    headers.setContentLength(contents.length);
+
+    return new ResponseEntity<>(contents, headers, HttpStatus.OK);
   }
 }
