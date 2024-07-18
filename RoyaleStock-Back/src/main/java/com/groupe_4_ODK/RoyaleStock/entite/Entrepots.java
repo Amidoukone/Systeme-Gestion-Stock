@@ -23,6 +23,6 @@ public class Entrepots {
   @OneToMany
   private List<Utilisateur> utilisateurs;
 
-  @OneToMany
+  @OneToMany()
   private List<Produits> produits;
 }
