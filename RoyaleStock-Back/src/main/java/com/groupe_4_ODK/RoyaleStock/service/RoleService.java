@@ -42,6 +42,9 @@ public class RoleService{
 
   }
 
+  public Role findById(int id) {
+    return roleRepository.findById(id).orElse(null);}
+
 
   public List<Role> readRole() {
     return  roleRepository.findAll();

@@ -41,7 +41,9 @@ public class SecurityConfig {
     http
       .csrf(csrf -> csrf.disable())
       .authorizeHttpRequests(authz -> authz
-        .requestMatchers("auth/connexion", "auth/deconnexion", "/api/fournisseurs/**", "/api/entrepots/**").permitAll()
+        .requestMatchers("auth/connexion", "auth/deconnexion").permitAll()
+        .requestMatchers("/api/utilisateurs/**", "/api/entrepots/**").hasRole("Admin")
+        .requestMatchers("/api/utilisateurs/vendeur").hasRole("Manager")
         .anyRequest().authenticated()
       )
       .httpBasic(withDefaults());

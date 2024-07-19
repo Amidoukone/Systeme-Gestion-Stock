@@ -32,4 +32,8 @@ public class RoleController {
   public List<Role> readRole() {
     return roleService.readRole();
   }
+  @GetMapping(path = "{id}")
+  public Role getRole(@PathVariable Integer id) {
+    return roleService.findById(id);
+  }
 }

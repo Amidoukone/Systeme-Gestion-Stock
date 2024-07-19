@@ -42,6 +42,18 @@ public class UtilisateurService implements UserDetailsService {
     createUtilisateur(vendeur, TypeRole.Vendeur);
   }
 
+  private void validateEmail(String email) {
+    if (!email.contains("@") || !email.contains(".")) {
+      throw new RuntimeException("Votre email est invalide");
+    }
+  }
+
+  private void checkIfEmailExists(String email) {
+    if (utilisateurRepository.findByEmail(email).isPresent()) {
+      throw new RuntimeException("Votre email est déjà utilisé");
+    }
+  }
+
   private Long getCurrentUserId() {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
@@ -68,20 +80,20 @@ public class UtilisateurService implements UserDetailsService {
   }
 
   public Utilisateur createUtilisateur(Utilisateur utilisateur, TypeRole typeRole) {
-    Role role = roleRepository.findByTypeRole(typeRole)
-      .orElseThrow(() -> new RuntimeException("Role non trouvé"));
-    utilisateur.setRole(role);
+    validateEmail(utilisateur.getEmail());
+    checkIfEmailExists(utilisateur.getEmail());
+    utilisateur.setRole(getOrCreateRole(typeRole));
     utilisateur.setPassword(passwordEncoder.encode(utilisateur.getPassword()));
     utilisateur.setCreatedBy(getCurrentUserId());
     return utilisateurRepository.save(utilisateur);
   }
 
   public void createDefaultAdmin() {
-    if (utilisateurRepository.findByEmail("admin@default.com").isEmpty()) {
+    if (utilisateurRepository.findByEmail("admin@gmail.com").isEmpty()) {
       Utilisateur admin = new Utilisateur();
       admin.setNom("Admin");
       admin.setEmail("admin@gmail.com");
-      admin.setPassword("12345");
+      admin.setPassword("$2a$10$0vZrUM15Q32e.2G8DAhYL.AGCaZUr.5xtmnfMZ/OfXgZzTXGS46Qm");
       admin.setContact("67567854");
       admin.setRole(getOrCreateRole(TypeRole.Admin));
       utilisateurRepository.save(admin);
