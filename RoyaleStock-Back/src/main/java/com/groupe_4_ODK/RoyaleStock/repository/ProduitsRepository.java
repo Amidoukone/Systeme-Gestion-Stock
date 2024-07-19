@@ -33,5 +33,9 @@ List<TopVenduDTO> findTopVendus();
     "GROUP BY p.nom, p.description " +
     "ORDER BY COUNT(p.Id) DESC")
   List<TopEntreeDTO> findTopEntrees();
+
+    List<Produits> findByQuantiteLessThan(int i);
+
+  List<Produits> findTop10BySortieByQuantiteVenduDesc();
 }
 
