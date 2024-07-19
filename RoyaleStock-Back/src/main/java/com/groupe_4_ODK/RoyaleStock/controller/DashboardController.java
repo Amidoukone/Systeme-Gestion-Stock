@@ -36,7 +36,7 @@ public class DashboardController {
   public ResponseEntity<List<BonSorties>> getRecentBonSorties() {
     return ResponseEntity.ok(dashboardService.getRecentBonSorties());
   }
-  //
+  //Liste des 
   @GetMapping("/top10Vendu")
   public ResponseEntity<List<Produits>> getProduitsTopVendu() {
     return ResponseEntity.ok(dashboardService.getProduitsTopVendu());
@@ -44,7 +44,7 @@ public class DashboardController {
   //Sortie par moi
   @GetMapping("/monthly-sales")
   public ResponseEntity<Map<String, Double>> getMonthlySales() {
-    Map<String, Double> monthlySales = dashboardService.getMonthlySales();
+    Map<String, Double> monthlySales = dashboardService.getsortieByMois();
     return ResponseEntity.ok(monthlySales);
   }
 

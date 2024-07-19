@@ -44,7 +44,7 @@ public class DashboardService {
     return produitsRepository.findTop10BySortieByQuantiteVenduDesc();
   }
   //Filtrage des sorties par moi
-  public Map<String, Double> getMonthlySales() {
+  public Map<String, Double> getsortieByMois() {
     List<BonSorties> bonSorties = bonSortieRepository.findAll();
 
     Map<String, Double> sortieByMois = bonSorties.stream()
