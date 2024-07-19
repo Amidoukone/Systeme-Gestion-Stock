@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface BonSortieRepository extends JpaRepository<BonSorties, Integer> {
-    List<BonSorties> findTop10ByEntreByDateSortieDesc();
+//    List<BonSorties> findTop10BySortieByDateSortieDesc();
 }
