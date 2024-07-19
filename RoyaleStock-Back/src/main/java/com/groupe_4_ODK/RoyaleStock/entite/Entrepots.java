@@ -19,12 +19,13 @@ public class Entrepots {
 
   private String adresse;
   private String logo;
-  private String lieu;
-  private String statut;
-
-  private Date dateCreate;
+  @Temporal(TemporalType.DATE)
+  @Column(name = "dateCreate", nullable = false, updatable = false)
+  private Date dateCreate = new Date();
   private Date debutAbonnement;
   private Date finAbonnement;
+  private Long createBy;
+
   @OneToMany
   private List<Utilisateur> utilisateurs;
 

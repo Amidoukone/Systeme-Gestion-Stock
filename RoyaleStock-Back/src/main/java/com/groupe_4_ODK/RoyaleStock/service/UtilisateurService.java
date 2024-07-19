@@ -54,7 +54,7 @@ public class UtilisateurService implements UserDetailsService {
     }
   }
 
-  private Long getCurrentUserId() {
+  public Long getCurrentUserId() {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
       String username = ((UserDetails) authentication.getPrincipal()).getUsername();

@@ -21,6 +21,9 @@ public class EntrepotsService {
   @Autowired
   private UtilisateurRepository utilisateurRepository;
 
+  @Autowired
+  private UtilisateurService utilisateurService;
+
   // Methode pour afficher la liste des entrepots
   public List<Entrepots> findAll() {
     return entrepotsRepository.findAll();
@@ -33,6 +36,7 @@ public class EntrepotsService {
 
   // Methode pour creer un entrepot
   public Entrepots save(Entrepots entrepot) {
+    entrepot.setCreateBy(utilisateurService.getCurrentUserId());
     return entrepotsRepository.save(entrepot);
   }
 
@@ -45,8 +49,6 @@ public class EntrepotsService {
   public Entrepots updateEntrepot(Long id, Entrepots updatedEntrepot) {
     return entrepotsRepository.findById(id).map(entrepot -> {
       entrepot.setNom(updatedEntrepot.getNom());
-      entrepot.setLieu(updatedEntrepot.getLieu());
-      entrepot.setStatut(updatedEntrepot.getStatut());
       entrepot.setUtilisateurs(updatedEntrepot.getUtilisateurs());
       entrepot.setProduits(updatedEntrepot.getProduits());
       return entrepotsRepository.save(entrepot);

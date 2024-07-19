@@ -42,7 +42,7 @@ public class SecurityConfig {
       .csrf(csrf -> csrf.disable())
       .authorizeHttpRequests(authz -> authz
         .requestMatchers("auth/connexion", "auth/deconnexion").permitAll()
-        .requestMatchers("/api/utilisateurs/**", "/api/entrepots/**").hasRole("Admin")
+        .requestMatchers("/api/utilisateurs/admin","/api/utilisateurs/manager","/api/utilisateurs/vendeur", "/api/entrepots/{entrepotId}/manager/{userId}", "/api/entrepots/create").hasRole("Admin")
         .requestMatchers("/api/utilisateurs/vendeur").hasRole("Manager")
         .anyRequest().authenticated()
       )
