@@ -49,4 +49,7 @@ public class RoleService{
   public List<Role> readRole() {
     return  roleRepository.findAll();
   }
+  public int nombreRole() {
+    return roleRepository.countRole();
+  }
 }

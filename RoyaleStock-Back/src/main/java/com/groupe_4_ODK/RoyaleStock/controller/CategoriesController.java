@@ -4,6 +4,7 @@ import com.groupe_4_ODK.RoyaleStock.entite.Categories;
 import com.groupe_4_ODK.RoyaleStock.entite.Produits;
 import com.groupe_4_ODK.RoyaleStock.service.CategoriesService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,5 +37,17 @@ public class CategoriesController {
   @DeleteMapping(value = "/supprimer/{id}")
   public String supprimerCategories(@PathVariable Long id){
     return categoriesService.supprimerCategorie(id);
+  }
+  //List des categories d'une Entrepot
+  @GetMapping("/{entrepotId}/nombre-categories")
+  public ResponseEntity<Long> countCategoriesByEntrepotId(@PathVariable Long entrepotId) {
+    long count = categoriesService.countCategoriesByEntrepotId(entrepotId);
+    return ResponseEntity.ok(count);
+  }
+  //Nomnre de categories
+  @GetMapping("/nombre-categories")
+  public ResponseEntity<Long> countCategories(){
+    long count = categoriesService.countCategories();
+    return ResponseEntity.ok(count);
   }
 }

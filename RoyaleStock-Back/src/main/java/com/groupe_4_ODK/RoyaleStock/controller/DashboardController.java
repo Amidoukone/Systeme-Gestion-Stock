@@ -36,12 +36,12 @@
 //  public ResponseEntity<List<BonSorties>> getRecentBonSorties() {
 //    return ResponseEntity.ok(dashboardService.getRecentBonSorties());
 //  }
-//  //Liste des
+//  //Liste des 10 produits les plus vendu
 //  @GetMapping("/top10Vendu")
 //  public ResponseEntity<List<Produits>> getProduitsTopVendu() {
 //    return ResponseEntity.ok(dashboardService.getProduitsTopVendu());
 //  }
-//  //Sortie par moi
+//  //Sortie par mois
 //  @GetMapping("/monthly-sales")
 //  public ResponseEntity<Map<String, Double>> getMonthlySales() {
 //    Map<String, Double> monthlySales = dashboardService.getsortieByMois();

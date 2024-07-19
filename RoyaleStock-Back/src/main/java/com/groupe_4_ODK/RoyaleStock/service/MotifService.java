@@ -47,4 +47,8 @@ public class MotifService {
     }
     motifRepository.deleteById(id);
   }
+  //Nombre Motifs
+  public int getNombreMotif() {
+  return motifRepository.countMotifs();
+  }
 }

@@ -31,12 +31,7 @@ public class ProduitsService {
     return produitsRepository.findById(id)
       .orElseThrow(() -> new RuntimeException("Produit non trouvée !"));
   }
-
-  /*public Produits produits(String nom) {
-    return produitsRepository.findById(nom)
-      .orElseThrow(() -> new RuntimeException("Produit non trouvée !"));
-  }*/
-
+  //Modifier un produit
   public Produits modifierProduits(Long id, Produits produits) {
     return produitsRepository.findById(id)
       .map(p-> {
@@ -48,7 +43,7 @@ public class ProduitsService {
         return produitsRepository.save(p);
       }).orElseThrow(() -> new RuntimeException("Produit non trouvé !"));
   }
-
+//Supprimer un produits
   public String supprimerProduit(Long id) {
     produitsRepository.deleteById(id);
     return "Produit Supprimé !";
@@ -61,5 +56,12 @@ public class ProduitsService {
   public List<TopEntreeDTO> getTopEntrees() {
     return produitsRepository.findTopEntrees();
   }
-
+  //Nombre de produit d'une Entrepot
+  public long countProductsByEntrepotId(Long entrepotId) {
+    return produitsRepository.countProductsByEntrepotId(entrepotId);
+  }
+  //Liste des produits d'une Entrepots
+  public List<Produits> findProductsByEntrepotId(Long entrepotId) {
+    return produitsRepository.findProductsByEntrepotId(entrepotId);
+  }
 }

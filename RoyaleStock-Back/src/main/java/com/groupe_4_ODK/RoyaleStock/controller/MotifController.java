@@ -39,4 +39,11 @@ private MotifService motifService;
   public void deleteMotif(@PathVariable int id){
     motifService.deleteMotif(id);
   }
+
+  //Nombre de Motif
+  @GetMapping("/motifNombre")
+  public int getMotifNombre() {
+    return motifService.getNombreMotif();
+  }
+
 }

@@ -28,21 +28,22 @@
 //  @Autowired
 //  private ProduitsRepository produitsRepository;
 //
-////  //List des produits en danger de stock
-////  public List<Produits> getLowStockProducts() {
-////    return produitRepository.findByQuantiteLessThan(10); // Exemple pour les produits avec un stock < 10
+// //List des produits en danger de stock
+//  public List<Produits> getLowStockProducts() {
+//    return produitRepository.findByQuantiteLessThan(10); //  pour les produits avec un stock < 10
 //  }
-//////Top 10 Entre
-////  public List<BonEntrees> getRecentBonEntrees() {
-////    return bonEntreeRepository.findTop10ByEntreByDateCommandeDesc();
-////  }
-//////Top 10 sortie
-////  public List<BonSorties> getRecentBonSorties() {
-////    return bonSortieRepository.findTop10BySortieByDateSortieDesc();
-////  }
-////  public List<Produits> getProduitsTopVendu() {
-////    return produitsRepository.findTop10BySortieByQuantiteVenduDesc();
-////  }
+////Top 10 Bon d'Entre
+//  public List<BonEntrees> getRecentBonEntrees() {
+//    return bonEntreeRepository.findTop10ByOrderByDateCommandeDesc();
+//  }
+////Top 10 Bon de sortie
+//  public List<BonSorties> getRecentBonSorties() {
+//    return bonSortieRepository.findTop10BySortieByDateSortieDesc();
+//  }
+//  //Top 10 Produits Vendu
+//  public List<Produits> getProduitsTopVendu() {
+//    return produitsRepository.findTop10ByOrderByQuantiteVenduDesc();
+//  }
 //  //Filtrage des sorties par moi
 //  public Map<String, Double> getsortieByMois() {
 //    List<BonSorties> bonSorties = bonSortieRepository.findAll();

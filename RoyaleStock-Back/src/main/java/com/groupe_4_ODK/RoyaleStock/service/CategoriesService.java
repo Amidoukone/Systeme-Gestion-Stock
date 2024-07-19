@@ -43,4 +43,12 @@ public class CategoriesService {
     categoriesRepository.deleteById(id);
     return "Categorie Supprimé !";
   }
+  //Nombre de categories
+  public long countCategories() {
+    return categoriesRepository.countCategories();
+  }
+  //Catgories d'une entrepot
+  public long countCategoriesByEntrepotId(Long entrepotId) {
+    return categoriesRepository.countCategoriesByEntrepotId(entrepotId);
+  }
 }

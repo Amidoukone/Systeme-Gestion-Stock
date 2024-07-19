@@ -6,6 +6,7 @@ import com.groupe_4_ODK.RoyaleStock.entite.Produits;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -34,8 +35,13 @@ List<TopVenduDTO> findTopVendus();
     "ORDER BY COUNT(p.Id) DESC")
   List<TopEntreeDTO> findTopEntrees();
 
-//    List<Produits> findByQuantiteLessThan(int i);
-//
-//  List<Produits> findTop10BySortieByQuantiteVenduDesc();
+  //Nombre de Produits dune entrepots
+  @Query("SELECT COUNT(p) FROM Produits p WHERE p.entrepots.id = :entrepotId")
+  long countProductsByEntrepotId(@Param("entrepotId") Long entrepotId);
+  //Liste des produits d'une entrepot
+  @Query("SELECT p FROM Produits p WHERE p.entrepots.id = :entrepotId")
+  List<Produits> findProductsByEntrepotId(@Param("entrepotId") Long entrepotId);
+
+
 }
 
