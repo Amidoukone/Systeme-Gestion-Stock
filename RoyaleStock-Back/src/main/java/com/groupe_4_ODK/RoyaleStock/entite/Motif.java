@@ -1,9 +1,7 @@
 package com.groupe_4_ODK.RoyaleStock.entite;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
@@ -13,4 +11,9 @@ public class Motif {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
   private String title;
+  private long createBy;
+
+  @JsonIgnore
+  @ManyToOne
+  private Entrepots entrepot;
 }

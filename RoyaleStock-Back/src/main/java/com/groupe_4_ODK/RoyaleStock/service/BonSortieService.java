@@ -106,9 +106,7 @@ public class BonSortieService {
     BonSorties existingBonSortie = existingBonSortieOptional.get();
     existingBonSortie.setMotif(bonSortie.getMotif());
     existingBonSortie.setDateSortie(bonSortie.getDateSortie());
-    existingBonSortie.setDetailsSorties(bonSortie.getDetailsSorties());
-    existingBonSortie.setManager(bonSortie.getManager());
-    existingBonSortie.setAdmin(bonSortie.getAdmin());
+    existingBonSortie.setDetailsSorties(bonSortie.getDetailsSorties()); 
 
     // Sauvegarder et retourner le BonSortie mis à jour
     return bonSortieRepository.save(existingBonSortie);
@@ -223,7 +221,7 @@ public class BonSortieService {
       document.add(table);
 
 
-      document.add(new Paragraph("\n\nManager: " + bonSortie.getManager().getNom()));
+      document.add(new Paragraph("\n\nManager: " + bonSortie.getUtilisateur().getNom()));
 
       document.close();
     } catch (DocumentException | IOException e) {

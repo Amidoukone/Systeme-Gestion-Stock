@@ -5,6 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface CategoriesRepository extends JpaRepository<Categories, Long> {
   Categories findByLibelle(String libelle);
@@ -14,5 +16,7 @@ public interface CategoriesRepository extends JpaRepository<Categories, Long> {
 //Categories d'une Entrepot
 @Query("SELECT COUNT(DISTINCT p.categories) FROM Produits p WHERE p.entrepots.id = :entrepotId")
 long countCategoriesByEntrepotId(Long entrepotId);
+
+  List<Categories> findByEntrepotId(Long entrepotId);
 
 }

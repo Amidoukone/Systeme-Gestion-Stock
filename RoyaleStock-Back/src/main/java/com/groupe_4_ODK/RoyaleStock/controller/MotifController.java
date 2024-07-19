@@ -13,13 +13,10 @@ import java.util.Optional;
 public class MotifController {
 @Autowired
 private MotifService motifService;
-  //Motif
-  //Create Motif
   @PostMapping("/create")
   public Motif createMotif(@RequestBody Motif motif){
     return motifService.createMotif(motif);
   }
-  //get by Id
   @GetMapping("/id")
   public Optional<Motif> getMotifById(int id){
     return motifService.getMotifById(id);

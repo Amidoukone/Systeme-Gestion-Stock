@@ -9,4 +9,6 @@ import org.springframework.stereotype.Repository;
 public interface MotifRepository extends JpaRepository<Motif, Integer> {
   @Query("SELECT COUNT(m) FROM Motif m")
   int countMotifs();
+
+    Motif findByTitle(String title);
 }

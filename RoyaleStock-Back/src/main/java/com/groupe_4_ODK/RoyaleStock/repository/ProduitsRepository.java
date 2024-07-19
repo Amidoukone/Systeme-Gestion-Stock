@@ -2,6 +2,7 @@ package com.groupe_4_ODK.RoyaleStock.repository;
 
 import com.groupe_4_ODK.RoyaleStock.dto.TopEntreeDTO;
 import com.groupe_4_ODK.RoyaleStock.dto.TopVenduDTO;
+import com.groupe_4_ODK.RoyaleStock.entite.Categories;
 import com.groupe_4_ODK.RoyaleStock.entite.Produits;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -43,5 +44,6 @@ List<TopVenduDTO> findTopVendus();
   List<Produits> findProductsByEntrepotId(@Param("entrepotId") Long entrepotId);
 
 
+  Produits findByNom(String nom);
 }
 

@@ -3,10 +3,15 @@ package com.groupe_4_ODK.RoyaleStock.service;
 import com.groupe_4_ODK.RoyaleStock.dto.TopEntreeDTO;
 import com.groupe_4_ODK.RoyaleStock.dto.TopVenduDTO;
 import com.groupe_4_ODK.RoyaleStock.entite.Categories;
+import com.groupe_4_ODK.RoyaleStock.entite.Entrepots;
 import com.groupe_4_ODK.RoyaleStock.entite.Produits;
+import com.groupe_4_ODK.RoyaleStock.entite.Utilisateur;
 import com.groupe_4_ODK.RoyaleStock.repository.CategoriesRepository;
 import com.groupe_4_ODK.RoyaleStock.repository.ProduitsRepository;
+import com.groupe_4_ODK.RoyaleStock.repository.UtilisateurRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,9 +21,27 @@ import java.util.List;
 public class ProduitsService {
 
   private final ProduitsRepository produitsRepository;
+  private final MethodeUtil methodeUtil;
 
   public Produits creerProduits(Produits produits) {
+    Produits existingProduit = produitsRepository.findByNom(produits.getNom());
 
+    if (existingProduit != null) {
+      return existingProduit;
+    }
+
+    Long currentUserId = methodeUtil.getCurrentUserId();
+    if (currentUserId == null) {
+      throw new RuntimeException("Utilisateur non trouvé ou non authentifié");
+    }
+
+    Entrepots entrepot = methodeUtil.getEntrepotByUserId(currentUserId);
+    if (entrepot == null) {
+      throw new RuntimeException("Utilisateur n'est associé à aucun entrepôt");
+    }
+
+    produits.setCreateBy(currentUserId);
+    produits.setEntrepots(entrepot);
     return produitsRepository.save(produits);
   }
 
@@ -31,7 +54,7 @@ public class ProduitsService {
     return produitsRepository.findById(id)
       .orElseThrow(() -> new RuntimeException("Produit non trouvée !"));
   }
-  //Modifier un produit
+
   public Produits modifierProduits(Long id, Produits produits) {
     return produitsRepository.findById(id)
       .map(p-> {
@@ -43,12 +66,12 @@ public class ProduitsService {
         return produitsRepository.save(p);
       }).orElseThrow(() -> new RuntimeException("Produit non trouvé !"));
   }
-//Supprimer un produits
+
   public String supprimerProduit(Long id) {
     produitsRepository.deleteById(id);
     return "Produit Supprimé !";
   }
-  // Produit vendu le plus
+
   public List<TopVenduDTO> getTopVendus() {
     return produitsRepository.findTopVendus();
   }
@@ -56,11 +79,11 @@ public class ProduitsService {
   public List<TopEntreeDTO> getTopEntrees() {
     return produitsRepository.findTopEntrees();
   }
-  //Nombre de produit d'une Entrepot
+
   public long countProductsByEntrepotId(Long entrepotId) {
     return produitsRepository.countProductsByEntrepotId(entrepotId);
   }
-  //Liste des produits d'une Entrepots
+
   public List<Produits> findProductsByEntrepotId(Long entrepotId) {
     return produitsRepository.findProductsByEntrepotId(entrepotId);
   }

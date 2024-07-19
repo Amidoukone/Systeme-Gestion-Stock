@@ -61,7 +61,7 @@ public class ProduitsController {
   return ResponseEntity.ok(count);
   }
   //Liste des produits d'une Entrepots
-  @GetMapping("/listProduits/{entrepotId}")
+  @GetMapping("/'listProduits'/{entrepotId}")
   public ResponseEntity<List<Produits>> findProductsByEntrepotId(@PathVariable Long entrepotId) {
     List<Produits> produits = produitsService.findProductsByEntrepotId(entrepotId);
     return ResponseEntity.ok(produits);
