@@ -208,16 +208,16 @@ public class BonSortieService {
       }
 
       // Ajouter une ligne vide
-      cell = new PdfPCell(new Paragraph(""));
+      cell = new PdfPCell(new Paragraph("Total"));
+      cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
       cell.setColspan(3);
       table.addCell(cell);
 
       // Ajouter le total général
-      cell = new PdfPCell(new Paragraph("Total", FontFactory.getFont(FontFactory.HELVETICA_BOLD)));
+      cell = new PdfPCell(new Paragraph(String.valueOf(totalGeneral), FontFactory.getFont(FontFactory.HELVETICA_BOLD)));
       cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
       table.addCell(cell);
 
-      table.addCell(new PdfPCell(new Paragraph(String.valueOf(totalGeneral), FontFactory.getFont(FontFactory.HELVETICA_BOLD))));
 
       // Ajouter le tableau au document
       document.add(table);
