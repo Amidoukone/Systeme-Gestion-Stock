@@ -39,7 +39,7 @@ public class Utilisateur implements UserDetails {
 
   @ManyToOne
   @JoinColumn(name = "entrepot_id")
-  private Entrepots entrepots;
+  private Entrepots entrepot;
 
   @ManyToOne
   @JoinColumn(name = "notification_id")

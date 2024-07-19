@@ -20,12 +20,10 @@ public class EntrepotsController {
   @Autowired
   private EntrepotsService entrepotsService;
 
-  @GetMapping("/{id}")
-  public ResponseEntity<Entrepots> findById(@PathVariable Long id) {
-    Optional<Entrepots> entrepot = entrepotsService.findById(id);
-    return entrepot.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+  @PostMapping("/create")
+  public Entrepots createEntrepot(@RequestBody Entrepots entrepots) {
+    return entrepotsService.save(entrepots);
   }
-
 
   @PutMapping("/{id}")
   public ResponseEntity<Entrepots> updateEntrepot(@PathVariable Long id, @RequestBody Entrepots updatedEntrepot) {
@@ -36,19 +34,20 @@ public class EntrepotsController {
     }
   }
 
-  @PostMapping("/{entrepotId}/manager/{userId}")
-  public ResponseEntity<Entrepots> assignManager(@PathVariable Long entrepotId, @PathVariable Long userId) {
+  @PostMapping("/{entrepotId}/manager/{managerId}")
+  public ResponseEntity<Entrepots> assignManager(@PathVariable Long entrepotId, @PathVariable Long managerId) {
     try {
-      return ResponseEntity.ok(entrepotsService.assignManager(entrepotId, userId));
+      Entrepots updatedEntrepot = entrepotsService.assignManager(entrepotId, managerId);
+      return ResponseEntity.ok(updatedEntrepot);
     } catch (Exception e) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
   }
 
-  @PostMapping("/{entrepotId}/vendeur/{userId}")
-  public ResponseEntity<Entrepots> assignVendeur(@PathVariable Long entrepotId, @PathVariable Long userId) {
+  @PostMapping("/{entrepotId}/vendeur/{vendeurId}")
+  public ResponseEntity<Entrepots> assignVendeur(@PathVariable Long entrepotId, @PathVariable Long vendeurId) {
     try {
-      return ResponseEntity.ok(entrepotsService.assignVendeur(entrepotId, userId));
+      return ResponseEntity.ok(entrepotsService.assignVendeur(entrepotId, vendeurId));
     } catch (Exception e) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
@@ -90,12 +89,6 @@ public class EntrepotsController {
   public Optional<Entrepots> getById(@PathVariable Long id) {
     return entrepotsService.findById(id);
   }
-
-  @PostMapping("/create")
-  public Entrepots createEntrepot(@RequestBody Entrepots entrepots) {
-    return entrepotsService.save(entrepots);
-  }
-
 
   @DeleteMapping("/delete/{id}")
   public void deleteEntrepot(@PathVariable Long id) {

@@ -13,7 +13,7 @@ import java.util.List;
 public class Entrepots {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long Id;
+  private Long id;
 
   private String nom;
 
@@ -22,11 +22,13 @@ public class Entrepots {
   @Temporal(TemporalType.DATE)
   @Column(name = "dateCreate", nullable = false, updatable = false)
   private Date dateCreate = new Date();
+  @Temporal(TemporalType.DATE)
   private Date debutAbonnement;
+  @Temporal(TemporalType.DATE)
   private Date finAbonnement;
   private Long createBy;
 
-  @OneToMany
+  @OneToMany(mappedBy = "entrepot", cascade = CascadeType.ALL)
   private List<Utilisateur> utilisateurs;
 
   @OneToMany()

@@ -57,36 +57,56 @@ public class EntrepotsService {
       return entrepotsRepository.save(updatedEntrepot);
     });
   }
-  public Entrepots assignManager(Long entrepotId, Long userId) throws Exception {
+  public Entrepots assignManager(Long entrepotId, Long managerId) throws Exception {
     Entrepots entrepot = entrepotsRepository.findById(entrepotId)
-      .orElseThrow(() -> new Exception("Entrepot not found"));
+      .orElseThrow(() -> new Exception("Entrepot non trouvé"));
 
-    Utilisateur manager = utilisateurRepository.findById(userId)
-      .orElseThrow(() -> new Exception("Utilisateur not found"));
+    Utilisateur manager = utilisateurRepository.findById(managerId)
+      .orElseThrow(() -> new Exception("Utilisateur non trouvé"));
 
     if (manager.getRole().getTypeRole() != TypeRole.Manager) {
-      throw new Exception("Utilisateur is not a Manager");
+      throw new Exception("Utilisateur n'est pas un Manager");
     }
 
     for (Utilisateur utilisateur : entrepot.getUtilisateurs()) {
       if (utilisateur.getRole().getTypeRole() == TypeRole.Manager) {
-        throw new Exception("This entrepot already has a manager");
+        throw new Exception("Cet entrepot a déja un Manager");
       }
     }
 
+    boolean hasManager = entrepot.getUtilisateurs().stream()
+      .anyMatch(utilisateur -> utilisateur.getRole().getTypeRole() == TypeRole.Manager);
+
+    if (hasManager) {
+      throw new Exception("Cet entrepot a déjà un Manager");
+    }
+
+    manager.setEntrepot(entrepot);
     entrepot.getUtilisateurs().add(manager);
+    utilisateurRepository.save(manager);
     return entrepotsRepository.save(entrepot);
   }
 
-  public Entrepots assignVendeur(Long entrepotId, Long userId) throws Exception {
+  public Entrepots assignVendeur(Long entrepotId, Long vendeurId) throws Exception {
     Entrepots entrepot = entrepotsRepository.findById(entrepotId)
       .orElseThrow(() -> new Exception("Entrepot not found"));
 
-    Utilisateur vendeur = utilisateurRepository.findById(userId)
+    Utilisateur vendeur = utilisateurRepository.findById(vendeurId)
       .orElseThrow(() -> new Exception("Utilisateur not found"));
 
     if (vendeur.getRole().getTypeRole() != TypeRole.Vendeur) {
       throw new Exception("Utilisateur is not a Vendeur");
+    }
+
+    if (vendeur.getEntrepot() != null) {
+      throw new Exception("Ce vendeur est déjà attribué à un autre entrepôt");
+    }
+
+    boolean hasManager = entrepot.getUtilisateurs().stream()
+      .anyMatch(utilisateur -> utilisateur.getRole().getTypeRole() == TypeRole.Manager);
+
+    if (!hasManager) {
+      throw new Exception("Cet entrepot n'a pas de Manager");
     }
 
     long vendeurCount = entrepot.getUtilisateurs().stream()
@@ -94,10 +114,12 @@ public class EntrepotsService {
       .count();
 
     if (vendeurCount >= 2) {
-      throw new Exception("This entrepot already has two vendeurs");
+      throw new Exception("Cet entrepot a deja deux vendeurs");
     }
 
+    vendeur.setEntrepot(entrepot);
     entrepot.getUtilisateurs().add(vendeur);
+    utilisateurRepository.save(vendeur);
     return entrepotsRepository.save(entrepot);
   }
 
