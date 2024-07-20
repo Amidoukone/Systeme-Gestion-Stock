@@ -49,51 +49,58 @@ public class BonSortieService {
   }
 
   // Méthode pour créer un nouveau BonSortie
-   @Transactional
-    public BonSorties createBonSortie(BonSorties bonSortie) {
-        try {
-            if (bonSortie.getDateSortie() == null) {
-                bonSortie.setDateSortie(new Date());
-            }
-          double totalPrix = 0.0;
+  @Transactional
+  public BonSorties createBonSortie(BonSorties bonSortie) {
+    try {
+      if (bonSortie.getDateSortie() == null) {
+        bonSortie.setDateSortie(new Date());
+      }
 
-          for (DetailsSorties detailsSortie : bonSortie.getDetailsSorties()) {
-                Produits produit = detailsSortie.getProduits();
-                if (produit == null || produit.getId() == null) {
-                    throw new IllegalArgumentException("Produit invalide pour le détail de sortie");
-                }
+      double totalPrix = 0.0;
 
-                // Récupérer le produit depuis la base de données
-                Produits finalProduit = produitRepository.findById(produit.getId())
-                        .orElseThrow(() -> new IllegalArgumentException("Produit non trouvé pour l'ID: " + produit.getId()));
+      for (DetailsSorties detailsSortie : bonSortie.getDetailsSorties()) {
+        Produits produit = detailsSortie.getProduits();
 
-                // Calculer la nouvelle quantité
-                int quantiteSortie = Integer.parseInt(String.valueOf(detailsSortie.getQuantite()));
-                int nouvelleQuantite = finalProduit.getQuantite() - quantiteSortie;
-
-                if (nouvelleQuantite < 0) {
-                    throw new IllegalArgumentException("Quantité insuffisante pour le produit: " + finalProduit.getNom());
-                }
-
-                // Mettre à jour la quantité du produit
-                finalProduit.setQuantite(nouvelleQuantite);
-                produitRepository.save(finalProduit);
-
-            }
-            bonSortie = bonSortieRepository.save(bonSortie);
-
-            for (DetailsSorties detailsSortie : bonSortie.getDetailsSorties()) {
-                detailsSortie.setBonSorties(bonSortie);
-                detailsSortieRepository.save(detailsSortie);
-              totalPrix += detailsSortie.getPrix_unitaire() * detailsSortie.getQuantite();
-              detailsSortie.setBonSorties(bonSortie);
-            }
-            bonSortie.setPrixTotal(totalPrix);
-            return bonSortie;
-        } catch (Exception e) {
-            throw new RuntimeException("Erreur lors de la création du bon de sortie", e);
+        if (produit == null || produit.getId() == null) {
+          throw new IllegalArgumentException("Produit invalide pour le détail de sortie");
         }
+
+        Produits produit1 = produitRepository.findById(produit.getId()).orElse(null);
+        if (produit1 == null) {
+          throw new IllegalArgumentException("Produit non trouvé pour l'ID: " + produit.getId());
+        }
+
+
+        int quantiteSortie = detailsSortie.getQuantite();
+        int nouvelleQuantite = produit1.getQuantite() - quantiteSortie;
+
+        if (nouvelleQuantite < 0) {
+          throw new IllegalArgumentException("Quantité insuffisante pour le produit: " + produit1.getNom());
+        }
+
+        produit1.setQuantite(nouvelleQuantite);
+        produitRepository.save(produit1);
+
+      }
+
+      bonSortie = bonSortieRepository.save(bonSortie);
+
+      for (DetailsSorties detailsSortie : bonSortie.getDetailsSorties()) {
+        detailsSortie.setBonSorties(bonSortie);
+        detailsSortieRepository.save(detailsSortie);
+        totalPrix += detailsSortie.getPrix_unitaire() * detailsSortie.getQuantite();
+        detailsSortie.setBonSorties(bonSortie);
+      }
+
+      bonSortie.setPrixTotal(totalPrix);
+
+      return bonSortie;
+    } catch (Exception e) {
+      System.err.println("Erreur: " + e.getMessage());
+      e.printStackTrace();
+      throw new RuntimeException("Erreur lors de la création du bon de sortie", e);
     }
+  }
 
   // Méthode pour mettre à jour un BonSortie existant
   @Transactional
@@ -106,7 +113,7 @@ public class BonSortieService {
     BonSorties existingBonSortie = existingBonSortieOptional.get();
     existingBonSortie.setMotif(bonSortie.getMotif());
     existingBonSortie.setDateSortie(bonSortie.getDateSortie());
-    existingBonSortie.setDetailsSorties(bonSortie.getDetailsSorties()); 
+    existingBonSortie.setDetailsSorties(bonSortie.getDetailsSorties());
 
     // Sauvegarder et retourner le BonSortie mis à jour
     return bonSortieRepository.save(existingBonSortie);
