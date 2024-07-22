@@ -13,7 +13,7 @@ import { AuthService } from "./services/auth.service";
   standalone: true,
   imports: [RouterOutlet, HeaderComponent, NavbarComponent, FooterComponent, SidebarComponent, CommonModule, FormsModule],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent {
   title = 'Test-Angular';
