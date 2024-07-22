@@ -1,0 +1,18 @@
+<div class="container">
+    <h1 class="h2 mb-4">Détails du BonSortie</h1>
+    <div class="card mb-3">
+      <div class="card-body">
+        <h5 class="card-title">Date Sortie: {{ bonSortie.dateSortie | date }}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">Prix Total: {{ bonSortie.prixTotal | currency }}</h6>
+        <div *ngIf="detailsSorties.length > 0">
+          <h5>Details Sorties:</h5>
+          <ul class="list-group">
+            <li class="list-group-item" *ngFor="let detail of detailsSorties">
+              {{ detail.produit.name }} - {{ detail.quantity }} - {{ detail.prix | currency }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  

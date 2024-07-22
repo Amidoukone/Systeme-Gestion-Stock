@@ -1,0 +1,26 @@
+<div class="container mx-auto px-4 py-6">
+  <div class="card advanced-form-card">
+    <div class="card-header">
+      <h5 class="card-title">{{ isEditMode ? 'Modifier Fournisseur' : 'Ajouter Fournisseur' }}</h5>
+    </div>
+    <div class="card-body">
+      <form (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="fourn_name">Nom du fournisseur</label>
+          <input type="text" class="form-control" id="fourn_name" name="fourn_name" [(ngModel)]="fournisseur.fournName" required>
+        </div>
+        <div class="form-group">
+          <label for="adresse">Adresse</label>
+          <input type="text" class="form-control" id="adresse" name="adresse" [(ngModel)]="fournisseur.adresse" required>
+        </div>
+        <div class="form-group">
+          <label for="telephone">Téléphone</label>
+          <input type="text" class="form-control" id="telephone" name="telephone" [(ngModel)]="fournisseur.telephone" required>
+        </div>
+        <div class="button-container mt-3">
+          <button class="btn btn-primary" type="submit">{{ isEditMode ? 'Modifier' : 'Ajouter' }}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
