@@ -1,5 +1,6 @@
 package com.groupe_4_ODK.RoyaleStock.entite;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,11 +23,15 @@ public class Produits {
   private String description;
   private Double prixAchats;
   private Double prixVente;
+  private Date dateExpiration;
   private int quantite;
+  private long createBy;
 
+  @JsonIgnore
   @OneToMany
   private List<DetailsEntrees> detailsEntrees;
 
+  @JsonIgnore
   @OneToMany
   private List<DetailsSorties> detailsSorties;
 
@@ -35,6 +40,6 @@ public class Produits {
   private Categories categories;
 
   @ManyToOne
-  @JoinColumn(name = "produit_id")
+  @JoinColumn(name = "entrepot_id")
   private Entrepots entrepots;
 }

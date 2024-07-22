@@ -1,10 +1,14 @@
 package com.groupe_4_ODK.RoyaleStock.config;
 
 
+import com.groupe_4_ODK.RoyaleStock.service.UtilisateurService;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,11 +23,20 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class SecurityConfig {
 
 
-  private final BCryptPasswordEncoder bCryptPasswordEncoder; 
+  private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-  public SecurityConfig(BCryptPasswordEncoder bCryptPasswordEncoder) {
-    this.bCryptPasswordEncoder = bCryptPasswordEncoder; 
+  private final UtilisateurService utilisateurService;
+
+  public SecurityConfig(BCryptPasswordEncoder bCryptPasswordEncoder, UtilisateurService utilisateurService) {
+    this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    this.utilisateurService =utilisateurService;
   }
+
+  @Bean
+  public CommandLineRunner initAdmin() {
+    return args -> utilisateurService.createDefaultAdmin();
+  }
+
 
   //script pour poser un filter sur mes endpointes
   @Bean
@@ -31,7 +44,9 @@ public class SecurityConfig {
     http
       .csrf(csrf -> csrf.disable())
       .authorizeHttpRequests(authz -> authz
-        .requestMatchers("auth/connexion", "auth/deconnexion", "/api/fournisseurs/**", "/api/entrepots/**").permitAll()
+        .requestMatchers("auth/connexion", "auth/deconnexion").permitAll()
+        .requestMatchers("/api/utilisateurs/admin","/api/utilisateurs/manager","/api/utilisateurs/vendeur", "/api/entrepots/{entrepotId}/manager/{userId}", "/api/entrepots/create").hasRole("Admin")
+        .requestMatchers("/api/utilisateurs/vendeur").hasRole("Manager")
         .anyRequest().authenticated()
       )
       .httpBasic(withDefaults());
@@ -46,6 +61,12 @@ public class SecurityConfig {
     daoAuthenticationProvider.setUserDetailsService(userDetailsService);
     daoAuthenticationProvider.setPasswordEncoder(bCryptPasswordEncoder);
     return daoAuthenticationProvider;
+  }
+
+  //pour permettre l'accès aux endpoints d'authentification
+  @Bean
+  public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
+    return http.getSharedObject(AuthenticationManagerBuilder.class).build();
   }
 
 

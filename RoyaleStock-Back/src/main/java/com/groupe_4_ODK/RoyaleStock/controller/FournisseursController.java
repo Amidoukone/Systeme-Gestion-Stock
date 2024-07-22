@@ -27,7 +27,7 @@ public class FournisseursController {
     return fournisseur.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
   }
 
-  @PostMapping
+  @PostMapping("/creer")
   public Fournisseurs createFournisseur(@RequestBody Fournisseurs fournisseur) {
     return fournisseursService.save(fournisseur);
   }
@@ -42,6 +42,10 @@ public class FournisseursController {
   public ResponseEntity<Void> deleteFournisseur(@PathVariable int id) {
     fournisseursService.deleteById(id);
     return ResponseEntity.noContent().build();
+  }
+  @GetMapping("/fournisseurs-count")
+  public int getFournisseursCount() {
+    return fournisseursService.getFournisseursCount();
   }
 
 

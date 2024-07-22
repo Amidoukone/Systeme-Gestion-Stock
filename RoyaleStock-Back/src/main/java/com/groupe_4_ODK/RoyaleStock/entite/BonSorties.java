@@ -1,5 +1,6 @@
 package com.groupe_4_ODK.RoyaleStock.entite;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,17 +16,15 @@ public class BonSorties {
 
   private Long id;
 
-  private Date dateSortie;
-
+  @Temporal(TemporalType.DATE)
+  private Date dateSortie = new Date();
+  private double prixTotal;
   @OneToMany
+  @JsonManagedReference
   private List<DetailsSorties> detailsSorties;
-  @ManyToOne
-  private Manager manager;
-  @ManyToOne
-  private Admin admin;
   @ManyToOne
   private Motif motif;
   @ManyToOne
-  private Vendeur vendeur;
+  private Utilisateur utilisateur;
 
 }

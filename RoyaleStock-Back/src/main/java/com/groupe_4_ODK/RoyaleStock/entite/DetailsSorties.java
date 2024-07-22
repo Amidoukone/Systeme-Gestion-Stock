@@ -1,5 +1,6 @@
 package com.groupe_4_ODK.RoyaleStock.entite;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,18 +19,16 @@ public class DetailsSorties {
 
   private Long id;
 
-  private  int quantite;
+  private int quantite;
 
-  private String motif;
+  private double prix_unitaire;
 
-  private Float prix_unitaire;
-
-  private  Float prix_total;
 
   private Date dateSortie;
 
   @ManyToOne
   @JoinColumn(name = "bonSortie_id")
+  @JsonBackReference
   private BonSorties bonSorties;
 
   @ManyToOne

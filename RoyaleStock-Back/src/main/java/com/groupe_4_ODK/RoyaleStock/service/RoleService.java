@@ -22,7 +22,7 @@ public class RoleService{
     Optional<Role> roles = roleRepository.findById(id);
     if (roles.isPresent()) {
       Role r  = roles.get();
-      r.setNom(role.getNom());
+      r.setTypeRole(role.getTypeRole());
       Role updateRole = roleRepository.save(r);
       return updateRole;
     }
@@ -42,8 +42,14 @@ public class RoleService{
 
   }
 
+  public Role findById(int id) {
+    return roleRepository.findById(id).orElse(null);}
+
 
   public List<Role> readRole() {
     return  roleRepository.findAll();
+  }
+  public int nombreRole() {
+    return roleRepository.countRole();
   }
 }

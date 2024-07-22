@@ -1,11 +1,14 @@
 package com.groupe_4_ODK.RoyaleStock.controller;
 
+import com.groupe_4_ODK.RoyaleStock.dto.TopEntreeDTO;
+import com.groupe_4_ODK.RoyaleStock.dto.TopVenduDTO;
 import com.groupe_4_ODK.RoyaleStock.entite.Produits;
 import com.groupe_4_ODK.RoyaleStock.repository.CategoriesRepository;
 import com.groupe_4_ODK.RoyaleStock.repository.ProduitsRepository;
 import com.groupe_4_ODK.RoyaleStock.service.CategoriesService;
 import com.groupe_4_ODK.RoyaleStock.service.ProduitsService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +18,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 
 @RestController
-@RequestMapping("/produits")
+@RequestMapping("api/produits")
 @AllArgsConstructor
 public class ProduitsController {
 
@@ -42,4 +45,25 @@ public class ProduitsController {
     return produitsService.supprimerProduit(id);
   }
 
+  @GetMapping("/top-vendus")
+  public List<TopVenduDTO> getTopVendus() {
+    return produitsService.getTopVendus();
+  }
+  //Entre
+  @GetMapping("/top-entrees")
+  public List<TopEntreeDTO> getTopEntrees() {
+    return produitsService.getTopEntrees();
+  }
+  //Nombre de produits d'une entreprot
+  @GetMapping("/nombreProduits/{entrepotId}")
+  public ResponseEntity<Long> countProductsByEntrepotId(@PathVariable Long entrepotId) {
+  long count = produitsService.countProductsByEntrepotId(entrepotId);
+  return ResponseEntity.ok(count);
+  }
+  //Liste des produits d'une Entrepots
+  @GetMapping("/'listProduits'/{entrepotId}")
+  public ResponseEntity<List<Produits>> findProductsByEntrepotId(@PathVariable Long entrepotId) {
+    List<Produits> produits = produitsService.findProductsByEntrepotId(entrepotId);
+    return ResponseEntity.ok(produits);
+  }
 }

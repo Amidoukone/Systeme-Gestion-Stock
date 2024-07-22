@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,9 +27,11 @@ public class Utilisateur implements UserDetails {
 
   private String nom;
   private String contact;
+  @Email
   private String email;
   private String password;
   private boolean actif=true;
+  private Long createdBy;
 
   @ManyToOne
   @JoinColumn(name = "role_id")
@@ -36,7 +39,7 @@ public class Utilisateur implements UserDetails {
 
   @ManyToOne
   @JoinColumn(name = "entrepot_id")
-  private Entrepots entrepots;
+  private Entrepots entrepot;
 
   @ManyToOne
   @JoinColumn(name = "notification_id")
@@ -44,8 +47,9 @@ public class Utilisateur implements UserDetails {
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    return Collections.singleton(new SimpleGrantedAuthority("ROLE_" + role.getNom()));
+    return Collections.singleton(new SimpleGrantedAuthority("ROLE_" + role.getTypeRole()));
   }
+
 
   @Override
   public String getUsername() {

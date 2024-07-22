@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -12,17 +13,24 @@ import java.util.List;
 public class Entrepots {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long Id;
+  private Long id;
 
   private String nom;
 
-  private String lieu;
+  private String adresse;
+  private String logo;
+  @Temporal(TemporalType.DATE)
+  @Column(name = "dateCreate", nullable = false, updatable = false)
+  private Date dateCreate = new Date();
+  @Temporal(TemporalType.DATE)
+  private Date debutAbonnement;
+  @Temporal(TemporalType.DATE)
+  private Date finAbonnement;
+  private Long createBy;
 
-  private String statut;
-
-  @OneToMany
+  @OneToMany(mappedBy = "entrepot", cascade = CascadeType.ALL)
   private List<Utilisateur> utilisateurs;
 
-  @OneToMany
+  @OneToMany()
   private List<Produits> produits;
 }

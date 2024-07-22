@@ -13,30 +13,34 @@ import java.util.Optional;
 public class MotifController {
 @Autowired
 private MotifService motifService;
-  //Motif
-  //Create Motif
-  @PostMapping("motif/create")
+  @PostMapping("/create")
   public Motif createMotif(@RequestBody Motif motif){
     return motifService.createMotif(motif);
   }
-  //get by Id
-  @GetMapping("motif/id")
+  @GetMapping("/id")
   public Optional<Motif> getMotifById(int id){
     return motifService.getMotifById(id);
   }
   //List des motifs
-  @PostMapping("motif/list")
+  @PostMapping("/list")
   public List<Motif> listMotif(){
     return motifService.getAllMotifs();
   }
   //modifier Motif
-  @PutMapping("motif/update/{id}")
+  @PutMapping("/update/{id}")
   public Motif updateMotif(@PathVariable int id, @RequestBody Motif motif){
     return motifService.updateMotif(motif,id);
   }
   //Supprimer motif
-  @DeleteMapping("motif/delete/{id}")
+  @DeleteMapping("/delete/{id}")
   public void deleteMotif(@PathVariable int id){
     motifService.deleteMotif(id);
   }
+
+  //Nombre de Motif
+  @GetMapping("/motifNombre")
+  public int getMotifNombre() {
+    return motifService.getNombreMotif();
+  }
+
 }
