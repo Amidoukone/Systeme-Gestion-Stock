@@ -1,7 +1,9 @@
-<app-navbar (sidebarToggle)="sidebar.toggleSidebar()"></app-navbar>
-<div class="d-flex flex-column" id="main-wrapper">
-  <app-sidebar #sidebar [isExpanded]="true"></app-sidebar>
-  <div class="main-content flex-grow-1">
+<app-navbar *ngIf="authService.currentUserValue" (sidebarToggle)="sidebar?.toggleSidebar()"></app-navbar>
+<div class="row me-0" id="main-wrapper">
+  <div class="col-lg-3">
+    <app-sidebar #sidebar [isExpanded]="true" *ngIf="authService.currentUserValue"></app-sidebar>
+  </div>
+  <div class="col-lg-8">
     <router-outlet></router-outlet>
   </div>
 </div>

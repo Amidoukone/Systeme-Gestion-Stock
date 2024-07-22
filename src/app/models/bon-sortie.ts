@@ -1,6 +1,10 @@
+import {DetailSortie} from "./detail-sortie";
+import {Utilisateur} from "./utilisateur";
+
 export interface BonSortie {
-  bon_sortie_id: number;
+  id: number;
   motif: string;
   date_sortie: Date;
-  utilisateur_id: number;
+  utilisateur: Utilisateur;
+  detailsSorties: DetailSortie[];
 }

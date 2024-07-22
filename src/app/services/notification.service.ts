@@ -9,14 +9,18 @@ import { Notification } from '../models/notification';
 export class NotificationService {
   private apiUrl = 'http://localhost:8080/api/notifications';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getNotifications(): Observable<Notification[]> {
     return this.http.get<Notification[]>(this.apiUrl);
   }
 
-  markAsRead(notificationId: number): Observable<void> {
-    return this.http.put<void>(`${this.apiUrl}/${notificationId}/mark-as-read`, {});
+  getUnreadNotifications(): Observable<Notification[]> {
+    return this.http.get<Notification[]>(`${this.apiUrl}/unread`);
+  }
+
+  markAsRead(id: number): Observable<void> {
+    return this.http.patch<void>(`${this.apiUrl}/${id}/read`, {});
   }
 
   getNotificationById(id: number): Observable<Notification> {

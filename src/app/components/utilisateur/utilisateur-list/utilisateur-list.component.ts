@@ -25,7 +25,9 @@ export class UtilisateurListComponent implements OnInit {
 
   ngOnInit(): void {
     this.utilisateurService.getUtilisateurs().subscribe(data => {
+
       this.utilisateurs = data;
+      console.log('Utilisateurs loaded:', data);
       this.filteredUtilisateurs = data;
       console.log('Utilisateurs loaded:', this.utilisateurs);
     });

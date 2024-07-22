@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NotificationService } from '../../services/notification.service';
 import { Notification } from '../../models/notification';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -17,15 +18,16 @@ export class NavbarComponent implements OnInit {
   @Output() sidebarToggle = new EventEmitter<void>();
   notifications: Notification[] = [];
   showNotifications: boolean = false;
+  showProfile: boolean = false;
 
-  constructor(private notificationService: NotificationService) {}
+  constructor(private notificationService: NotificationService, public authService: AuthService) {}
 
   ngOnInit(): void {
-    this.loadNotifications();
+    this.loadUnreadNotifications();
   }
 
-  loadNotifications(): void {
-    this.notificationService.getNotifications().subscribe(notifications => {
+  loadUnreadNotifications(): void {
+    this.notificationService.getUnreadNotifications().subscribe(notifications => {
       this.notifications = notifications;
     });
   }
@@ -34,24 +36,36 @@ export class NavbarComponent implements OnInit {
     this.showNotifications = !this.showNotifications;
   }
 
+  toggleProfile(): void {
+    this.showProfile = !this.showProfile;
+  }
+
   markAsRead(notification: Notification): void {
     if (!notification.read) {
       this.notificationService.markAsRead(notification.id).subscribe(() => {
         notification.read = true;
-        this.loadNotifications(); // Refresh notifications
+        this.loadUnreadNotifications(); // Refresh notifications
       });
     }
   }
 
   getUnreadCount(): number {
-    return this.notifications.filter(notification => !notification.read).length;
+    return this.notifications.length;
   }
 
   toggleSidebar(): void {
     this.sidebarToggle.emit();
   }
 
+  get currentUser() {
+    return this.authService.currentUserValue;
+  }
+
   logout(): void {
-    this.sidebarToggle.emit();
+    this.authService.logout();
+  }
+
+  hasRole(role: string): boolean {
+    return this.authService.hasRole(role);
   }
 }

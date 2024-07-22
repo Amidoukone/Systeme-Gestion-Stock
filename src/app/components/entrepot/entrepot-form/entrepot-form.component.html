@@ -16,7 +16,10 @@
           </div>
           <div class="mb-3">
             <label for="statut" class="form-label">Statut</label>
-            <input type="text" class="form-control" id="statut" name="statut" [(ngModel)]="entrepot.statut" required>
+            <select class="form-control" id="statut" name="statut" [(ngModel)]="entrepot.statut" required>
+              <option value="Active">Active</option>
+              <option value="Bloquer">Bloquer</option>
+            </select>
           </div>
         </div>
         <div class="d-grid">

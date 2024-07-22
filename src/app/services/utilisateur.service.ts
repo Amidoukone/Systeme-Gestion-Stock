@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import { Utilisateur } from '../models/utilisateur';
+import {observableToBeFn} from "rxjs/internal/testing/TestScheduler";
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +12,8 @@ export class UtilisateurService {
 
   constructor(private http: HttpClient) { }
 
-  getUtilisateurs(): Observable<Utilisateur[]> {
-    return this.http.get<Utilisateur[]>(`${this.baseUrl}`);
+  getUtilisateurs(): Observable<any> {
+    return this.http.get<any>(this.baseUrl);
   }
 
   getUtilisateurById(id: number): Observable<Utilisateur> {

@@ -1,7 +1,7 @@
 export interface Notification {
   id: number;
   contenu: string;
-  dateNotif: string;
+  dateNotif: Date;
   read: boolean;
   utilisateur: {
     id: number;
