@@ -5,8 +5,10 @@ import com.groupe_4_ODK.RoyaleStock.service.UtilisateurService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -35,6 +37,7 @@ public class SecurityConfig {
     return args -> utilisateurService.createDefaultAdmin();
   }
 
+
   //script pour poser un filter sur mes endpointes
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -58,6 +61,12 @@ public class SecurityConfig {
     daoAuthenticationProvider.setUserDetailsService(userDetailsService);
     daoAuthenticationProvider.setPasswordEncoder(bCryptPasswordEncoder);
     return daoAuthenticationProvider;
+  }
+
+  //pour permettre l'accès aux endpoints d'authentification
+  @Bean
+  public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
+    return http.getSharedObject(AuthenticationManagerBuilder.class).build();
   }
 
 

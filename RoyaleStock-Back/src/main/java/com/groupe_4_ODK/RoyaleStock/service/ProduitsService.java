@@ -50,8 +50,7 @@ public class ProduitsService {
   }
 
 public Produits produits(String nom) {
-    return produitsRepository.findById(nom)
-      .orElseThrow(() -> new RuntimeException("Produit non trouvée !"));
+    return produitsRepository.findByNom(nom);
  }
 
   public Produits modifierProduits(Long id, Produits produits) {
