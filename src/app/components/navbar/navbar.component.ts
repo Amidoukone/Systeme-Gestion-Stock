@@ -27,9 +27,9 @@ export class NavbarComponent implements OnInit {
   }
 
   loadUnreadNotifications(): void {
-    this.notificationService.getUnreadNotifications().subscribe(notifications => {
-      this.notifications = notifications;
-    });
+    // this.notificationService.getUnreadNotifications().subscribe(notifications => {
+    //   this.notifications = notifications;
+    // });
   }
 
   toggleNotifications(): void {
@@ -41,12 +41,12 @@ export class NavbarComponent implements OnInit {
   }
 
   markAsRead(notification: Notification): void {
-    if (!notification.read) {
-      this.notificationService.markAsRead(notification.id).subscribe(() => {
-        notification.read = true;
-        this.loadUnreadNotifications(); // Refresh notifications
-      });
-    }
+    // if (!notification.read) {
+    //   this.notificationService.markAsRead(notification.id).subscribe(() => {
+    //     notification.read = true;
+    //     this.loadUnreadNotifications(); // Refresh notifications
+    //   });
+    // }
   }
 
   getUnreadCount(): number {

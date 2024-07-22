@@ -7,28 +7,28 @@
       <a href="/dashboard" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
         <i class="fas fa-tachometer-alt me-2"></i> Dashboard
       </a>
-      <a *ngIf="hasRole('ADMIN') || hasRole('MANAGER')" href="/bon-entree" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+      <a *ngIf="hasRole('Admin') || hasRole('Manager')" href="/bon-entree" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
         <i class="fas fa-boxes me-2"></i> Bons d'Entrée
       </a>
-      <a *ngIf="hasRole('ADMIN') || hasRole('MANAGER')" href="/bon-sortie" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+      <a *ngIf="hasRole('Admin') || hasRole('Manager')" href="/bon-sortie" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
         <i class="fas fa-box-open me-2"></i> Bons de Sortie
       </a>
-      <a *ngIf="hasRole('ADMIN') || hasRole('MANAGER')" href="/categories" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+      <a *ngIf="hasRole('Admin') || hasRole('Manager')" href="/categories" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
         <i class="fas fa-tags me-2"></i> Catégories
       </a>
-      <a *ngIf="hasRole('ADMIN')" href="/entrepots" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+      <a *ngIf="hasRole('Admin')" href="/entrepots" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
         <i class="fas fa-warehouse me-2"></i> Entrepôts
       </a>
-      <a *ngIf="hasRole('ADMIN') || hasRole('MANAGER')" href="/fournisseurs" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+      <a *ngIf="hasRole('Admin') || hasRole('Manager')" href="/fournisseurs" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
         <i class="fas fa-truck me-2"></i> Fournisseurs
       </a>
-      <a *ngIf="hasRole('ADMIN') || hasRole('MANAGER') || hasRole('VENDEUR')" href="/produits" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+      <a *ngIf="hasRole('Admin') || hasRole('Manager') || hasRole('VENDEUR')" href="/produits" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
         <i class="fas fa-box me-2"></i> Produits
       </a>
-      <a *ngIf="hasRole('ADMIN')" href="/roles" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+      <a *ngIf="hasRole('Admin')" href="/roles" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
         <i class="fas fa-shield-alt me-2"></i> Rôles
       </a>
-      <a *ngIf="hasRole('ADMIN')" href="/utilisateurs" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+      <a *ngIf="hasRole('Admin')" href="/utilisateurs" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
         <i class="fas fa-users me-2"></i> Utilisateurs
       </a>
       <a *ngIf="currentUser" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">

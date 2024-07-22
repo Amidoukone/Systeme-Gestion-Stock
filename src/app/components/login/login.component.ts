@@ -15,6 +15,7 @@ export class LoginComponent implements  OnInit{
   email: string = '';
   password: string = '';
   isConnected: boolean = false;
+  errorMessage: string = '';
 
   constructor(public authService: AuthService, private router: Router) {}
 
@@ -30,7 +31,9 @@ export class LoginComponent implements  OnInit{
       },
       error => {
         console.error('Login failed', error);
+        this.errorMessage = 'Login failed: ' + error.error;
       }
     );
   }
+ 
 }

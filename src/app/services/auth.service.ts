@@ -9,10 +9,15 @@ import { catchError, map } from 'rxjs/operators';
 })
 export class AuthService {
 
-  private apiUrl = 'http://localhost:8080/api/utilisateurs';
+  private apiUrl = 'http://localhost:8080/auth/connexion';
   private currentUserSubject: BehaviorSubject<any>;
   public currentUser: Observable<any>;
 
+  // constructor(private http: HttpClient, private router: Router) {
+  //   const storedUser = this.isBrowser() ? localStorage.getItem('currentUser') : null;
+  //   this.currentUserSubject = new BehaviorSubject<any>(storedUser ? JSON.parse(storedUser) : null);
+  //   this.currentUser = this.currentUserSubject.asObservable();
+  // }
   constructor(private http: HttpClient, private router: Router) {
     const storedUser = this.isBrowser() ? localStorage.getItem('currentUser') : null;
     this.currentUserSubject = new BehaviorSubject<any>(storedUser ? JSON.parse(storedUser) : null);
@@ -27,15 +32,15 @@ export class AuthService {
     return this.currentUserSubject.value;
   }
 
-  login(email: string, password: string) {
-    return this.http.post<any>(`${this.apiUrl}/login`, { email, password })
+  login(email: string, password: string): Observable<any> {
+    return this.http.post(this.apiUrl, { email, password }, { responseType: 'text' as 'json' })
       .pipe(
-        map(user => {
-          if (user && user.token && this.isBrowser()) {
-            localStorage.setItem('currentUser', JSON.stringify(user));
-            this.currentUserSubject.next(user);
+        map(response => {
+          if (response && this.isBrowser()) {
+            localStorage.setItem('currentUser', JSON.stringify(response));
+            this.currentUserSubject.next(response);
           }
-          return user;
+          return response;
         }),
         catchError(this.handleError)
       );

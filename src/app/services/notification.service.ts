@@ -6,36 +6,38 @@ import { Notification } from '../models/notification';
 @Injectable({
   providedIn: 'root'
 })
-export class NotificationService {
-  private apiUrl = 'http://localhost:8080/api/notifications';
+export class NotificationService { 
+  // private apiUrl = 'http://localhost:8080/api/notifications';
 
-  constructor(private http: HttpClient) {}
+  // constructor(private http: HttpClient) {}
 
-  getNotifications(): Observable<Notification[]> {
-    return this.http.get<Notification[]>(this.apiUrl);
-  }
+  // getNotifications(): Observable<Notification[]> {
+  //   return this.http.get<Notification[]>(this.apiUrl);
+  // }
 
-  getUnreadNotifications(): Observable<Notification[]> {
-    return this.http.get<Notification[]>(`${this.apiUrl}/unread`);
-  }
+  // getUnreadNotifications(): Observable<Notification[]> {
+  //   return this.http.get<Notification[]>(`${this.apiUrl}`);
+  //   return this.http.get<Notification[]>(`${this.apiUrl}/unread`);
+  // }
 
-  markAsRead(id: number): Observable<void> {
-    return this.http.patch<void>(`${this.apiUrl}/${id}/read`, {});
-  }
+  // markAsRead(id: number): Observable<void> {
+  //   return this.http.patch<void>(`${this.apiUrl}`, {});
+  //   return this.http.patch<void>(`${this.apiUrl}/${id}/read`, {});
+  // }
 
-  getNotificationById(id: number): Observable<Notification> {
-    return this.http.get<Notification>(`${this.apiUrl}/${id}`);
-  }
+  // getNotificationById(id: number): Observable<Notification> {
+  //   return this.http.get<Notification>(`${this.apiUrl}/${id}`);
+  // }
 
-  createNotification(notification: Notification): Observable<Notification> {
-    return this.http.post<Notification>(this.apiUrl, notification);
-  }
+  // createNotification(notification: Notification): Observable<Notification> {
+  //   return this.http.post<Notification>(this.apiUrl, notification);
+  // }
 
-  updateNotification(id: number, notification: Notification): Observable<Notification> {
-    return this.http.put<Notification>(`${this.apiUrl}/${id}`, notification);
-  }
+  // updateNotification(id: number, notification: Notification): Observable<Notification> {
+  //   return this.http.put<Notification>(`${this.apiUrl}/${id}`, notification);
+  // }
 
-  deleteNotification(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
-  }
+  // deleteNotification(id: number): Observable<void> {
+  //   return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  // }
 }
