@@ -13,11 +13,6 @@ export class AuthService {
   private currentUserSubject: BehaviorSubject<any>;
   public currentUser: Observable<any>;
 
-  // constructor(private http: HttpClient, private router: Router) {
-  //   const storedUser = this.isBrowser() ? localStorage.getItem('currentUser') : null;
-  //   this.currentUserSubject = new BehaviorSubject<any>(storedUser ? JSON.parse(storedUser) : null);
-  //   this.currentUser = this.currentUserSubject.asObservable();
-  // }
   constructor(private http: HttpClient, private router: Router) {
     const storedUser = this.isBrowser() ? localStorage.getItem('currentUser') : null;
     this.currentUserSubject = new BehaviorSubject<any>(storedUser ? JSON.parse(storedUser) : null);
@@ -33,7 +28,8 @@ export class AuthService {
   }
 
   login(email: string, password: string): Observable<any> {
-    return this.http.post(this.apiUrl, { email, password }, { responseType: 'text' as 'json' })
+    return this.http.post(this.apiUrl, { email, password })
+    // return this.http.post(this.apiUrl, { email, password }, { responseType: 'text' as 'json' })
       .pipe(
         map(response => {
           if (response && this.isBrowser()) {
@@ -56,17 +52,20 @@ export class AuthService {
 
   private handleError(error: HttpErrorResponse) {
     let errorMessage = 'An unknown error occurred!';
-    if (error.error instanceof ErrorEvent) {
-      // Client-side errors
+    if (error.error instanceof ErrorEvent) { 
       errorMessage = `Error: ${error.error.message}`;
-    } else {
-      // Server-side errors
+    } else { 
       errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
     }
     return throwError(errorMessage);
   }
 
   hasRole(role: string): boolean {
-    return this.currentUserValue && this.currentUserValue.role && this.currentUserValue.role === role;
+    return this.currentUserValue && this.currentUserValue.roles && this.currentUserValue.roles.includes(role);
   }
+
+  // hasRole(role: string): boolean {
+  //   return this.currentUserValue && this.currentUserValue.role && this.currentUserValue.role === role;
+  // }
+
 }

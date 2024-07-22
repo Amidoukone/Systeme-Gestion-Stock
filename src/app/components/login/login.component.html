@@ -1,5 +1,8 @@
-<div *ngIf="!isConnected" class="d-flex align-items-center justify-content-center vh-100">
-  <div class="w-100" style="max-width: 300px;">
+
+
+
+<!-- <div *ngIf="!isConnected" class="d-flex align-items-center justify-content-center vh-100">
+  <div class="w-100" style="max-width: 300px;"> 
     <form class="bg-white shadow-sm rounded p-4 mb-4" (ngSubmit)="login()">
       <div class="mb-3">
         <label for="email" class="form-label text-dark fw-bold">Email</label>
@@ -16,41 +19,70 @@
       </div>
     </form>
   </div>
-</div>  
-
-<!-- <div class="container">
-  <div class="login-form">
-    <h2>Se Connecter</h2> 
-    <form (ngSubmit)="onSubmit()">
-      <div class="input-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" formControlName="email" placeholder="exemple@gmail.com" required>
-        <div *ngIf="loginForm.get('email')?.invalid && (loginForm.get('email')?.dirty || loginForm.get('email')?.touched)">
-          <div *ngIf="loginForm.get('email')?.errors?.['required']">
-            L'email est requis.
-          </div>
-          <div *ngIf="loginForm.get('email')?.errors?.['email']">
-            entre un email valide.
-          </div>
-        </div> -   
-      </div>
-      <div class="input-group">
-        <label for="password">Mot de passe</label>
-        <input id="password" formControlName="password" placeholder="Entrer votre mot de passe" required>
-         <span class="toggle-password" (click)="togglePasswordVisibility()">&#128065;</span> 
-          <div *ngIf="loginForm.get('password')?.invalid && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)">
-          <div *ngIf="loginForm.get('password')?.errors?.['required']">
-            Le mot de passe est requis.
-          </div> 
-        </div>  
-      </div>
-      <button type="submit">Se Connecter</button>
-    </form>
-  </div>
   <div class="info-section">
-    <img src="../assets/logo.png" type="image/x-icon" alt="Royale Stock Logo"> 
+    <img src="assets/logo.png" alt="Royale Stock Logo">
     <h3>Royale Stock</h3>
     <p>Le meilleur système pour faciliter votre gestion de stocks</p>
   </div>
-</div> 
- -->
+</div>   -->
+
+<div *ngIf="!isConnected" class="container-fluid vh-100 d-flex align-items-center justify-content-center">
+  <div class="row w-100">
+    <div class="col-lg-6 d-flex justify-content-center align-items-center">
+      <div class="w-75">
+        <h2 class="text-center mb-4">Se Connecter</h2>
+        <form class="bg-white shadow-sm rounded p-4 mb-4" (ngSubmit)="login()">
+          <div class="mb-3">
+            <label for="email" class="form-label text-dark fw-bold">Email</label>
+            <input type="email" class="form-control form-control-lg" [(ngModel)]="email" name="email" required>
+          </div>
+          <div class="mb-4">
+            <label for="password" class="form-label text-dark fw-bold">Mot de passe</label>
+            <input type="password" class="form-control form-control-lg" [(ngModel)]="password" name="password" required>
+          </div>
+          <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+            {{ errorMessage }}
+          </div>
+          <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-primary w-100 btn-lg">Se Connecter</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="col-lg-6 d-none d-lg-flex flex-column justify-content-center align-items-center bg-primary text-white">
+      <img src="assets/logo.png" class="mb-4" alt="Royale Stock Logo" style="width: 150px;">
+      <h3>Royale Stock</h3>
+      <p>Le meilleur système pour faciliter votre gestion de stocks</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- <div *ngIf="!isConnected" class="container-fluid vh-100 d-flex">
+  <div class="row w-100 align-items-center justify-content-center">
+    <div class="col-lg-6 d-flex justify-content-center">
+      <div class="w-75">
+        <h2 class="text-center mb-4">Se Connecter</h2>
+        <form class="bg-white shadow-sm rounded p-4 mb-4" (ngSubmit)="login()">
+          <div class="mb-3">
+            <label for="email" class="form-label text-dark fw-bold">Email</label>
+            <input type="email" class="form-control" [(ngModel)]="email" name="email" required>
+          </div>
+          <div class="mb-4">
+            <label for="password" class="form-label text-dark fw-bold">Mot de passe</label>
+            <input type="password" class="form-control" [(ngModel)]="password" name="password" required>
+          </div>
+          <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-primary w-100">Se Connecter</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="col-lg-6 d-none d-lg-flex flex-column justify-content-center align-items-center bg-primary text-white">
+      <img src="assets/logo.png" class="mb-4" alt="Royale Stock Logo" style="width: 150px;">
+      <h3>Royale Stock</h3>
+      <p>Le meilleur système pour faciliter votre gestion de stocks</p>
+    </div>
+  </div>
+</div> -->
+

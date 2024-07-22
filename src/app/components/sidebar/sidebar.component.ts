@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Router, RouterOutlet} from '@angular/router';
 import { CommonModule } from '@angular/common';
 import {AuthService} from "../../services/auth.service";
@@ -10,12 +10,15 @@ import {AuthService} from "../../services/auth.service";
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css'
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnInit {
 
   @Input() isExpanded = true;
   currentUser: any;
 
-  constructor(public authService: AuthService) {
+  constructor(public authService: AuthService) {}
+
+  
+  ngOnInit() {
     this.currentUser = this.authService.currentUserValue;
   }
 
