@@ -1,0 +1,40 @@
+<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+  <div class="container-fluid">
+    <button class="btn btn-link d-md-none rounded-circle mr-3" type="button" (click)="toggleSidebar()">
+      <i class="fas fa-bars"></i>
+    </button>
+    <a class="navbar-brand text-primary" href="#">Dashboard</a>
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav ms-auto">
+        <!-- Nav Item - Alerts -->
+        <li class="nav-item dropdown no-arrow mx-1">
+          <button class="nav-link dropdown-toggle text-primary" (click)="toggleNotifications()">
+            <i class="fas fa-bell"></i>
+            <span *ngIf="getUnreadCount() > 0" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+              {{ getUnreadCount() }}
+            </span>
+          </button>
+          <!-- Dropdown - Alerts -->
+          <ul *ngIf="showNotifications" class="dropdown-list dropdown-menu-right shadow animated--grow-in">
+            <li class="dropdown-header">Notificatons</li>
+            <li *ngFor="let notification of notifications" class="dropdown-item d-flex align-items-center" [ngClass]="{'text-muted': notification.read}">
+              <div class="small text-gray-500">{{ notification.dateNotif | date }}</div>
+              <span (click)="markAsRead(notification)">{{ notification.contenu }}</span>
+            </li>
+          </ul>
+        </li>
+        <!-- Nav Item - User Information -->
+        <li class="nav-item dropdown no-arrow">
+          <a class="nav-link dropdown-toggle text-primary" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fas fa-user-circle"></i> Profil
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="/user-profile"><i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> Mon Profil</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i> Déconnexion</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

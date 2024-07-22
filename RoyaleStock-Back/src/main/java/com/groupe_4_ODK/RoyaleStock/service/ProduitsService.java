@@ -30,10 +30,10 @@ public class ProduitsService {
       .orElseThrow(() -> new RuntimeException("Produit non trouvée !"));
   }
 
-  public Produits produits(String nom) {
-    return produitsRepository.findById(nom)
-      .orElseThrow(() -> new RuntimeException("Produit non trouvée !"));
-  }
+  //public Produits produits(String nom) {
+    //return produitsRepository.findById(nom)
+      //.orElseThrow(() -> new RuntimeException("Produit non trouvée !"));
+ // }
 
   public Produits modifierProduits(Long id, Produits produits) {
     return produitsRepository.findById(id)

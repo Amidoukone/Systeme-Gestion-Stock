@@ -1,0 +1,25 @@
+<div class="container mt-5">
+  <h1 class="h2 mb-4">Liste des Catégories</h1>
+  <button class="btn btn-primary mb-3" (click)="addCategorie()">Ajouter Catégorie</button>
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>#</th>
+        <th>Nom</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let categorie of categories; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ categorie.name }}</td>
+        <td>
+          <button class="btn btn-secondary btn-sm" (click)="editCategorie(categorie.id)">Modifier</button>
+          <button class="btn btn-danger btn-sm" (click)="deleteCategorie(categorie.id)">Supprimer</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
