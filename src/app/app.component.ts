@@ -15,11 +15,11 @@ import {SidebarComponent} from "./components/sidebar/sidebar.component";
 export class AppComponent {
   title = 'Test-Angular';
 
-  @ViewChild('sidebar') sidebar: SidebarComponent | null = null;
+  // @ViewChild('sidebar') sidebar: SidebarComponent | null = null;
 
-  toggleSidebar() {
-    if (this.sidebar) {
-      this.sidebar.toggleSidebar();
-    }
-  }
+  // toggleSidebar() {
+  //   if (this.sidebar) {
+  //     this.sidebar.toggleSidebar();
+  //   }
+  // }
 }

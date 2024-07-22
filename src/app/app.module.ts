@@ -1,8 +1,10 @@
 import { NgModule } from '@angular/core';
+import { bootstrapApplication } from '@angular/platform-browser';
+import { importProvidersFrom } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
-import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http'; 
 import { CommonModule } from '@angular/common';
 
 import { AppComponent } from './app.component';
@@ -12,6 +14,9 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { LoginComponent } from './components/login/login.component';
+
+//Authentification pas touch
+import { AuthComponent } from './auth/auth.component';
 
 // Bon Entree
 import { BonEntreeListComponent } from './components/bon-entree/bon-entree-list/bon-entree-list.component';
@@ -46,53 +51,62 @@ import { ProduitService } from './services/produit.service';
 import { RoleService } from './services/role.service';
 import { UtilisateurService } from './services/utilisateur.service';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import { RestApiService } from './services/rest-api.service';
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    DashboardComponent,
-    NavbarComponent,
-    SidebarComponent,
-    FooterComponent,
-    HeaderComponent,
-    LoginComponent,
-    BonEntreeListComponent,
-    BonEntreeFormComponent,
-    BonEntreePrintComponent,
-    BonSortieListComponent,
-    BonSortieFormComponent,
-    BonSortiePrintComponent,
-    CategorieListComponent,
-    CategorieFormComponent,
-    EntrepotListComponent,
-    EntrepotFormComponent,
-    FournisseurListComponent,
-    FournisseurFormComponent,
-    ProduitListComponent,
-    ProduitFormComponent,
-    RoleListComponent,
-    RoleFormComponent,
-    UtilisateurListComponent,
-    UtilisateurFormComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    FormsModule,
-    CommonModule,
-    BrowserAnimationsModule,
-  ],
+// @NgModule({
+//   declarations: [ 
+//     AuthComponent,
+//     DashboardComponent,
+//     NavbarComponent,
+//     SidebarComponent,
+//     FooterComponent,
+//     HeaderComponent,
+//     LoginComponent,
+//     BonEntreeListComponent,
+//     BonEntreeFormComponent,
+//     BonEntreePrintComponent,
+//     BonSortieListComponent,
+//     BonSortieFormComponent,
+//     BonSortiePrintComponent,
+//     CategorieListComponent,
+//     CategorieFormComponent,
+//     EntrepotListComponent,
+//     EntrepotFormComponent,
+//     FournisseurListComponent,
+//     FournisseurFormComponent,
+//     ProduitListComponent,
+//     ProduitFormComponent,
+//     RoleListComponent,
+//     RoleFormComponent,
+//     UtilisateurListComponent,
+//     UtilisateurFormComponent
+//   ],
+//   imports: [
+//     BrowserModule,
+//     AppRoutingModule,
+//     HttpClientModule,
+//     FormsModule,
+//     ReactiveFormsModule,
+//     CommonModule,
+//     BrowserAnimationsModule,
+//     AppComponent 
+//   ],
+//   providers: [],
+//   bootstrap: [AppComponent]
+// })
+// export class AppModule { }
+
+bootstrapApplication(AppComponent, {
   providers: [
-    BonEntreeService,
-    BonSortieService,
-    CategorieService,
-    EntrepotService,
-    FournisseurService,
-    ProduitService,
-    RoleService,
-    UtilisateurService
-  ],
-  bootstrap: [AppComponent]
-})
-export class AppModule { }
+    importProvidersFrom(
+      BrowserModule,
+      AppRoutingModule,
+      HttpClientModule,
+      FormsModule,
+      ReactiveFormsModule,
+      CommonModule,
+      BrowserAnimationsModule
+    )
+  ]
+});
+

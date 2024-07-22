@@ -1,4 +1,4 @@
-<div class="d-flex ">
+<!-- <div class="d-flex ">
   <div class="border-end bg-white col-2 navbar-light bg-white topbar mb-4 static-top shadow" id="sidebar-wrapper" [ngClass]="{'toggled': !isExpanded}">
     <div class="sidebar-heading text-center py-4 primary-text fs-4 fw-bold text-uppercase border-bottom">
       <i class="fas fa-user-secret me-2"></i> Gestion de Stock
@@ -39,4 +39,46 @@
       <router-outlet></router-outlet>
     </div>
   </div>
+</div> -->
+<div class="main-container">
+  <div class="sidebar" id="sidebar-wrapper">
+    <div class="sidebar-heading">
+      <img src="assets/Logo.png" alt="Logo" class="logo">
+    </div>
+    <div class="menu">
+      <a href="/dashboard" class="menu-item">
+        <i class="fas fa-tachometer-alt"></i> Dashboard
+      </a>
+      <a href="/utilisateurs" class="menu-item">
+        <i class="fas fa-users"></i> Utilisateurs
+      </a>
+      <a href="/produits" class="menu-item">
+        <i class="fas fa-box"></i> Produits
+      </a>
+      <a href="/fournisseurs" class="menu-item">
+        <i class="fas fa-truck"></i> Fournisseurs
+      </a>
+      <a href="/bon-entree" class="menu-item">
+        <i class="fas fa-boxes"></i> Bon d'entrées
+      </a>
+      <a href="/bon-sortie" class="menu-item">
+        <i class="fas fa-box-open"></i> Bon de Sorties
+      </a>
+      <a href="/etat-stocks" class="menu-item">
+        <i class="fas fa-chart-line"></i> Etat de Stocks
+      </a>
+      <a href="/rapport-stocks" class="menu-item">
+        <i class="fas fa-file-alt"></i> Rapport de Stocks
+      </a>
+      <a href="/logout" class="menu-item logout">
+        <i class="fas fa-sign-out-alt"></i> Se déconnecter
+      </a>
+    </div>
+  </div>
+  <div class="content" id="page-content-wrapper">
+    <div class="container-fluid">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
 </div>
+

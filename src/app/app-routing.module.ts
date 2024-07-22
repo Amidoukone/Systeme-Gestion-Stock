@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthComponent } from './auth/auth.component';
+import { AuthGuard } from './auth/auth.guard';
 
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { BonEntreeListComponent } from './components/bon-entree/bon-entree-list/bon-entree-list.component';
@@ -23,33 +25,35 @@ import { UtilisateurFormComponent } from './components/utilisateur/utilisateur-f
 import { LoginComponent } from './components/login/login.component';
 
 const routes: Routes = [
-  { path: '', component: DashboardComponent },
-  { path: 'bon-entree', component: BonEntreeListComponent },
-  { path: 'add-bon-entree', component: BonEntreeFormComponent },
-  { path: 'edit-bon-entree/:id', component: BonEntreeFormComponent },
-  { path: 'print-bon-entree/:id', component: BonEntreePrintComponent },
-  { path: 'bon-sortie', component: BonSortieListComponent },
-  { path: 'bon-sortie/add', component: BonSortieFormComponent },
-  { path: 'bon-sortie/print/:id', component: BonSortiePrintComponent },
-  { path: 'categories', component: CategorieListComponent },
-  { path: 'add-categorie', component: CategorieFormComponent },
-  { path: 'edit-categorie/:id', component: CategorieFormComponent },
-  { path: 'entrepots', component: EntrepotListComponent },
-  { path: 'add-entrepot', component: EntrepotFormComponent },
-  { path: 'edit-entrepot/:id', component: EntrepotFormComponent },
-  { path: 'fournisseurs', component: FournisseurListComponent },
-  { path: 'add-fournisseur', component: FournisseurFormComponent },
-  { path: 'edit-fournisseur/:id', component: FournisseurFormComponent },
-  { path: 'produits', component: ProduitListComponent },
-  { path: 'add-produit', component: ProduitFormComponent },
-  { path: 'edit-produit/:id', component: ProduitFormComponent },
-  { path: 'roles', component: RoleListComponent },
-  { path: 'add-role', component: RoleFormComponent },
-  { path: 'edit-role/:id', component: RoleFormComponent },
-  { path: 'utilisateurs', component: UtilisateurListComponent },
-  { path: 'add-utilisateur', component: UtilisateurFormComponent },
-  { path: 'edit-utilisateur/:id', component: UtilisateurFormComponent },
-  { path: 'login', component: LoginComponent }
+  { path: 'auth', component: AuthComponent },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+  { path: 'bon-entree', component: BonEntreeListComponent, canActivate: [AuthGuard] },
+  { path: 'add-bon-entree', component: BonEntreeFormComponent, canActivate: [AuthGuard] },
+  { path: 'edit-bon-entree/:id', component: BonEntreeFormComponent, canActivate: [AuthGuard] },
+  { path: 'print-bon-entree/:id', component: BonEntreePrintComponent, canActivate: [AuthGuard] },
+  { path: 'bon-sortie', component: BonSortieListComponent, canActivate: [AuthGuard] },
+  { path: 'bon-sortie/add', component: BonSortieFormComponent, canActivate: [AuthGuard] },
+  { path: 'bon-sortie/print/:id', component: BonSortiePrintComponent, canActivate: [AuthGuard] },
+  { path: 'categories', component: CategorieListComponent, canActivate: [AuthGuard] },
+  { path: 'add-categorie', component: CategorieFormComponent, canActivate: [AuthGuard] },
+  { path: 'edit-categorie/:id', component: CategorieFormComponent, canActivate: [AuthGuard] },
+  { path: 'entrepots', component: EntrepotListComponent, canActivate: [AuthGuard] },
+  { path: 'add-entrepot', component: EntrepotFormComponent, canActivate: [AuthGuard] },
+  { path: 'edit-entrepot/:id', component: EntrepotFormComponent, canActivate: [AuthGuard] },
+  { path: 'fournisseurs', component: FournisseurListComponent, canActivate: [AuthGuard] },
+  { path: 'add-fournisseur', component: FournisseurFormComponent, canActivate: [AuthGuard] },
+  { path: 'edit-fournisseur/:id', component: FournisseurFormComponent, canActivate: [AuthGuard] },
+  { path: 'produits', component: ProduitListComponent, canActivate: [AuthGuard] },
+  { path: 'add-produit', component: ProduitFormComponent, canActivate: [AuthGuard] },
+  { path: 'edit-produit/:id', component: ProduitFormComponent, canActivate: [AuthGuard] },
+  { path: 'roles', component: RoleListComponent, canActivate: [AuthGuard] },
+  { path: 'add-role', component: RoleFormComponent, canActivate: [AuthGuard] },
+  { path: 'edit-role/:id', component: RoleFormComponent, canActivate: [AuthGuard] },
+  { path: 'utilisateurs', component: UtilisateurListComponent, canActivate: [AuthGuard] },
+  { path: 'add-utilisateur', component: UtilisateurFormComponent, canActivate: [AuthGuard] },
+  { path: 'edit-utilisateur/:id', component: UtilisateurFormComponent, canActivate: [AuthGuard] },
+  { path: 'login', component: LoginComponent },
+  { path: '', redirectTo: '/auth', pathMatch: 'full' }
 ];
 
 @NgModule({

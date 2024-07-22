@@ -1,0 +1,36 @@
+<div class="container">
+    <div class="login-form">
+      <h2>Se Connecter</h2> 
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="input-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" formControlName="email" placeholder="exemple@gmail.com" required>
+          <div *ngIf="loginForm.get('email')?.invalid && (loginForm.get('email')?.dirty || loginForm.get('email')?.touched)">
+            <div *ngIf="loginForm.get('email')?.errors?.['required']">
+              L'email est requis.
+            </div>
+            <div *ngIf="loginForm.get('email')?.errors?.['email']">
+              entre un email valide.
+            </div>
+          </div>
+        </div>
+        <div class="input-group">
+          <label for="password">Mot de passe</label>
+          <input [type]="passwordVisible ? 'text' : 'password'" id="password" formControlName="password" placeholder="Entrer votre mot de passe" required>
+          <span class="toggle-password" (click)="togglePasswordVisibility()">&#128065;</span>
+          <div *ngIf="loginForm.get('password')?.invalid && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)">
+            <div *ngIf="loginForm.get('password')?.errors?.['required']">
+              Le mot de passe est requis.
+            </div> 
+          </div>
+        </div>
+        <button type="submit" [disabled]="loginForm.invalid">Se Connecter</button>
+      </form>
+    </div>
+    <div class="info-section">
+      <img src="../assets/logo.png" alt="Royale Stock Logo"> 
+      <h3>Royale Stock</h3>
+      <p>Le meilleur système pour faciliter votre gestion de stocks</p>
+    </div>
+  </div> 
+  

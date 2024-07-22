@@ -1,5 +1,5 @@
-.dashboard {
-  height: calc(100vh - 4rem - 4rem); /* Ajuster la hauteur en fonction de la navbar et du footer */
+/* .dashboard {
+  height: calc(100vh - 4rem - 4rem); 
 }
 
 .card {
@@ -13,4 +13,42 @@
   align-items: center;
   justify-content: center;
   text-align: center;
+} */
+.dashboard-card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.dashboard-card h3 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.table-container {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th, .table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.table th {
+  background-color: #f2f2f2;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: #f9f9f9;
 }

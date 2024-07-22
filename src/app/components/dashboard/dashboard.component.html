@@ -1,4 +1,4 @@
-<div className="container text-center mt-5">
+<!-- <div className="container text-center mt-5">
   <h1 className="display-4 mb-4">Tableau de Bord</h1>
   <div className="row">
     <div className="col-md-4 mb-4">
@@ -33,12 +33,12 @@
   </div>
 </div>
 
-<!-- Bootstrap JS and dependencies -->
+  Bootstrap JS and dependencies 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-<!-- Chart.js Script -->
+  Chart.js Script  
 <script>
   var ctx = document.getElementById('myChart').getContext('2d');
   var myChart = new Chart(ctx, {
@@ -77,4 +77,53 @@
       }
     }
   });
-</script>
+</script> -->
+
+<div class="dashboard">
+  <div class="dashboard-card">
+    <h3>Stock Total</h3>
+    <p>798</p>
+  </div>
+  <div class="dashboard-card">
+    <h3>Valeur en stock</h3>
+    <p>4 535 877 FCFA</p>
+  </div>
+  <div class="dashboard-card">
+    <h3>Total des entrées</h3>
+    <p>309</p>
+  </div>
+  <div class="dashboard-card">
+    <h3>Valeur des entrées</h3>
+    <p>10 477 868 FCFA</p>
+  </div>
+  <div class="dashboard-card">
+    <h3>Total des sorties</h3>
+    <p>906</p>
+  </div>
+  <div class="dashboard-card">
+    <h3>Valeur des sorties</h3>
+    <p>30 477 868 FCFA</p>
+  </div>
+  <div class="table-container">
+    <h3>Top des produits entrées</h3>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Quantité</th>
+          <th>Catégorie</th>
+          <th>Prix Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Samsung S24 Plus</td>
+          <td>150</td>
+          <td>Téléphone</td>
+          <td>30 000 000 FCFA</td>
+        </tr> 
+      </tbody>
+    </table>
+  </div>
+</div>
+

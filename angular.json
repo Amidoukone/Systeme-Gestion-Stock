@@ -21,9 +21,17 @@
             ],
             "tsConfig": "tsconfig.app.json",
             "assets": [
+              "src/favicon.ico",
+              "src/app/assets",
               {
                 "glob": "**/*",
-                "input": "public"
+                "input": "node_modules/sb-admin-2",
+                "output": "assets/sb-admin-2"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/jquery-easing",
+                "output": "assets/vendor/jquery-easing"
               }
             ],
             "styles": [
