@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
@@ -16,8 +16,11 @@ export class LoginComponent implements  OnInit{
   password: string = '';
   isConnected: boolean = false;
   errorMessage: string = '';
+  returnUrl: string;
 
-  constructor(public authService: AuthService, private router: Router) {}
+  constructor(private route: ActivatedRoute, public authService: AuthService, private router: Router) {
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/dashboard';
+  }
 
   ngOnInit() {
     this.isConnected = !!localStorage.getItem("currentUser");
@@ -25,11 +28,14 @@ export class LoginComponent implements  OnInit{
 
   login() {
     this.authService.login(this.email, this.password).subscribe(
-      response => {
-        console.log('Connexion reussiiiiie', response);
-        this.isConnected = true;
-        localStorage.setItem('currentUser', JSON.stringify(response));
-        this.router.navigate(['/dashboard']);
+      // response => {
+      //   console.log('Connexion reussiiiiie', response);
+      //   this.isConnected = true;
+      //   localStorage.setItem('currentUser', JSON.stringify(response));
+      //   this.router.navigate(['/dashboard']);
+    // },
+      data => {
+        this.router.navigate([this.returnUrl]);
       },
       error => {
         console.error('Connexion échouée🥱', error);

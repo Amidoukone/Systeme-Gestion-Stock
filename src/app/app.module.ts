@@ -46,10 +46,10 @@ import { ProduitService } from './services/produit.service';
 import { RoleService } from './services/role.service';
 import { UtilisateurService } from './services/utilisateur.service';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {RouterLink} from "@angular/router";
+import {RouterLink} from "@angular/router"; 
 
 @NgModule({
-  declarations: [
+  declarations: [ 
   ],
   imports: [
     BrowserModule,

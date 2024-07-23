@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { MainLayoutComponent } from './components/main-layout/main-layout.component';
+import { AuthLayoutComponent } from './components/auth-layout/auth-layout.component';
 import { BonEntreeListComponent } from './components/bon-entree/bon-entree-list/bon-entree-list.component';
 import { BonEntreeFormComponent } from './components/bon-entree/bon-entree-form/bon-entree-form.component';
 import { BonEntreePrintComponent } from './components/bon-entree/bon-entree-print/bon-entree-print.component';
@@ -25,7 +27,43 @@ import { LoginComponent } from './components/login/login.component';
 import {AuthGuard} from "./auth.guard";
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full'},
+  // {
+  //   path: '',
+  //   component: MainLayoutComponent,
+  //   canActivate: [AuthGuard],
+  //   children: [
+  //     { path: 'dashboard', component: DashboardComponent },
+  //     { path: 'bon-entree', component: BonEntreeListComponent },
+  //     { path: 'categories', component: CategorieListComponent },
+  //     { path: 'add-categorie', component: CategorieFormComponent },
+  //     { path: 'edit-categorie/:id', component: CategorieFormComponent },
+  //     { path: 'entrepots', component: EntrepotListComponent },
+  //     { path: 'add-entrepot', component: EntrepotFormComponent },
+  //     { path: 'edit-entrepot/:id', component: EntrepotFormComponent },
+  //     { path: 'fournisseurs', component: FournisseurListComponent },
+  //     { path: 'add-fournisseur', component: FournisseurFormComponent },
+  //     { path: 'edit-fournisseur/:id', component: FournisseurFormComponent },
+  //     { path: 'produits', component: ProduitListComponent },
+  //     { path: 'add-produit', component: ProduitFormComponent },
+  //     { path: 'edit-produit/:id', component: ProduitFormComponent },
+  //     { path: 'roles', component: RoleListComponent },
+  //     { path: 'add-role', component: RoleFormComponent },
+  //     { path: 'edit-role/:id', component: RoleFormComponent },
+  //     { path: 'utilisateurs', component: UtilisateurListComponent },
+  //     { path: 'add-utilisateur', component: UtilisateurFormComponent },
+  //     { path: 'edit-utilisateur/:id', component: UtilisateurFormComponent },
+  //   ]
+  // },
+  // {
+  //   path: '',
+  //   component: AuthLayoutComponent,
+  //   children: [
+  //     { path: 'login', component: LoginComponent },
+  //   ]
+  // },
+  // { path: '', redirectTo: '/login', pathMatch: 'full' }
+
+  { path: 'login', component: LoginComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: 'bon-entree', component: BonEntreeListComponent, canActivate: [AuthGuard] },
   { path: 'add-bon-entree', component: BonEntreeFormComponent, canActivate: [AuthGuard] },
@@ -51,8 +89,8 @@ export const routes: Routes = [
   { path: 'edit-role/:id', component: RoleFormComponent, canActivate: [AuthGuard] },
   { path: 'utilisateurs', component: UtilisateurListComponent, canActivate: [AuthGuard] },
   { path: 'add-utilisateur', component: UtilisateurFormComponent, canActivate: [AuthGuard] },
-  { path: 'edit-utilisateur/:id', component: UtilisateurFormComponent, canActivate: [AuthGuard] },
-  { path: 'login', component: LoginComponent }
+  { path: 'edit-utilisateur/:id', component: UtilisateurFormComponent, canActivate: [AuthGuard] }, 
+  { path: '', redirectTo: '/login', pathMatch: 'full'} 
 ];
 
 @NgModule({

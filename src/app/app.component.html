@@ -5,7 +5,35 @@
     <router-outlet></router-outlet>
 
   </div>
-</div>
+</div>  
+
 <app-footer></app-footer>
+<!-- <div *ngIf="showSidebarAndNavbar">
+  <app-navbar (sidebarToggle)="sidebar.toggleSidebar()"></app-navbar>
+  <div class="d-flex flex-column" id="main-wrapper">
+    <app-sidebar #sidebar [isExpanded]="true"></app-sidebar>
+    <div class="main-content flex-grow-1">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+  <app-footer></app-footer>
+</div>
+<div *ngIf="!showSidebarAndNavbar">
+  <router-outlet></router-outlet>
+</div> -->
+
+<!-- <div *ngIf="showSidebarAndNavbar">
+  <app-navbar (sidebarToggle)="toggleSidebar()"></app-navbar>
+  <div class="d-flex flex-column" id="main-wrapper">
+    <app-sidebar #sidebar [isExpanded]="true"></app-sidebar>
+    <div class="main-content flex-grow-1">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+  <app-footer></app-footer>
+</div>
+<div *ngIf="!showSidebarAndNavbar">
+  <router-outlet></router-outlet>
+</div> -->
 
 

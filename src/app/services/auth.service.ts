@@ -27,8 +27,7 @@ export class AuthService {
   }
 
   login(email: string, password: string): Observable<any> {
-    return this.http.post(this.apiUrl, { email, password })
-    // return this.http.post(this.apiUrl, { email, password }, { responseType: 'text' as 'json' })
+    return this.http.post(this.apiUrl, { email, password }) 
       .pipe(
         map(response => {
           if (response && this.isBrowser()) {
