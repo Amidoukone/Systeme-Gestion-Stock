@@ -25,18 +25,6 @@ public class AuthController {
   public AuthController(AuthenticationManager authenticationManager) {
     this.authenticationManager = authenticationManager;
   }
- /* @PostMapping("/connexion")
-  public ResponseEntity<String> login(@RequestBody Utilisateur loginRequest) {
-    try {
-      Authentication authentication = authenticationManager.authenticate(
-        new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword())
-      );
-      SecurityContextHolder.getContext().setAuthentication(authentication);
-      return ResponseEntity.ok("Utilisateur connecté: " + authentication.getName());
-    } catch (AuthenticationException e) {
-      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Échec de l'authentification");
-    }
-  }*/
  @PostMapping("/connexion")
  public ResponseEntity<?> login(@RequestBody Utilisateur loginRequest) {
    try {

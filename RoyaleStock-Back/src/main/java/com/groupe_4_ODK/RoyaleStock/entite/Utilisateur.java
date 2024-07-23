@@ -36,6 +36,9 @@ public class Utilisateur implements UserDetails {
   @ManyToOne
   @JoinColumn(name = "role_id")
   private Role role;
+ /*@ManyToOne
+  @JoinColumn(name = "createdBy")
+  private Utilisateur createdBy;*/
 
   @ManyToOne
   @JoinColumn(name = "entrepot_id")
