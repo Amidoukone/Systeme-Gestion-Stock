@@ -16,9 +16,7 @@ public class Notification {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
 
   private  Long Id;
-
   private String Contenu;
-
   private Date dateNotification;
 
   @OneToMany

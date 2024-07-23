@@ -1,9 +1,6 @@
 package com.groupe_4_ODK.RoyaleStock.service;
 
-import com.groupe_4_ODK.RoyaleStock.entite.BonSorties;
-import com.groupe_4_ODK.RoyaleStock.entite.DetailsSorties;
-import com.groupe_4_ODK.RoyaleStock.entite.Motif;
-import com.groupe_4_ODK.RoyaleStock.entite.Produits;
+import com.groupe_4_ODK.RoyaleStock.entite.*;
 import com.groupe_4_ODK.RoyaleStock.repository.*;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
@@ -34,10 +31,15 @@ public class BonSortieService {
   private AdminRepository adminRepository;
 
   @Autowired
+  private MethodeUtil methodeUtil;
+
+  @Autowired
   private ManagerRepository managerRepository;
   @Autowired
   private MotifRepository motifRepository;
 
+  @Autowired
+  private NotificationService notificationService;
   // Méthode pour récupérer tous les BonSortie
   public List<BonSorties> getAllBonSorties() {
     return bonSortieRepository.findAll();
@@ -54,6 +56,17 @@ public class BonSortieService {
     try {
       if (bonSortie.getDateSortie() == null) {
         bonSortie.setDateSortie(new Date());
+
+
+
+//        Entrepots entrepot = methodeUtil.getEntrepotByUserId(currentUserId);
+//        if (entrepot == null) {
+//          throw new RuntimeException("Utilisateur n'est associé à aucun entrepôt");
+//        }
+
+        bonSortie.setUtilisateur(methodeUtil.getCurrentUserId());
+//        motif.setEntrepot(entrepot);
+        return bonSortieRepository.save(bonSortie);
       }
 
       double totalPrix = 0.0;
@@ -77,7 +90,11 @@ public class BonSortieService {
         if (nouvelleQuantite < 0) {
           throw new IllegalArgumentException("Quantité insuffisante pour le produit: " + produit1.getNom());
         }
-
+        if (nouvelleQuantite <= 5) {
+          String message = "La quantité du produit " + produit.getNom() + " est maintenant " + nouvelleQuantite + "Pensez à faire une nouvelle commande pour ce produit.";
+          notificationService.sendNotification(bonSortie.getUtilisateur(), message);
+          System.out.println("Email Envoye");
+        }
         produit1.setQuantite(nouvelleQuantite);
         produitRepository.save(produit1);
 
@@ -228,7 +245,7 @@ public class BonSortieService {
       document.add(table);
 
 
-      document.add(new Paragraph("\n\nManager: " + bonSortie.getUtilisateur().getNom()));
+      document.add(new Paragraph("\n\nManager: " + bonSortie));
 
       document.close();
     } catch (DocumentException | IOException e) {

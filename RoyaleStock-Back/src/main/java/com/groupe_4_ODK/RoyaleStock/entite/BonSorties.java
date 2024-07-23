@@ -24,7 +24,6 @@ public class BonSorties {
   private List<DetailsSorties> detailsSorties;
   @ManyToOne
   private Motif motif;
-  @ManyToOne
-  private Utilisateur utilisateur;
+  private long utilisateur;
 
 }
