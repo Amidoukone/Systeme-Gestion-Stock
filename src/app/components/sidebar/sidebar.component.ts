@@ -1,6 +1,7 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Router, RouterOutlet} from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -9,12 +10,10 @@ import { CommonModule } from '@angular/common';
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss'
 })
-export class SidebarComponent {
-  @Input() isExpanded = true;
+export class SidebarComponent implements OnInit{
 
-  toggleSidebar() {
-    this.isExpanded = !this.isExpanded;
-  }
+  @Input() isExpanded = true;
+  currentUser: any;
 
   navItems = [
     { label: 'Dashboard', icon: 'dashboard', route: '/' },
@@ -28,9 +27,20 @@ export class SidebarComponent {
     { label: 'Utilisateurs', icon: 'people', route: '/utilisateurs' }
   ];
 
-  constructor(private router: Router) { }
+  constructor(public authService: AuthService, private router: Router) { }
+
+  ngOnInit() {
+    this.currentUser = this.authService.currentUserValue;
+  }
 
   navigate(route: string) {
     this.router.navigate([route]);
+  }
+  hasRole(role: string): boolean {
+    return this.authService.hasRole(role);
+  }
+
+  toggleSidebar() {
+    this.isExpanded = !this.isExpanded;
   }
 }

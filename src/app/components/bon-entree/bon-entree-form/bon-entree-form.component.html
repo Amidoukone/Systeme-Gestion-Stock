@@ -25,7 +25,7 @@
           <div class="col-md-6 mb-3">
             <label for="utilisateur">Utilisateur</label>
             <select class="form-control" id="utilisateur" name="utilisateur" [(ngModel)]="selectedUtilisateurId" (change)="onUtilisateurChange($event)">
-              <option *ngFor="let utilisateur of utilisateurs" [value]="utilisateur.id">{{ utilisateur.username }}</option>
+              <option *ngFor="let utilisateur of utilisateurs" [value]="utilisateur.id">{{ utilisateur.nom }}</option>
             </select>
           </div>
         </div>

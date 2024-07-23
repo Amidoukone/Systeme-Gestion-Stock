@@ -8,7 +8,7 @@ import {Router} from "@angular/router";
 })
 export class AuthService {
 
-  private apiUrl = 'http://localhost:8080/api/utilisateurs';
+  private apiUrl = 'http://localhost:8080/auth/connexion';
   private currentUserSubject: BehaviorSubject<any>;
   public currentUser: Observable<any>;
 
@@ -26,15 +26,16 @@ export class AuthService {
     return this.currentUserSubject.value;
   }
 
-  login(email: string, password: string) {
-    return this.http.post<any>(`${this.apiUrl}/login`, { email, password })
+  login(email: string, password: string): Observable<any> {
+    return this.http.post(this.apiUrl, { email, password })
+    // return this.http.post(this.apiUrl, { email, password }, { responseType: 'text' as 'json' })
       .pipe(
-        map(user => {
-          if (user && user.token && this.isBrowser()) {
-            localStorage.setItem('currentUser', JSON.stringify(user));
-            this.currentUserSubject.next(user);
+        map(response => {
+          if (response && this.isBrowser()) {
+            localStorage.setItem('currentUser', JSON.stringify(response));
+            this.currentUserSubject.next(response);
           }
-          return user;
+          return response;
         }),
         catchError(this.handleError)
       );
@@ -50,18 +51,15 @@ export class AuthService {
 
   private handleError(error: HttpErrorResponse) {
     let errorMessage = 'An unknown error occurred!';
-    if (error.error instanceof ErrorEvent) {
-      // Client-side errors
+    if (error.error instanceof ErrorEvent) { 
       errorMessage = `Error: ${error.error.message}`;
-    } else {
-      // Server-side errors
+    } else { 
       errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
     }
     return throwError(errorMessage);
   }
 
   hasRole(role: string): boolean {
-    return this.currentUserValue && this.currentUserValue.role && this.currentUserValue.role === role;
+    return this.currentUserValue && this.currentUserValue.roles && this.currentUserValue.roles.includes(role);
   }
-
 }

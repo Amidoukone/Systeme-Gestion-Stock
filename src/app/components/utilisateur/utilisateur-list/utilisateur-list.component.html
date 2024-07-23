@@ -23,7 +23,7 @@
       <tbody>
       <tr *ngFor="let utilisateur of filteredUtilisateurs; let i = index">
         <td>{{ i + 1 }}</td>
-        <td>{{ utilisateur.username }}</td>
+        <td>{{ utilisateur.nom }}</td>
         <td>{{ utilisateur.contact }}</td>
         <td>{{ utilisateur.email }}</td>
         <td>{{ utilisateur.role?.name }}</td>

@@ -53,7 +53,7 @@ export class UtilisateurListComponent implements OnInit {
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
     this.filteredUtilisateurs = this.utilisateurs.filter(utilisateur =>
-      utilisateur.username.toLowerCase().includes(filterValue)
+      utilisateur.nom.toLowerCase().includes(filterValue)
     );
   }
 
