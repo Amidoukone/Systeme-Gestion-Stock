@@ -2,9 +2,11 @@ package com.groupe_4_ODK.RoyaleStock.entite;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 import java.util.Date;
 import java.util.List;
@@ -35,12 +37,12 @@ public class Produits {
   @OneToMany
   private List<DetailsSorties> detailsSorties;
 
-  @JsonIgnore
+  //@JsonIgnore
   @ManyToOne
   @JoinColumn(name = "categorie_id")
   private Categories categories;
 
-  @JsonIgnore
+ // @JsonIgnore
   @ManyToOne
   @JoinColumn(name = "entrepot_id")
   private Entrepots entrepots;

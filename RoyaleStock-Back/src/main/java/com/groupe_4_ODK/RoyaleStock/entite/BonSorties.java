@@ -21,14 +21,14 @@ public class BonSorties {
   private Date dateSortie = new Date();
   private double prixTotal;
 
-  @JsonIgnore
-  @OneToMany
+  //@JsonIgnore
   @JsonManagedReference
+  @OneToMany(mappedBy = "bonSorties", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<DetailsSorties> detailsSorties;
-  @JsonIgnore
+ //@JsonIgnore
   @ManyToOne
   private Motif motif;
- 
-  private long utilisateur; 
+
+  private long utilisateur;
 
 }

@@ -24,13 +24,13 @@ public class DetailsEntrees {
   private  int quantite;
   private double prixUnitaire;
 
-  @JsonIgnore
+  //@JsonIgnore
   @ManyToOne
   @JoinColumn(name = "bonEntre_id")
   @JsonBackReference
   private BonEntrees bonEntrees;
 
-  @JsonIgnore
+  //@JsonIgnore
   @ManyToOne
   @JoinColumn(name = "produit_id")
   private Produits produits;

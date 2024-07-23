@@ -27,13 +27,13 @@ public class DetailsSorties {
 
   private Date dateSortie;
 
-  @JsonIgnore
+  //@JsonIgnore
   @ManyToOne
   @JoinColumn(name = "bonSortie_id")
   @JsonBackReference
   private BonSorties bonSorties;
 
-  @JsonIgnore
+  //@JsonIgnore
   @ManyToOne
   @JoinColumn(name = "produit_id")
   private Produits produits;

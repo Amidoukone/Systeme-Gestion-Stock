@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -26,20 +27,23 @@ public class BonEntrees {
   private  Double prixTotal;
   @Enumerated(EnumType.STRING)
   private Statut statut;
+  private Long user;
 
   @ManyToOne
   @JoinColumn(name = "fournisseur_id")
   private Fournisseurs fournisseurs;
 
-  @JsonIgnore
-  @OneToMany
-  @JsonManagedReference
-  private List<DetailsEntrees> detailsEntrees;
-  @JsonIgnore
-  @ManyToOne
-  private Manager manager;
-  @JsonIgnore
-  @ManyToOne
-  private Admin admin;
+  //@JsonIgnore
+  //@OneToMany
+  //@JsonManagedReference
+  @OneToMany(mappedBy = "bonEntrees", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<DetailsEntrees> detailsEntrees = new ArrayList<>();
+  //private List<DetailsEntrees> detailsEntrees;
+//  @JsonIgnore
+//  @ManyToOne
+//  private Manager manager;
+//  @JsonIgnore
+//  @ManyToOne
+//  private Admin admin;
 
 }

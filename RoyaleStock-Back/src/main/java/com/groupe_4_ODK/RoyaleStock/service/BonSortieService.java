@@ -56,18 +56,8 @@ public class BonSortieService {
     try {
       if (bonSortie.getDateSortie() == null) {
         bonSortie.setDateSortie(new Date());
-
-
-
-//        Entrepots entrepot = methodeUtil.getEntrepotByUserId(currentUserId);
-//        if (entrepot == null) {
-//          throw new RuntimeException("Utilisateur n'est associé à aucun entrepôt");
-//        }
-
-        bonSortie.setUtilisateur(methodeUtil.getCurrentUserId());
-//        motif.setEntrepot(entrepot);
-        return bonSortieRepository.save(bonSortie);
       }
+      bonSortie.setUtilisateur(methodeUtil.getCurrentUserId());
 
       double totalPrix = 0.0;
 
@@ -90,11 +80,11 @@ public class BonSortieService {
         if (nouvelleQuantite < 0) {
           throw new IllegalArgumentException("Quantité insuffisante pour le produit: " + produit1.getNom());
         }
-        if (nouvelleQuantite <= 5) {
-          String message = "La quantité du produit " + produit.getNom() + " est maintenant " + nouvelleQuantite + "Pensez à faire une nouvelle commande pour ce produit.";
-          notificationService.sendNotification(bonSortie.getUtilisateur(), message);
-          System.out.println("Email Envoye");
-        }
+//        if (nouvelleQuantite <= 5) {
+//          String message = "La quantité du produit " + produit.getNom() + " est maintenant " + nouvelleQuantite + "Pensez à faire une nouvelle commande pour ce produit.";
+//          notificationService.sendNotification(methodeUtil.getCurrentUserId(), message);
+//          System.out.println("Email Envoye");
+//        }
         produit1.setQuantite(nouvelleQuantite);
         produitRepository.save(produit1);
 

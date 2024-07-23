@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -32,6 +33,9 @@ public class BonEntreService {
   private ProduitsRepository produitRepository;
 
   @Autowired
+  private MethodeUtil methodeUtil;
+
+  @Autowired
   private DetailsEntreRepository detailsEntreRepository;
 
   // Méthode pour récupérer tous les BonEntre
@@ -46,9 +50,11 @@ public class BonEntreService {
   //Creer un bon Entre
   @Transactional
   public BonEntrees creeBonEntre(BonEntrees bonEntre) {
+
     if (bonEntre.getDateCommande() == null) {
       bonEntre.setDateCommande(new Date()); // Utilisation de la date actuelle
     }
+    bonEntre.setUser(methodeUtil.getCurrentUserId());
     bonEntre.setStatut(Statut.Encours);
 
     // Sauvegarder le BonEntree sans mettre à jour les quantités
@@ -57,7 +63,10 @@ public class BonEntreService {
     double prixTotal = 0.0;
 
     // Associer les détails du BonEntree
-    for (DetailsEntrees detailsEntre : bonEntre.getDetailsEntrees()) {
+    if (bonEntre.getDetailsEntrees() != null) {
+      System.out.println("La liste des détails d'entrées n'est nulle");
+      for (DetailsEntrees detailsEntre : bonEntre.getDetailsEntrees()) {
+      System.out.println("bon detail entre");
       if (detailsEntre.getProduits() != null && detailsEntre.getProduits().getId() != null) {
         Produits produit = produitRepository.findById(detailsEntre.getProduits().getId())
           .orElseThrow(() -> new RuntimeException("Pas de produit avec ce ID: " + detailsEntre.getProduits().getId()));
@@ -83,6 +92,9 @@ public class BonEntreService {
     bonEntre = bonEntreRepository.save(bonEntre);
 
     return bonEntre;
+  }else {
+      throw new RuntimeException("La liste des détails d'entrées est nulle");
+    }
   }
 
   @Transactional
@@ -117,8 +129,7 @@ public class BonEntreService {
     bonEntree.setStatut(bonEntreeDetails.getStatut());
     bonEntree.setFournisseurs(bonEntreeDetails.getFournisseurs());
     bonEntree.setDetailsEntrees(bonEntreeDetails.getDetailsEntrees());
-    bonEntree.setManager(bonEntreeDetails.getManager());
-    bonEntree.setAdmin(bonEntreeDetails.getAdmin());
+
 
     return bonEntreRepository.save(bonEntree);
   }
