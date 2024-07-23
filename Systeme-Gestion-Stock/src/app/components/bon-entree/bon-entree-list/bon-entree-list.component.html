@@ -1,0 +1,34 @@
+<div class="container mt-4">
+  <h1 class="h2 mb-4">Liste des Bons d'Entrée</h1>
+  <div class="mb-4 d-flex justify-content-between align-items-center">
+    <button class="btn btn-primary" routerLink="/add-bon-entree">Ajouter Bon d'Entrée</button>
+    <div class="form-group mb-0">
+      <label for="search" class="form-label">Rechercher par Statut</label>
+      <input id="search" type="text" class="form-control" (keyup)="applyFilter($event)" placeholder="Statut">
+    </div>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Date de Commande</th>
+        <th scope="col">Statut</th>
+        <th scope="col">Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let bonEntree of filteredBonEntrees; let i = index">
+        <th scope="row">{{ i + 1 }}</th>
+        <td>{{ bonEntree.dateCommande | date }}</td>
+        <td>{{ bonEntree.statut }}</td>
+        <td>
+          <button class="btn btn-warning btn-sm m-1" routerLink="/edit-bon-entree/{{ bonEntree.id }}">Modifier</button>
+          <button class="btn btn-danger btn-sm m-1" (click)="deleteBonEntree(bonEntree.id)">Supprimer</button>
+          <button class="btn btn-secondary btn-sm m-1" (click)="printBonEntree(bonEntree.id)">Imprimer</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
