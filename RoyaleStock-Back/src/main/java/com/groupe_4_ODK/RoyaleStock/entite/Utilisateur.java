@@ -3,6 +3,7 @@ package com.groupe_4_ODK.RoyaleStock.entite;
 import java.util.Collection;
 import java.util.Collections;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import org.springframework.security.core.GrantedAuthority;
@@ -33,6 +34,7 @@ public class Utilisateur implements UserDetails {
   private boolean actif=true;
   private Long createdBy;
 
+  @JsonIgnore
   @ManyToOne
   @JoinColumn(name = "role_id")
   private Role role;
@@ -40,10 +42,12 @@ public class Utilisateur implements UserDetails {
   @JoinColumn(name = "createdBy")
   private Utilisateur createdBy;*/
 
+  @JsonIgnore
   @ManyToOne
   @JoinColumn(name = "entrepot_id")
   private Entrepots entrepot;
 
+  @JsonIgnore
   @ManyToOne
   @JoinColumn(name = "notification_id")
   private Notification notification;

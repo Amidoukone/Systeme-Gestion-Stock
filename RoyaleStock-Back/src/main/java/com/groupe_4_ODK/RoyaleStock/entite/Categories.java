@@ -23,6 +23,7 @@ public class Categories {
   @ManyToOne
   private Entrepots entrepot;
 
+  @JsonIgnore
   @OneToMany
   private List<Produits> produits;
 

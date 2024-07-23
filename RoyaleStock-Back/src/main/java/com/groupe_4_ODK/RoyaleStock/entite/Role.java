@@ -19,4 +19,5 @@ public class Role {
   private int id;
   @Enumerated(EnumType.STRING)
   private TypeRole typeRole;
+
 }

@@ -1,5 +1,6 @@
 package com.groupe_4_ODK.RoyaleStock.entite;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,6 +21,7 @@ public class Fournisseurs {
 
   private String Telephone;
 
+  @JsonIgnore
   @OneToMany
   private List<BonEntrees> bonEntrees;
 

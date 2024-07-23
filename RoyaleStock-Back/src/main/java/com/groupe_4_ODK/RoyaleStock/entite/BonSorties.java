@@ -1,5 +1,6 @@
 package com.groupe_4_ODK.RoyaleStock.entite;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -19,11 +20,15 @@ public class BonSorties {
   @Temporal(TemporalType.DATE)
   private Date dateSortie = new Date();
   private double prixTotal;
+
+  @JsonIgnore
   @OneToMany
   @JsonManagedReference
   private List<DetailsSorties> detailsSorties;
+  @JsonIgnore
   @ManyToOne
   private Motif motif;
+  @JsonIgnore
   @ManyToOne
   private Utilisateur utilisateur;
 

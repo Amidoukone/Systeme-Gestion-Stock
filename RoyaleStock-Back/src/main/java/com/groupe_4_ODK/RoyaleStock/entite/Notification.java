@@ -1,6 +1,7 @@
 package com.groupe_4_ODK.RoyaleStock.entite;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,6 +22,7 @@ public class Notification {
 
   private Date dateNotification;
 
+  @JsonIgnore
   @OneToMany
   private List<Utilisateur> utilisateurs;
 

@@ -35,10 +35,12 @@ public class Produits {
   @OneToMany
   private List<DetailsSorties> detailsSorties;
 
+  @JsonIgnore
   @ManyToOne
   @JoinColumn(name = "categorie_id")
   private Categories categories;
 
+  @JsonIgnore
   @ManyToOne
   @JoinColumn(name = "entrepot_id")
   private Entrepots entrepots;

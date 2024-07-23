@@ -1,5 +1,6 @@
 package com.groupe_4_ODK.RoyaleStock.entite;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.groupe_4_ODK.RoyaleStock.enums.Statut;
 import jakarta.persistence.*;
@@ -30,11 +31,14 @@ public class BonEntrees {
   @JoinColumn(name = "fournisseur_id")
   private Fournisseurs fournisseurs;
 
+  @JsonIgnore
   @OneToMany
   @JsonManagedReference
   private List<DetailsEntrees> detailsEntrees;
+  @JsonIgnore
   @ManyToOne
   private Manager manager;
+  @JsonIgnore
   @ManyToOne
   private Admin admin;
 
