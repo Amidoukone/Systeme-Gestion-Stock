@@ -25,7 +25,7 @@ public class AuthController {
   public AuthController(AuthenticationManager authenticationManager) {
     this.authenticationManager = authenticationManager;
   }
- @PostMapping("/connexion")
+/* @PostMapping("/connexion")
  public ResponseEntity<?> login(@RequestBody Utilisateur loginRequest) {
    try {
      Authentication authentication = authenticationManager.authenticate(
@@ -47,6 +47,38 @@ public class AuthController {
      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Échec de l'authentification");
    }
  }
+*/
+@PostMapping("/connexion")
+public ResponseEntity<?> login(@RequestBody Utilisateur loginRequest) {
+  try {
+    Authentication authentication = authenticationManager.authenticate(
+      new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword())
+    );
+    SecurityContextHolder.getContext().setAuthentication(authentication);
+
+    Utilisateur utilisateur = (Utilisateur) authentication.getPrincipal();
+    List<String> roles = utilisateur.getAuthorities().stream()
+      .map(GrantedAuthority::getAuthority)
+      .collect(Collectors.toList());
+
+    Map<String, Object> response = new HashMap<>();
+    response.put("id", utilisateur.getId()); // Ajout de l'ID de l'utilisateur
+    response.put("nom", utilisateur.getNom()); // Ajout du nom de l'utilisateur
+    response.put("email", utilisateur.getEmail());
+    response.put("roles", roles);
+    
+    if (utilisateur.getEntrepot() != null) {
+      Map<String, Object> entrepotInfo = new HashMap<>();
+      entrepotInfo.put("id", utilisateur.getEntrepot().getId());
+      entrepotInfo.put("nom", utilisateur.getEntrepot().getNom());
+      response.put("entrepot", entrepotInfo);
+    }
+
+    return ResponseEntity.ok(response);
+  } catch (AuthenticationException e) {
+    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Échec de l'authentification");
+  }
+}
 
 
   @GetMapping("/deconnexion")
