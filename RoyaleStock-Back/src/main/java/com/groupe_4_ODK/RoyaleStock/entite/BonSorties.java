@@ -28,8 +28,7 @@ public class BonSorties {
   @JsonIgnore
   @ManyToOne
   private Motif motif;
-  @JsonIgnore
-  @ManyToOne
-  private Utilisateur utilisateur;
+ 
+  private long utilisateur; 
 
 }
