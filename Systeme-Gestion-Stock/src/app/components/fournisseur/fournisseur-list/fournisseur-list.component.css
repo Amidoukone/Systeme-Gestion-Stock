@@ -1,0 +1,100 @@
+/*
+#test{
+  display: flex;
+  justify-content: space-between;
+}
+
+
+#tab{
+  border-radius: 25px;
+  margin-top: 20px;
+
+}
+i{
+  background-color: #dddddd;
+
+
+}
+#inp {
+  width: 25%;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+#recherche{
+  position: absolute;
+  left: 10px;
+  z-index: 2;
+  border-radius: 50%;
+  background-color: white;
+  padding: 5px;
+}
+
+#inp input {
+  z-index: 1;
+  position: absolute;
+  width: 100%;
+  text-align: right;
+  padding: 15px 15px;
+  box-sizing: border-box;
+  border-radius: 20px;
+  border: none;
+  background-color: #1976d2;
+  color: white;
+}
+thead tr{
+  padding: 10px;
+  background-color: white;
+
+}
+thead tr th{
+
+  border-radius:20px ;
+  background-color: #1976d2;
+  text-align: center;
+}
+#inp input::placeholder {
+  color: white;
+  font-weight: bold;
+}
+
+
+
+#ID{
+  background-color: #1976d2;
+  color: white;
+  border-radius: 20px;
+  padding: 2px;
+  text-align: center;
+}
+
+#nom{
+  background-color: #1976d2;
+  color: white;
+  border-radius: 20px;
+  padding: 2px;
+  text-align: center;
+}
+#adress{
+  background-color: #1976d2;
+  color: white;
+  border-radius: 20px;
+  padding: 2px;
+  text-align: center;
+}
+
+#tel{
+  background-color: #1976d2;
+  color: white;
+  border-radius: 20px;
+  padding: 2px;
+  text-align: center;
+}
+#act{
+  background-color: #1976d2;
+  color: white;
+  border-radius: 20px;
+  padding: 2px;
+  text-align: center;
+}*/
+
