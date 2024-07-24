@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -30,5 +31,9 @@ public class BonSorties {
   private Motif motif;
 
   private long utilisateur;
+
+  @ManyToOne
+  @JoinColumn(name = "entrepot_id")
+  private Entrepots entrepot;
 
 }

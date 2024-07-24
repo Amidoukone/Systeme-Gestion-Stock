@@ -30,12 +30,15 @@ public class BonEntrees {
   private Long user;
 
   @ManyToOne
+  private Entrepots entrepot;
+
+  @ManyToOne
   @JoinColumn(name = "fournisseur_id")
   private Fournisseurs fournisseurs;
 
   //@JsonIgnore
   //@OneToMany
-  //@JsonManagedReference
+  @JsonManagedReference
   @OneToMany(mappedBy = "bonEntrees", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<DetailsEntrees> detailsEntrees = new ArrayList<>();
   //private List<DetailsEntrees> detailsEntrees;

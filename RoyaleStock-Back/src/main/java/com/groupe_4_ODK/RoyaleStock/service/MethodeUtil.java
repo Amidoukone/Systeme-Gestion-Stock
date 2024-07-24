@@ -31,4 +31,12 @@ public class MethodeUtil {
       .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
     return user.getEntrepot();
   }
+
+  public String getCurrentUserEmail() {
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    if (authentication != null && authentication.getPrincipal() instanceof Utilisateur) {
+      return ((Utilisateur) authentication.getPrincipal()).getEmail();
+    }
+    return null;
+  }
 }

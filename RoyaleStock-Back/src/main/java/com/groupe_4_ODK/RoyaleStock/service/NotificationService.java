@@ -16,7 +16,7 @@ public class NotificationService {
   private EmailService emailService;
 
   //Methode pour envoyer notification
-  public void sendNotification(long user, String message) {
+  public void sendNotification(String email, String message) {
     // Créer et enregistrer la notification dans la base de données
     Notification notification = new Notification();
     notification.setContenu(message);
@@ -24,7 +24,7 @@ public class NotificationService {
     notificationRepository.save(notification);
 
     // Envoyer l'email
-    emailService.sendSimpleMessage(String.valueOf(user), "Gestion  de Stock", message);
+    emailService.sendSimpleMessage(email, "Gestion  de Stock", message);
     notificationRepository.save(notification);
 
   }

@@ -22,6 +22,9 @@ public class BonSortieService {
   private BonSortieRepository bonSortieRepository;
 
   @Autowired
+  private EntrepotsRepository entrepotsRepository;
+
+  @Autowired
   private DetailsSortieRepository detailsSortieRepository;
 
   @Autowired
@@ -53,62 +56,84 @@ public class BonSortieService {
   // Méthode pour créer un nouveau BonSortie
   @Transactional
   public BonSorties createBonSortie(BonSorties bonSortie) {
-    try {
-      if (bonSortie.getDateSortie() == null) {
-        bonSortie.setDateSortie(new Date());
-      }
-      bonSortie.setUtilisateur(methodeUtil.getCurrentUserId());
+    // Si la date de sortie n'est pas définie, la définir à la date actuelle
+    if (bonSortie.getDateSortie() == null) {
+      bonSortie.setDateSortie(new Date());
+    }
 
-      double totalPrix = 0.0;
+    // Récupérer l'ID de l'utilisateur connecté et l'assigner au bon de sortie
+    bonSortie.setUtilisateur(methodeUtil.getCurrentUserId());
+    bonSortie.setEntrepot(methodeUtil.getEntrepotByUserId(bonSortie.getUtilisateur()));
+    // Sauvegarder le bon de sortie sans mettre à jour les quantités
+    bonSortie = bonSortieRepository.save(bonSortie);
 
+    // Initialiser le prix total à zéro
+    double totalPrix = 0.0;
+
+    // Vérifier et traiter les détails de sortie
+    if (bonSortie.getDetailsSorties() != null) {
+      System.out.println("La liste des détails de sortie n'est pas nulle");
       for (DetailsSorties detailsSortie : bonSortie.getDetailsSorties()) {
-        Produits produit = detailsSortie.getProduits();
+        System.out.println("Traitement du détail de sortie");
 
-        if (produit == null || produit.getId() == null) {
-          throw new IllegalArgumentException("Produit invalide pour le détail de sortie");
+        // Vérifier si le produit est valide
+        if (detailsSortie.getProduits() != null && detailsSortie.getProduits().getId() != null) {
+          Produits produit = produitRepository.findById(detailsSortie.getProduits().getId())
+            .orElseThrow(() -> new RuntimeException("Pas de produit avec cet ID: " + detailsSortie.getProduits().getId()));
+
+          // Calculer la nouvelle quantité du produit après la sortie
+          int quantiteSortie = detailsSortie.getQuantite();
+          int nouvelleQuantite = produit.getQuantite() - quantiteSortie;
+
+          // Vérifier si la nouvelle quantité est valide
+          if (nouvelleQuantite < 0) {
+            throw new IllegalArgumentException("Quantité insuffisante pour le produit: " + produit.getNom());
+          }
+
+          // Envoyer une notification si la quantité est insuffisante
+          if (nouvelleQuantite <= 5) {
+            String message = "La quantité du produit " + produit.getNom() + " est maintenant " + nouvelleQuantite + ". Pensez à faire une nouvelle commande pour ce produit.";
+            notificationService.sendNotification(methodeUtil.getCurrentUserEmail(), message);
+            System.out.println("Email envoyé");
+          }
+
+          // Mettre à jour la quantité du produit et enregistrer les modifications
+          produit.setQuantite(nouvelleQuantite);
+          produitRepository.save(produit);
+
+          // Associer le produit mis à jour au détail de sortie
+          detailsSortie.setProduits(produit);
+        } else {
+          throw new RuntimeException("Produit est null ou n'a pas cet ID");
         }
 
-        Produits produit1 = produitRepository.findById(produit.getId()).orElse(null);
-        if (produit1 == null) {
-          throw new IllegalArgumentException("Produit non trouvé pour l'ID: " + produit.getId());
-        }
-
-
-        int quantiteSortie = detailsSortie.getQuantite();
-        int nouvelleQuantite = produit1.getQuantite() - quantiteSortie;
-
-        if (nouvelleQuantite < 0) {
-          throw new IllegalArgumentException("Quantité insuffisante pour le produit: " + produit1.getNom());
-        }
-//        if (nouvelleQuantite <= 5) {
-//          String message = "La quantité du produit " + produit.getNom() + " est maintenant " + nouvelleQuantite + "Pensez à faire une nouvelle commande pour ce produit.";
-//          notificationService.sendNotification(methodeUtil.getCurrentUserId(), message);
-//          System.out.println("Email Envoye");
-//        }
-        produit1.setQuantite(nouvelleQuantite);
-        produitRepository.save(produit1);
-
-      }
-
-      bonSortie = bonSortieRepository.save(bonSortie);
-
-      for (DetailsSorties detailsSortie : bonSortie.getDetailsSorties()) {
-        detailsSortie.setBonSorties(bonSortie);
-        detailsSortieRepository.save(detailsSortie);
+        // Calculer le prix total
         totalPrix += detailsSortie.getPrix_unitaire() * detailsSortie.getQuantite();
         detailsSortie.setBonSorties(bonSortie);
+        detailsSortieRepository.save(detailsSortie);
       }
 
+      // Mettre à jour le prix total du bon de sortie
       bonSortie.setPrixTotal(totalPrix);
 
+      // Sauvegarder le bon de sortie mis à jour avec le prix total calculé
+      bonSortie = bonSortieRepository.save(bonSortie);
+
       return bonSortie;
-    } catch (Exception e) {
-      System.err.println("Erreur: " + e.getMessage());
-      e.printStackTrace();
-      throw new RuntimeException("Erreur lors de la création du bon de sortie", e);
+    } else {
+      throw new RuntimeException("La liste des détails de sortie est nulle");
     }
   }
 
+  //Methode pour recuper les bonSorties dune entrepot donner
+  public List<BonSorties> getDetailsSortiesByEntrepot(Long entrepotId) {
+    // Récupérer l'entrepôt par ID
+    Entrepots entrepot = entrepotsRepository.findById(entrepotId)
+      .orElseThrow(() -> new RuntimeException("Entrepôt non trouvé avec l'ID: " + entrepotId));
+
+    // Récupérer
+    return bonSortieRepository.findByEntrepot(entrepot);
+  }
   // Méthode pour mettre à jour un BonSortie existant
   @Transactional
   public BonSorties updateBonSortie(Integer id, BonSorties bonSortie) {

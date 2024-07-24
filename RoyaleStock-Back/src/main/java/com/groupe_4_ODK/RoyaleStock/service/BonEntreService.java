@@ -1,8 +1,6 @@
 package com.groupe_4_ODK.RoyaleStock.service;
 
-import com.groupe_4_ODK.RoyaleStock.entite.BonEntrees;
-import com.groupe_4_ODK.RoyaleStock.entite.DetailsEntrees;
-import com.groupe_4_ODK.RoyaleStock.entite.Produits;
+import com.groupe_4_ODK.RoyaleStock.entite.*;
 import com.groupe_4_ODK.RoyaleStock.enums.Statut;
 import com.groupe_4_ODK.RoyaleStock.repository.*;
 import com.itextpdf.text.*;
@@ -37,6 +35,9 @@ public class BonEntreService {
 
   @Autowired
   private DetailsEntreRepository detailsEntreRepository;
+
+  @Autowired
+  private EntrepotsRepository entrepotsRepository;
 
   // Méthode pour récupérer tous les BonEntre
   public List<BonEntrees> getAllBonEntrees() {
@@ -96,30 +97,43 @@ public class BonEntreService {
       throw new RuntimeException("La liste des détails d'entrées est nulle");
     }
   }
-
+  //Valider BonEntre
   @Transactional
   public BonEntrees validerBonEntre(Integer bonEntreId) {
     BonEntrees bonEntre = bonEntreRepository.findById(bonEntreId)
       .orElseThrow(() -> new RuntimeException("BonEntree pas trouvé"));
-
-    // Mettre à jour la quantité du produit pour chaque DetailsEntree
-    for (DetailsEntrees detailsEntre : bonEntre.getDetailsEntrees()) {
-      if (detailsEntre.getProduits() != null && detailsEntre.getProduits().getId() != null) {
-        Produits produit = produitRepository.findById(detailsEntre.getProduits().getId())
-          .orElseThrow(() -> new RuntimeException("Produit non trouvé avec ce ID: " + detailsEntre.getProduits().getId()));
-        // Ajouter la quantité spécifiée à la quantité actuelle du produit
-        produit.setQuantite(produit.getQuantite() + detailsEntre.getQuantite());
-        produitRepository.save(produit);
-      } else {
-        throw new RuntimeException("Produit est null ou n'a pas ce ID");
+    if(bonEntre.getStatut().equals(Statut.Encours)) {
+      for (DetailsEntrees detailsEntre : bonEntre.getDetailsEntrees()) {
+        if (detailsEntre.getProduits() != null && detailsEntre.getProduits().getId() != null) {
+          Produits produit = produitRepository.findById(detailsEntre.getProduits().getId())
+            .orElseThrow(() -> new RuntimeException("Produit non trouvé avec ce ID: " + detailsEntre.getProduits().getId()));
+          // Ajouter la quantité spécifiée à la quantité actuelle du produit
+          produit.setQuantite(produit.getQuantite() + detailsEntre.getQuantite());
+          produitRepository.save(produit);
+        } else {
+          throw new RuntimeException("Produit est null ou n'a pas ce ID");
+        }
+        detailsEntreRepository.save(detailsEntre);
       }
-      detailsEntreRepository.save(detailsEntre);
-    }
 
-    // Valider le bon d'entrée en mettant à jour son état
-    bonEntre.setStatut(Statut.Livre);
-    return bonEntreRepository.save(bonEntre);
+      // Valider le bon d'entrée en mettant à jour son état
+      bonEntre.setStatut(Statut.Livre);
+      return bonEntreRepository.save(bonEntre);
+    }else {
+      throw new RuntimeException("Ce BonEntre a deja ete valide");
+    }
   }
+
+  //Liste d'une BonEntre
+  public List<BonEntrees> getBonEntreByEntrepot(Long entrepotId) {
+    // Récupérer l'entrepôt par ID
+    Entrepots entrepot = entrepotsRepository.findById(entrepotId)
+      .orElseThrow(() -> new RuntimeException("Entrepôt non trouvé avec l'ID: " + entrepotId));
+
+    // Récupérer et retourner les détails de sortie pour l'entrepôt spécifié
+    return bonEntreRepository.findByEntrepot(entrepot);
+  }
+
   // Méthode pour mettre à jour un BonEntre existant
   public BonEntrees updateBonEntree(Integer id, BonEntrees bonEntreeDetails) {
     BonEntrees bonEntree = getBonEntreeById(id);

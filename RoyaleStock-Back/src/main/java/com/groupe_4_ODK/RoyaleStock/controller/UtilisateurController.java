@@ -39,9 +39,13 @@ public class UtilisateurController {
     this.utilisateurService.createVendeur(vendeur);
   }
 
-  @GetMapping
-  public ResponseEntity<List<Utilisateur>> getAllUtilisateurs() {
-    return ResponseEntity.ok(utilisateurService.getAllUtilisateurs());
+//  @GetMapping
+//  public ResponseEntity<List<Utilisateur>> getAllUtilisateurs() {
+//    return ResponseEntity.ok(utilisateurService.getAllUtilisateurs());
+//  }
+  @GetMapping("list")
+  public List<Utilisateur> listUtilisateur() {
+    return utilisateurService.getAllUtilisateurs();
   }
 
   @GetMapping("/{nom}")

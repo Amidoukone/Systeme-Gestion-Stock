@@ -58,6 +58,11 @@ public class BonSortieController {
     Map<String, Map<String, Integer>> topProductsByMotif = bonSortieService.getTopProductsByMotif();
     return ResponseEntity.ok(topProductsByMotif);
   }
+  //Bon Sortie d'une entrepot
+  @GetMapping("/list/{entrepotId}")
+  public List<BonSorties> getDetailsSortiesByEntrepot(@PathVariable Long entrepotId) {
+    return bonSortieService.getDetailsSortiesByEntrepot(entrepotId);
+  }
 //Imprimer une sortie
 @GetMapping("/imprimer/{id}")
 public ResponseEntity<byte[]> imprimerBonSortie(@PathVariable Integer id) {

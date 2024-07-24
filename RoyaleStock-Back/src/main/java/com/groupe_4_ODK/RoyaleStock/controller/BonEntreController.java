@@ -1,6 +1,7 @@
 package com.groupe_4_ODK.RoyaleStock.controller;
 
 import com.groupe_4_ODK.RoyaleStock.entite.BonEntrees;
+import com.groupe_4_ODK.RoyaleStock.entite.BonSorties;
 import com.groupe_4_ODK.RoyaleStock.entite.DetailsEntrees;
 import com.groupe_4_ODK.RoyaleStock.service.BonEntreService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,12 +35,18 @@ public class BonEntreController {
     BonEntrees validatedBonEntree = bonEntreService.validerBonEntre(id);
     return ResponseEntity.ok(validatedBonEntree);
   }
+  //Listes des BonEntre d'une Entrepots
+  @GetMapping("/list/{entrepotId}")
+  public List<BonEntrees> getBonEntreByEntrepot(@PathVariable Long entrepotId) {
+    return bonEntreService.getBonEntreByEntrepot(entrepotId);
+  }
+  //Liste de tout BonEntre
   @GetMapping("/list")
   public ResponseEntity<List<BonEntrees>> getAllBonEntrees() {
     List<BonEntrees> bonEntreesList = bonEntreService.getAllBonEntrees();
     return ResponseEntity.ok(bonEntreesList);
   }
-
+  //GetBonById
   @GetMapping("/getbonById/{id}")
   public ResponseEntity<BonEntrees> getBonEntreeById(@PathVariable Integer id) {
     BonEntrees bonEntree = bonEntreService.getBonEntreeById(id);
@@ -52,7 +59,7 @@ public class BonEntreController {
     BonEntrees updatedBonEntree = bonEntreService.updateBonEntree(id, bonEntreeDetails);
     return ResponseEntity.ok(updatedBonEntree);
   }
-
+  //Delete
   @DeleteMapping("/delete/{id}")
   public ResponseEntity<Void> deleteBonEntree(@PathVariable Integer id) {
     bonEntreService.deleteBonEntree(id);

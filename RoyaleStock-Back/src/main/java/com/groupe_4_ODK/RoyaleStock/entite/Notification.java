@@ -20,7 +20,7 @@ public class Notification {
   private String Contenu;
   private Date dateNotification;
 
-  @JsonIgnore
+  //@JsonIgnore
   @OneToMany
   private List<Utilisateur> utilisateurs;
 

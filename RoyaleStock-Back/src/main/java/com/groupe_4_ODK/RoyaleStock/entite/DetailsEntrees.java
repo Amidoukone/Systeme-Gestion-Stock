@@ -2,6 +2,7 @@ package com.groupe_4_ODK.RoyaleStock.entite;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -32,6 +33,7 @@ public class DetailsEntrees {
 
   //@JsonIgnore
   @ManyToOne
+  @JsonManagedReference
   @JoinColumn(name = "produit_id")
   private Produits produits;
 
