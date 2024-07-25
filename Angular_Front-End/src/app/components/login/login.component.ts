@@ -15,6 +15,7 @@ export class LoginComponent implements  OnInit{
   email: string = '';
   password: string = '';
   isConnected: boolean = false;
+  errorMessage: string = '';
 
   constructor(public authService: AuthService, private router: Router) {}
 
@@ -29,7 +30,15 @@ export class LoginComponent implements  OnInit{
         this.router.navigate(['/dashboard']);
       },
       error => {
-        console.error('Login failed', error);
+        // console.error('Login failed', error);
+        console.error('Connexion échouée🥱', error);
+        this.errorMessage = 'Connexion échouée🥱: ' + (error.error?.message || 'Email or Password invalide');
+        setTimeout(() => {
+          this.errorMessage = '';
+        }, 2000);
+        this.email = '';
+        this.password = '';
+        
       }
     );
   }

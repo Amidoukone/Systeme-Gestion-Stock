@@ -3,7 +3,7 @@
     <button class="btn btn-link d-md-none rounded-circle mr-3" type="button" (click)="toggleSidebar()">
       <i class="fas fa-bars"></i>
     </button>
-    <a class="navbar-brand text-primary">Dashboard</a>
+    <a class="navbar-brand text-primary"> {{ getEntrepotName() }}</a>
     <div class="collapse navbar-collapse">
       <ul class="navbar-nav ms-auto">
         <!-- Nav Item - Alerts -->
@@ -27,7 +27,7 @@
         <!-- Nav Item - User Information -->
         <li class="nav-item dropdown no-arrow">
           <button *ngIf="currentUser" class="nav-link dropdown-toggle text-primary" (click)="toggleProfile()">
-            <i class="fas fa-user-circle"></i> Profile: {{ currentUser.username }}
+            <i class="fas fa-user-circle"></i> {{ currentUser.username }}
           </button>
           <ul *ngIf="showProfile" class="dropdown-menu-right shadow animated--grow-in" aria-labelledby="navbarDropdown">
             <li class="list-group-item active"><a class="dropdown-item" href="/user-profile"><i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> Mon Profil</a></li>
@@ -37,4 +37,4 @@
       </ul>
     </div>
   </div>
-</nav>
+</nav> 

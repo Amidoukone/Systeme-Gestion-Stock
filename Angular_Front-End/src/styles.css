@@ -51,3 +51,7 @@
 #sidebar-wrapper .list-group-item {
   border: none;
 }
+.container-fluid{
+  height: 50px;
+}
+

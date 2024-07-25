@@ -68,4 +68,8 @@ export class NavbarComponent implements OnInit {
   hasRole(role: string): boolean {
     return this.authService.hasRole(role);
   }
+  
+  getEntrepotName(): string {
+    return this.currentUser && this.currentUser.entrepot ? this.currentUser.entrepot.name : 'RoyalStock';
+  }
 }
