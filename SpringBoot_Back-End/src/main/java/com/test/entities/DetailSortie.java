@@ -29,8 +29,8 @@ public class DetailSortie {
     @JsonBackReference
     private BonSortie bonSortie;
 
-    @ManyToOne
+    /*@ManyToOne
     @JoinColumn(name = "produit_id", nullable = false)
     @JsonBackReference
-    private Produit produit;
+    private Produit produit;*/
 }

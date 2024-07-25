@@ -22,10 +22,10 @@ public class DetailEntree {
     @Column(name = "prix")
     private int prix;
 
-    @ManyToOne
+    /*@ManyToOne
     @JoinColumn(name = "produit_id", nullable = false)
     @JsonBackReference
-    private Produit produit;
+    private Produit produit;*/
 
     @ManyToOne
     @JoinColumn(name = "bon_entree_id", nullable = false)
