@@ -1,0 +1,58 @@
+<div class="container mt-5">
+  <h1 class="h2 mb-4">Liste des Catégories</h1>
+  <button class="btn btn-primary mb-3" (click)="addCategorie()">Ajouter Catégorie</button>
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>#</th>
+        <th>Nom</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let categorie of categories; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ categorie.name }}</td>
+
+        <td>
+          <button class="btn btn-warning btn-sm m-2"   (click)="showEditConfirmation(editModal, categorie.id)">Modifier</button>
+          <button class="btn btn-danger btn-sm m-2" (click)="showDeleteConfirmation(deleteModal, categorie.id)">Supprimer</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Modal de confirmation de suppression -->
+  <ng-template #deleteModal let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title">Confirmer la suppression</h5>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      Êtes-vous sûr de vouloir supprimer cette catégorie ?
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modal.dismiss('cancel click')">Annuler</button>
+      <button type="button" class="btn btn-danger" (click)="confirmDelete()">Supprimer</button>
+    </div>
+  </ng-template>
+
+  <!-- Modal de confirmation de modification -->
+  <ng-template #editModal let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title">Confirmer la modification</h5>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      Êtes-vous sûr de vouloir modifier cette catégorie?
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modal.dismiss('cancel click')">Annuler</button>
+      <button type="button" class="btn btn-primary" (click)="confirmEdit()">Modifier</button>
+    </div>
+  </ng-template>
+</div>
+
+

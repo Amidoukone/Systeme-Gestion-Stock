@@ -1,0 +1,46 @@
+<div class="container mt-5 py-4">
+  <div class="card advanced-form-card">
+    <div class="card-header">
+      <h5 class="card-title">{{ isEditMode ? 'Modifier Entrepôt' : 'Ajouter Entrepôt' }}</h5>
+    </div>
+    <div class="card-body">
+      <form id="entrepotForm" (ngSubmit)="onSubmit($event)">
+        <div class="form-group">
+          <div class="mb-3">
+            <label for="entrepotName" class="form-label">Nom d'Entrepôt</label>
+            <input type="text" class="form-control" id="entrepotName" name="entrepotName" [(ngModel)]="entrepot.entrepotName" required>
+          </div>
+          <div class="mb-3">
+            <label for="lieu" class="form-label">Lieu</label>
+            <input type="text" class="form-control" id="lieu" name="lieu" [(ngModel)]="entrepot.lieu" required>
+          </div>
+          <div class="mb-3">
+            <label for="statut" class="form-label">Statut</label>
+            <select class="form-control" id="statut" name="statut" [(ngModel)]="entrepot.statut" required>
+              <option value="Active">Active</option>
+              <option value="Bloquer">Bloquer</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label for="dateCreate" class="form-label">Date de Creation</label>
+            <input type="date" class="form-control" id="dateCreate" name="dateCreate" [(ngModel)]="entrepot.dateCreate" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="abonnementStart" class="form-label">Debut Abonnement</label>
+            <input type="date" class="form-control" id="abonnementStart" name="abonnementStart" [(ngModel)]="entrepot.abonnementStart" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="abonnementEnd" class="form-label">Fin Abonnement</label>
+            <input type="date" class="form-control" id="abonnementEnd" name="abonnementEnd" [(ngModel)]="entrepot.abonnementEnd" required>
+          </div>
+        </div>
+        <div class="d-flex justify-content-end">
+          <button class="btn btn-primary" type="submit">{{ isEditMode ? 'Modifier' : 'Ajouter' }}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

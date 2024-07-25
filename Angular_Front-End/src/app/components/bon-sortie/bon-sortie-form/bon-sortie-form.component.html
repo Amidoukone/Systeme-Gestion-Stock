@@ -1,0 +1,57 @@
+<div class="container mx-auto px-4 py-6">
+  <div class="card advanced-form-card">
+    <div class="card-header">
+      <h5 class="card-title">{{ isEditMode ? 'Modifier Bon de Sortie' : 'Ajouter Bon de Sortie' }}</h5>
+    </div>
+    <div class="card-body">
+      <form (ngSubmit)="onSubmit()">
+        <div class="form-group row">
+          <div class="col-md-6 mb-3">
+            <label for="date_sortie">Date de Sortie</label>
+            <input type="date" class="form-control" id="date_sortie" name="date_sortie"
+                   [(ngModel)]="bonSortie.dateSortie" required>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="motif">Motif</label>
+            <select class="form-control" id="motif" name="motif" [(ngModel)]="bonSortie.motif" required>
+              <option *ngFor="let motif of motifs" [value]="motif.id">{{ motif.title }}</option>
+            </select>
+          </div>
+        </div>
+        <!-- If visible user selection is needed -->
+        <div class="form-group row">
+          <div class="col-md-6 mb-3">
+            <label for="utilisateur">Utilisateur</label>
+            <input type="hidden" class="form-control" id="utilisateur" name="utilisateur"
+                   [(ngModel)]="bonSortie.utilisateur.id" [value]="bonSortie.utilisateur.id"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Détails des Sorties</label>
+          <button class="btn btn-secondary" type="button" (click)="addDetailSortie()">Ajouter Détail</button>
+          <div *ngFor="let detail of detailsSorties; let i = index" class="form-group row">
+            <div class="col-md-4 mb-3">
+              <label for="produit{{i}}">Produit</label>
+              <select class="form-control" id="produit{{i}}" name="produit{{i}}" [(ngModel)]="detail.produit_id">
+                <option *ngFor="let produit of produits" [value]="produit.id">{{ produit.productName }}</option>
+              </select>
+            </div>
+            <div class="col-md-4 mb-3">
+              <label for="quantite{{i}}">Quantité</label>
+              <input type="number" class="form-control" id="quantite{{i}}" name="quantite{{i}}"
+                     [(ngModel)]="detail.quantity">
+            </div>
+            <div class="col-md-4 mb-3">
+              <label for="prix_total{{i}}">Prix Total</label>
+              <input type="number" class="form-control" id="prixTotal{{i}}" name="prixTotal{{i}}"
+                     [(ngModel)]="detail.prix">
+            </div>
+          </div>
+        </div>
+        <div class="button-container">
+          <button class="btn btn-primary" type="submit">{{ isEditMode ? 'Modifier' : 'Ajouter' }}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
