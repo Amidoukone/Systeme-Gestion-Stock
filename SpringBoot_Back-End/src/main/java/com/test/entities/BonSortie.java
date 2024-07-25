@@ -1,5 +1,6 @@
 package com.test.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -24,6 +25,7 @@ public class BonSortie {
 
     @ManyToOne
     @JoinColumn(name = "motif_id", nullable = false)
+    @JsonBackReference
     private Motif motif;
 
     @ManyToOne

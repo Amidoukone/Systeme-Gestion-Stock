@@ -26,6 +26,6 @@ public class Fournisseur {
     @Column(name = "telephone")
     private String telephone;
 
-    @OneToMany(mappedBy = "fournisseur", cascade = CascadeType.ALL)
-    private List<BonEntree> bonEntrees;
+    /*@OneToMany(mappedBy = "fournisseur", cascade = CascadeType.ALL)
+    private List<BonEntree> bonEntrees;*/
 }

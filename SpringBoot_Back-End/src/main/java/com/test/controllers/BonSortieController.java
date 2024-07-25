@@ -2,8 +2,10 @@ package com.test.controllers;
 
 import com.test.entities.BonSortie;
 import com.test.entities.DetailSortie;
+import com.test.entities.Motif;
 import com.test.entities.Produit;
 import com.test.services.BonSortieService;
+import com.test.services.MotifService;
 import com.test.services.ProduitService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +26,9 @@ public class BonSortieController {
     @Autowired
     private ProduitService produitService;
 
+    @Autowired
+    private MotifService motifService;
+
     @GetMapping
     public List<BonSortie> getAllBonSorties() {
         return bonSortieService.findAll();
@@ -39,6 +44,11 @@ public class BonSortieController {
     @PostMapping
     public ResponseEntity<BonSortie> createBonSortie(@RequestBody BonSortie bonSortie) {
         try {
+            Motif motif = bonSortie.getMotif();
+            if (motif != null && motif.getId() == 0) {
+                motif = motifService.save(motif);
+                bonSortie.setMotif(motif);
+            }
             BonSortie savedBonSortie = bonSortieService.save(bonSortie);
             return ResponseEntity.status(HttpStatus.CREATED).body(savedBonSortie);
         } catch (Exception e) {
