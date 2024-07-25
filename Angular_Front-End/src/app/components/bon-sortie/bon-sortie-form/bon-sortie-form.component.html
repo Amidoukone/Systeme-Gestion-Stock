@@ -8,18 +8,22 @@
         <div class="form-group row">
           <div class="col-md-6 mb-3">
             <label for="date_sortie">Date de Sortie</label>
-            <input type="date" class="form-control" id="date_sortie" name="date_sortie" [(ngModel)]="bonSortie.dateSortie" required>
+            <input type="date" class="form-control" id="date_sortie" name="date_sortie"
+                   [(ngModel)]="bonSortie.dateSortie" required>
           </div>
           <div class="col-md-6 mb-3">
             <label for="motif">Motif</label>
-            <input type="text" class="form-control" id="motif" name="motif" [(ngModel)]="bonSortie.motif" required>
+            <select class="form-control" id="motif" name="motif" [(ngModel)]="bonSortie.motif" required>
+              <option *ngFor="let motif of motifs" [value]="motif.id">{{ motif.title }}</option>
+            </select>
           </div>
         </div>
         <!-- If visible user selection is needed -->
         <div class="form-group row">
           <div class="col-md-6 mb-3">
             <label for="utilisateur">Utilisateur</label>
-            <input type="hidden" class="form-control" id="utilisateur" name="utilisateur" [(ngModel)]="bonSortie.utilisateur.id" [value]="bonSortie.utilisateur.id"/>
+            <input type="hidden" class="form-control" id="utilisateur" name="utilisateur"
+                   [(ngModel)]="bonSortie.utilisateur.id" [value]="bonSortie.utilisateur.id"/>
           </div>
         </div>
         <div class="form-group">
@@ -34,11 +38,13 @@
             </div>
             <div class="col-md-4 mb-3">
               <label for="quantite{{i}}">Quantité</label>
-              <input type="number" class="form-control" id="quantite{{i}}" name="quantite{{i}}" [(ngModel)]="detail.quantity">
+              <input type="number" class="form-control" id="quantite{{i}}" name="quantite{{i}}"
+                     [(ngModel)]="detail.quantity">
             </div>
             <div class="col-md-4 mb-3">
               <label for="prix_total{{i}}">Prix Total</label>
-              <input type="number" class="form-control" id="prixTotal{{i}}" name="prixTotal{{i}}" [(ngModel)]="detail.prix">
+              <input type="number" class="form-control" id="prixTotal{{i}}" name="prixTotal{{i}}"
+                     [(ngModel)]="detail.prix">
             </div>
           </div>
         </div>

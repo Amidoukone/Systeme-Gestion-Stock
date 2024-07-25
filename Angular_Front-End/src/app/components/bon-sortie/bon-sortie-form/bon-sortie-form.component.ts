@@ -10,6 +10,8 @@ import { ProduitService } from '../../../services/produit.service';
 import {AuthService} from "../../../services/auth.service";
 import { format } from 'date-fns';
 import {BonEntree} from "../../../models/bon-entree";
+import {Motif} from "../../../models/motif";
+import {MotifService} from "../../../services/motif.service";
 
 @Component({
   selector: 'app-bon-sortie-form',
@@ -29,6 +31,7 @@ export class BonSortieFormComponent implements OnInit {
     detailsSorties: [],
   };
   produits: Produit[] = [];
+  motifs: Motif[] = [];
   detailsSorties: DetailSortie[] = [];
   isEditMode: boolean = false;
 
@@ -37,7 +40,8 @@ export class BonSortieFormComponent implements OnInit {
     private router: Router,
     private bonSortieService: BonSortieService,
     private authService: AuthService,
-    private produitService: ProduitService
+    private produitService: ProduitService,
+    private motifService: MotifService
   ) { }
 
   ngOnInit(): void {
@@ -54,6 +58,7 @@ export class BonSortieFormComponent implements OnInit {
   async loadProduits() {
     try {
       this.produits = await this.produitService.getProduits().toPromise() || [];
+      this.motifs = await this.motifService.getMotifs().toPromise() || [];
     } catch (error) {
       console.error('Error loading products:', error);
     }
