@@ -1,0 +1,42 @@
+<div class="d-flex ">
+  <div class="border-end bg-white navbar-light bg-white topbar mb-4 static-top shadow" id="sidebar-wrapper" [ngClass]="{'toggled': !isExpanded}">
+    <div class="sidebar-heading text-center py-4 primary-text fs-4 fw-bold text-uppercase border-bottom">
+      <img class="img-responsive" src="/Logo.png" alt="Logo" height="50" width="50" style="background-color: #000000"/>
+    </div>
+    <div class="list-group list-group-flush my-6">
+      <a *ngIf="hasRole('ADMIN') || hasRole('MANAGER')" href="/dashboard" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+        <i class="fas fa-tachometer-alt me-2"></i> Dashboard
+      </a>
+      <a *ngIf="hasRole('ADMIN') || hasRole('MANAGER')" href="/bon-entree" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+        <i class="fas fa-boxes me-2"></i> Bons d'Entrée
+      </a>
+      <a *ngIf="hasRole('ADMIN') || hasRole('MANAGER')" href="/bon-sortie" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+        <i class="fas fa-box-open me-2"></i> Bons de Sortie
+      </a>
+      <a *ngIf="hasRole('ADMIN') || hasRole('MANAGER')" href="/categories" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+        <i class="fas fa-tags me-2"></i> Catégories
+      </a>
+      <a *ngIf="hasRole('ADMIN') || hasRole('MANAGER')" href="/motif" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+        <i class="fas fa-tags me-2"></i> Motifs
+      </a>
+      <a *ngIf="hasRole('ADMIN')" href="/entrepots" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+        <i class="fas fa-warehouse me-2"></i> Entrepôts
+      </a>
+      <a *ngIf="hasRole('ADMIN') || hasRole('MANAGER')" href="/fournisseurs" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+        <i class="fas fa-truck me-2"></i> Fournisseurs
+      </a>
+      <a *ngIf="hasRole('ADMIN') || hasRole('MANAGER') || hasRole('VENDEUR')" href="/produits" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+        <i class="fas fa-box me-2"></i> Produits
+      </a>
+      <a *ngIf="hasRole('ADMIN')" href="/roles" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+        <i class="fas fa-shield-alt me-2"></i> Rôles
+      </a>
+      <a *ngIf="hasRole('ADMIN')" href="/utilisateurs" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+        <i class="fas fa-users me-2"></i> Utilisateurs
+      </a>
+      <a *ngIf="currentUser" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+        <i class="fas fa-user me-2"></i> {{ currentUser.email }}
+      </a>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,36 @@
+<div class="container mx-auto px-4 py-6">
+  <div class="card">
+    <div class="card-header">
+      <h5 class="card-title">{{ isEditMode ? 'Modifier Produit' : 'Ajouter Produit' }}</h5>
+    </div>
+    <div class="card-body">
+      <form id="produitForm" (ngSubmit)="onSubmit($event)">
+        <div class="form-group">
+          <div class="mb-3">
+            <label for="productName" class="form-label">Nom de Produit</label>
+            <input type="text" class="form-control" id="productName" name="productName" [(ngModel)]="produit.productName" required>
+          </div>
+          <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <input type="text" class="form-control" id="description" name="description" [(ngModel)]="produit.description" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="mb-3">
+            <label for="quantity" class="form-label">Quantité</label>
+            <input type="number" class="form-control" id="quantity" name="quantity" [(ngModel)]="produit.quantity" required>
+          </div>
+        </div>
+        <div class="form-group mb-3">
+          <label for="categories_id" class="form-label">Catégorie</label>
+          <select class="form-select" id="categories_id" name="categories_id" [(ngModel)]="selectedCategoryId" (change)="onCategoryChange($event)">
+            <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+          </select>
+        </div>
+        <div class="d-grid gap-2">
+          <button class="btn btn-primary" type="submit">{{ isEditMode ? 'Modifier' : 'Ajouter' }}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
