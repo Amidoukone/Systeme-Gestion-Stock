@@ -3,11 +3,13 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import { CurrentUser } from '../models/CurrentUser';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+
 
   private apiUrl = 'http://localhost:8080/api/utilisateurs';
   private currentUserSubject: BehaviorSubject<any>;
@@ -61,7 +63,10 @@ export class AuthService {
     return throwError(errorMessage);
   }
 
+
   hasRole(role: string): boolean {
     return this.currentUserValue && this.currentUserValue.role && this.currentUserValue.role === role;
   }
+
+
 }

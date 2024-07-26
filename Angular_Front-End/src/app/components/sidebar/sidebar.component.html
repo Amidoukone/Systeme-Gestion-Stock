@@ -33,12 +33,9 @@
       <a *ngIf="hasRole('ADMIN')" href="/roles" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
         <i class="fas fa-shield-alt me-2"></i> Rôles
       </a>
-      <a *ngIf="hasRole('ADMIN')" href="/utilisateurs" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+      <a *ngIf="hasRole('ADMIN') || hasRole('MANAGER')" href="/utilisateurs" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
         <i class="fas fa-users me-2"></i> Utilisateurs
-      </a>
-      <!-- <a *ngIf="currentUser" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
-        <i class="fas fa-user me-2"></i> {{ currentUser.email }}
-      </a> -->
+      </a> 
     </div>
   </div>
 </div>

@@ -54,6 +54,11 @@ public class AuthController {
             Map<String, Object> entrepotInfo = new HashMap<>();
             entrepotInfo.put("entrepotId", utilisateur.getEntrepot().getId());
             entrepotInfo.put("entrepotNom", utilisateur.getEntrepot().getEntrepotName());
+            entrepotInfo.put("entrepotAdresse", utilisateur.getEntrepot().getLieu());
+            /*entrepotInfo.put("entrepotDebutAbonnementStart", utilisateur.getEntrepot().getAbonnementStart());
+            entrepotInfo.put("entrepotDebutAbonnementEnd", utilisateur.getEntrepot().getAbonnementEnd());
+            entrepotInfo.put("entrepotDebutCreate", utilisateur.getEntrepot().getDateCreate());
+            entrepotInfo.put("entrepotStatut", utilisateur.getEntrepot().getStatut());*/
             response.put("entrepot", entrepotInfo);
         }
         return ResponseEntity.ok(response);

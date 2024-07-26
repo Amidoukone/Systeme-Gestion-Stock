@@ -16,12 +16,22 @@ export class UtilisateurService {
     return this.http.get<any>(this.baseUrl);
   }
 
+  // getUtilisateursByEntrepot(): Observable<any> {
+  //   return this.http.get<any>(`${this.baseUrl}/entrepots/${id}`);
+  // }
+
   getUtilisateurById(id: number): Observable<Utilisateur> {
     return this.http.get<Utilisateur>(`${this.baseUrl}/${id}`);
   }
 
-  createUtilisateur(utilisateur: Utilisateur): Observable<Utilisateur> {
-    return this.http.post<Utilisateur>(`${this.baseUrl}`, utilisateur);
+  createAdmin(utilisateur: Utilisateur): Observable<Utilisateur> {
+    return this.http.post<Utilisateur>(`${this.baseUrl}/admin`, utilisateur);
+  }
+  createManager(utilisateur: Utilisateur): Observable<Utilisateur> {
+    return this.http.post<Utilisateur>(`${this.baseUrl}/manager`, utilisateur);
+  }
+  createVendeur(utilisateur: Utilisateur): Observable<Utilisateur> {
+    return this.http.post<Utilisateur>(`${this.baseUrl}/vendeur`, utilisateur);
   }
 
   updateUtilisateur(id: number, utilisateur: Utilisateur): Observable<Utilisateur> {
