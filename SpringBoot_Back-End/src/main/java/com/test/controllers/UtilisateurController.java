@@ -13,8 +13,54 @@ import java.util.Optional;
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/utilisateurs")
 public class UtilisateurController {
+
+    private final UtilisateurService utilisateurService;
+
     @Autowired
-    private UtilisateurService utilisateurService;
+    public UtilisateurController(UtilisateurService utilisateurService) {
+        this.utilisateurService = utilisateurService;
+    }
+
+    @PostMapping("/admin")
+    public ResponseEntity<Utilisateur> createAdmin(@RequestBody Utilisateur utilisateur) {
+        try {
+            Utilisateur newAdmin = utilisateurService.createAdmin(utilisateur.getUsername(), utilisateur.getContact(), utilisateur.getEmail(), utilisateur.getPassword());
+            return ResponseEntity.ok(newAdmin);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
+
+    /*@PostMapping("/manager")
+    public ResponseEntity<Utilisateur> createManager(@RequestBody Utilisateur utilisateur) {
+        try {
+            Utilisateur newManager = utilisateurService.createManager(utilisateur.getUsername(), utilisateur.getContact(), utilisateur.getEmail(), utilisateur.getPassword());
+            return ResponseEntity.ok(newManager);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
+    }*/
+    @PostMapping("/manager")
+    public ResponseEntity<Utilisateur> createManager(@RequestBody Utilisateur utilisateurRequest) {
+        Utilisateur utilisateur = utilisateurService.createManager(utilisateurRequest.getUsername(), utilisateurRequest.getContact(), utilisateurRequest.getEmail(), utilisateurRequest.getPassword(), utilisateurRequest.getEntrepot());
+        return ResponseEntity.ok(utilisateur);
+    }
+
+    @PostMapping("/vendeur")
+    public ResponseEntity<Utilisateur> createVendeur(@RequestBody Utilisateur utilisateur) {
+        try {
+            Utilisateur newVendeur = utilisateurService.createVendeur(utilisateur.getUsername(), utilisateur.getContact(), utilisateur.getEmail(), utilisateur.getPassword());
+            return ResponseEntity.ok(newVendeur);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
+
+    @GetMapping("/entrepots/{entrepotId}")
+    public ResponseEntity<List<Utilisateur>> getUtilisateursByEntrepot(@PathVariable int entrepotId) {
+        List<Utilisateur> utilisateurs = utilisateurService.findByEntrepot(entrepotId);
+        return ResponseEntity.ok(utilisateurs);
+    }
 
     @GetMapping
     public ResponseEntity<List<Utilisateur>> getAllUtilisateurs() {
@@ -27,33 +73,6 @@ public class UtilisateurController {
         Optional<Utilisateur> utilisateur = utilisateurService.findById(id);
         return utilisateur.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
-
-    @PostMapping("/admin")
-    public ResponseEntity<Utilisateur> createAdmin(@RequestBody Utilisateur utilisateurRequest) {
-        Utilisateur utilisateur = utilisateurService.createAdmin(utilisateurRequest.getUsername(), utilisateurRequest.getEmail(), utilisateurRequest.getPassword());
-        return ResponseEntity.ok(utilisateur);
-    }
-
-    @PostMapping("/manager")
-    public ResponseEntity<Utilisateur> createManager(@RequestBody Utilisateur utilisateurRequest) {
-        Utilisateur utilisateur = utilisateurService.createManager(utilisateurRequest.getUsername(), utilisateurRequest.getEmail(), utilisateurRequest.getPassword(), utilisateurRequest.getEntrepot());
-        return ResponseEntity.ok(utilisateur);
-    }
-
-    /*@PostMapping("/vendeur")
-    public ResponseEntity<Utilisateur> createVendeur(@RequestBody Utilisateur utilisateurRequest, @RequestHeader("Authenticated-User") String authenticatedUser, @RequestHeader("Entrepot-Id") int entrepotId) {
-        Utilisateur manager = utilisateurService.findById(Integer.parseInt(authenticatedUser)).orElseThrow(() -> new RuntimeException("Manager non trouvé"));
-        Entrepot entrepot = utilisateurService.findEntrepotById(entrepotId).orElseThrow(() -> new RuntimeException("Entrepôt non trouvé"));
-        Utilisateur utilisateur = utilisateurService.createVendeur(utilisateurRequest.getUsername(), utilisateurRequest.getEmail(), utilisateurRequest.getPassword(), manager);
-        return ResponseEntity.ok(utilisateur);
-    }*/
-
-    @GetMapping("/entrepots/{entrepotId}")
-    public ResponseEntity<List<Utilisateur>> getUtilisateursByEntrepot(@PathVariable int entrepotId) {
-        List<Utilisateur> utilisateurs = utilisateurService.findByEntrepot(entrepotId);
-        return ResponseEntity.ok(utilisateurs);
-    }
-
     @PutMapping("/{id}")
     public ResponseEntity<Utilisateur> updateUtilisateur(@PathVariable int id, @RequestBody Utilisateur utilisateurDetails) {
         utilisateurDetails.setId(id);
@@ -73,48 +92,35 @@ public class UtilisateurController {
         return ResponseEntity.ok(utilisateurs);
     }
 
-
- /*   @Autowired
+ /*
+ @Autowired
     private UtilisateurService utilisateurService;
 
-    private static final Logger logger = LoggerFactory.getLogger(UtilisateurController.class);
 
-    @GetMapping
-    public List<Utilisateur> getAllUtilisateurs() {
-        //logger.info("GET /api/utilisateurs");
-        return utilisateurService.findAll();
+
+    @PostMapping("/admin")
+    public ResponseEntity<Utilisateur> createAdmin(@RequestBody Utilisateur utilisateurRequest) {
+        Utilisateur utilisateur = utilisateurService.createAdmin(utilisateurRequest.getUsername(), utilisateurRequest.getEmail(), utilisateurRequest.getPassword());
+        return ResponseEntity.ok(utilisateur);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Utilisateur> getUtilisateurById(@PathVariable int id) {
-        return utilisateurService.findById(id)
-                .map(utilisateur -> ResponseEntity.ok().body(utilisateur))
-                .orElse(ResponseEntity.notFound().build());
+    @PostMapping("/manager")
+    public ResponseEntity<Utilisateur> createManager(@RequestBody Utilisateur utilisateurRequest) {
+        Utilisateur utilisateur = utilisateurService.createManager(utilisateurRequest.getUsername(), utilisateurRequest.getEmail(), utilisateurRequest.getPassword(), utilisateurRequest.getEntrepot());
+        return ResponseEntity.ok(utilisateur);
     }
 
-    @PostMapping
-    public Utilisateur createUtilisateur(@RequestBody Utilisateur utilisateur) {
-        return utilisateurService.save(utilisateur);
+    @PostMapping("/vendeur")
+    public ResponseEntity<Utilisateur> createVendeur(@RequestBody Utilisateur utilisateur) {
+        try {
+            Utilisateur newVendeur = utilisateurService.createVendeur(utilisateur.getUsername(), utilisateur.getEmail(), utilisateur.getPassword());
+            return ResponseEntity.ok(newVendeur);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Utilisateur> updateUtilisateur(@PathVariable int id, @RequestBody Utilisateur utilisateurDetails) {
-        return utilisateurService.findById(id)
-                .map(utilisateur -> {
-                    utilisateur.setUsername(utilisateurDetails.getUsername());
-                    utilisateur.setContact(utilisateurDetails.getContact());
-                    utilisateur.setEmail(utilisateurDetails.getEmail());
-                    utilisateur.setPassword(utilisateurDetails.getPassword());
-                    utilisateur.setEntrepot(utilisateurDetails.getEntrepot());
-                    utilisateur.setRole(utilisateurDetails.getRole());
-                    Utilisateur updatedUtilisateur = utilisateurService.save(utilisateur);
-                    return ResponseEntity.ok().body(updatedUtilisateur);
-                }).orElse(ResponseEntity.notFound().build());
-    }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUtilisateur(@PathVariable int id) {
-        utilisateurService.deleteById(id);
-        return ResponseEntity.noContent().build();
-    }*/
+
+ */
 }
