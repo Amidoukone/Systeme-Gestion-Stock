@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import {Observable, Subscription} from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import {Observable, Subscription, throwError} from 'rxjs';
 import { Utilisateur } from '../models/utilisateur';
 import {observableToBeFn} from "rxjs/internal/testing/TestScheduler";
 
@@ -8,7 +8,7 @@ import {observableToBeFn} from "rxjs/internal/testing/TestScheduler";
   providedIn: 'root'
 })
 export class UtilisateurService {
-  private baseUrl = 'http://localhost:8080/api/utilisateurs';
+  private baseUrl = 'http://localhost:8080/api/utilisateurs'; 
 
   constructor(private http: HttpClient) { }
 
@@ -16,12 +16,23 @@ export class UtilisateurService {
     return this.http.get<any>(this.baseUrl);
   }
 
+  // getUtilisateursByEntrepot(): Observable<any> {
+  //   return this.http.get<any>(`${this.baseUrl}/entrepots/${id}`);
+  // }
+
   getUtilisateurById(id: number): Observable<Utilisateur> {
     return this.http.get<Utilisateur>(`${this.baseUrl}/${id}`);
   }
 
-  createUtilisateur(utilisateur: Utilisateur): Observable<Utilisateur> {
-    return this.http.post<Utilisateur>(`${this.baseUrl}`, utilisateur);
+  createAdmin(utilisateur: Utilisateur): Observable<Utilisateur> {
+    return this.http.post<Utilisateur>(`${this.baseUrl}/admin`, utilisateur);
+  }
+  createManager(utilisateur: Utilisateur): Observable<Utilisateur> {
+    return this.http.post<Utilisateur>(`${this.baseUrl}/manager`, utilisateur);
+  } 
+  createVendeur(utilisateur: Utilisateur, managerId: number): Observable<Utilisateur> {
+    const payload = { ...utilisateur, managerId };
+    return this.http.post<Utilisateur>(`${this.baseUrl}/vendeur`, payload);
   }
 
   updateUtilisateur(id: number, utilisateur: Utilisateur): Observable<Utilisateur> {
@@ -30,5 +41,10 @@ export class UtilisateurService {
 
   deleteUtilisateur(id: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    console.error('An error occurred:', error.error);
+    return throwError(() => new Error(error.error?.message || 'An error occurred'));
   }
 }

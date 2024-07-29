@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -16,47 +17,74 @@ import java.util.Optional;
 @RequestMapping("/api/utilisateurs")
 public class UtilisateurController {
 
-    @Autowired
-    private UtilisateurService utilisateurService;
+    private final UtilisateurService utilisateurService;
 
-    private static final Logger logger = LoggerFactory.getLogger(UtilisateurController.class);
+    @Autowired
+    public UtilisateurController(UtilisateurService utilisateurService) {
+        this.utilisateurService = utilisateurService;
+    }
+
+    @PostMapping("/admin")
+    public ResponseEntity<Utilisateur> createAdmin(@RequestBody Utilisateur utilisateur) {
+        try {
+            Utilisateur newAdmin = utilisateurService.createAdmin(utilisateur.getUsername(), utilisateur.getContact(), utilisateur.getEmail(), utilisateur.getPassword());
+            return ResponseEntity.ok(newAdmin);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
+
+    @PostMapping("/manager")
+    public ResponseEntity<Utilisateur> createManager(@RequestBody Utilisateur utilisateurRequest) {
+        Utilisateur utilisateur = utilisateurService.createManager(utilisateurRequest.getUsername(), utilisateurRequest.getContact(), utilisateurRequest.getEmail(), utilisateurRequest.getPassword(), utilisateurRequest.getEntrepot());
+        return ResponseEntity.ok(utilisateur);
+    }
+
+    @PostMapping("/vendeur")
+    public ResponseEntity<Utilisateur> createVendeur(@RequestBody Map<String, Object> request) {
+        String username = (String) request.get("username");
+        String contact = (String) request.get("contact");
+        String email = (String) request.get("email");
+        String password = (String) request.get("password");
+        Integer managerId = (Integer) request.get("managerId");
+
+        Utilisateur vendeur = utilisateurService.createVendeur(username, contact, email, password, managerId);
+        return ResponseEntity.ok(vendeur);
+    }
+
+    @GetMapping("/entrepots/{entrepotId}")
+    public ResponseEntity<List<Utilisateur>> getUtilisateursByEntrepot(@PathVariable int entrepotId) {
+        List<Utilisateur> utilisateurs = utilisateurService.findByEntrepot(entrepotId);
+        return ResponseEntity.ok(utilisateurs);
+    }
 
     @GetMapping
-    public List<Utilisateur> getAllUtilisateurs() {
-        //logger.info("GET /api/utilisateurs");
-        return utilisateurService.findAll();
+    public ResponseEntity<List<Utilisateur>> getAllUtilisateurs() {
+        List<Utilisateur> utilisateurs = utilisateurService.findAll();
+        return ResponseEntity.ok(utilisateurs);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Utilisateur> getUtilisateurById(@PathVariable int id) {
-        return utilisateurService.findById(id)
-                .map(utilisateur -> ResponseEntity.ok().body(utilisateur))
-                .orElse(ResponseEntity.notFound().build());
+        Optional<Utilisateur> utilisateur = utilisateurService.findById(id);
+        return utilisateur.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
-
-    @PostMapping
-    public Utilisateur createUtilisateur(@RequestBody Utilisateur utilisateur) {
-        return utilisateurService.save(utilisateur);
-    }
-
     @PutMapping("/{id}")
     public ResponseEntity<Utilisateur> updateUtilisateur(@PathVariable int id, @RequestBody Utilisateur utilisateurDetails) {
-        return utilisateurService.findById(id)
-                .map(utilisateur -> {
-                    utilisateur.setUsername(utilisateurDetails.getUsername());
-                    utilisateur.setContact(utilisateurDetails.getContact());
-                    utilisateur.setEmail(utilisateurDetails.getEmail());
-                    utilisateur.setPassword(utilisateurDetails.getPassword());
-                    utilisateur.setEntrepot(utilisateurDetails.getEntrepot());
-                    utilisateur.setRole(utilisateurDetails.getRole());
-                    Utilisateur updatedUtilisateur = utilisateurService.save(utilisateur);
-                    return ResponseEntity.ok().body(updatedUtilisateur);
-                }).orElse(ResponseEntity.notFound().build());
+        utilisateurDetails.setId(id);
+        Utilisateur updatedUtilisateur = utilisateurService.update(utilisateurDetails);
+        return updatedUtilisateur != null ? ResponseEntity.ok(updatedUtilisateur) : ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUtilisateur(@PathVariable int id) {
         utilisateurService.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/allUtilisateurs")
+    public ResponseEntity<List<Utilisateur>> getAllUtilisateur() {
+        List<Utilisateur> utilisateurs = utilisateurService.findAll();
+        return ResponseEntity.ok(utilisateurs);
     }
 }
