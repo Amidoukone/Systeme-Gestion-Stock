@@ -4,6 +4,7 @@ import { BonSortieService } from '../../../services/bon-sortie.service';
 import { BonSortie } from '../../../models/bon-sortie';
 import { RouterModule } from '@angular/router';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-bon-sortie-list',
@@ -16,10 +17,17 @@ export class BonSortieListComponent implements OnInit {
   bonSorties: BonSortie[] = [];
   filteredBonSorties: BonSortie[] = [];
 
+ bonsortieToDelete: number | null = null;
+  bonsortieToEdit: number | null = null;
+  private modalRef: NgbModalRef | null = null;
+
   constructor(
     private bonSortieService: BonSortieService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private modalService: NgbModal
+
+
   ) {}
 
   ngOnInit(): void {
@@ -53,4 +61,37 @@ export class BonSortieListComponent implements OnInit {
   navigateToAddDetail(bonSortieId: number): void {
     this.router.navigate(['/bon-sortie-detail', bonSortieId]);
   }
+
+
+
+  showEditConfirmation(content: any, id: number): void {
+    this.bonsortieToEdit = id;
+    this.modalRef = this.modalService.open(content);
+  }
+
+  confirmEdit(): void {
+    if (this.bonsortieToEdit !== null) {
+      this.router.navigate(['/edit-fournisseur', this.bonsortieToEdit]);
+      this.bonsortieToEdit = null;
+      this.modalRef?.close();
+    }
+  }
+
+  showDeleteConfirmation(content: any, id: number): void {
+    this.bonsortieToDelete= id;
+    this.modalRef = this.modalService.open(content);
+  }
+
+  confirmDelete(): void {
+    if (this.bonsortieToDelete !== null) {
+      this.bonSortieService.deleteBonSortie(this.bonsortieToDelete).subscribe(() => {
+        this.bonSorties = this.bonSorties.filter(f => f.id !== this.bonsortieToDelete);
+        this.filteredBonSorties = this.filteredBonSorties.filter(f => f.id !== this.bonsortieToDelete);
+        this.bonsortieToDelete= null;
+        this.modalRef?.close();
+      });
+    }
+  }
+
+
 }

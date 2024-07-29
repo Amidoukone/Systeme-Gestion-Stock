@@ -28,12 +28,35 @@
         <td>{{ produit.quantity }}</td>
         <td>{{ produit.categorie.name}}</td>
         <td>{{ produit.createBy}}</td>
-        <td>
+        <!--td>
           <button class="btn btn-warning btn-sm mr-2" (click)="editProduit(produit.id)">Modifier</button>
           <button class="btn btn-danger btn-sm" (click)="deleteProduit(produit.id)">Supprimer</button>
+        </td -->
+
+        <td>
+
+          <button class="btn btn-warning btn-sm mr-2" (click)="editProduit(produit.id)">Modifier</button>
+          <button class="btn btn-danger btn-sm m-2" (click)="showDeleteConfirmation(deleteModal, produit.id)">Supprimer</button>
         </td>
+
       </tr>
       </tbody>
     </table>
   </div>
+  <!-- Modal de confirmation de suppression -->
+  <ng-template #deleteModal let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title">Confirmer la suppression</h5>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      Êtes-vous sûr de vouloir supprimer ce produit ?
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modal.dismiss('cancel click')">Annuler</button>
+      <button type="button" class="btn btn-danger" (click)="confirmDelete()">Supprimer</button>
+    </div>
+  </ng-template>
+
 </div>
+

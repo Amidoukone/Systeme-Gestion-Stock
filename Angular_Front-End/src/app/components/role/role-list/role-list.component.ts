@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { RoleService } from '../../../services/role.service';
 import { Role } from '../../../models/role';
 import { CommonModule } from '@angular/common';
+import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-role-list',
@@ -14,7 +15,11 @@ import { CommonModule } from '@angular/common';
 export class RoleListComponent implements OnInit {
   roles: Role[] = [];
 
-  constructor(private roleService: RoleService, private router: Router) { }
+  roleToDelete: number | null = null;
+  roleToEdit: number | null = null;
+  private modalRef: NgbModalRef | null = null;
+
+  constructor(private roleService: RoleService, private router: Router,private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.loadRoles();
@@ -40,4 +45,20 @@ export class RoleListComponent implements OnInit {
       this.roles = this.roles.filter(r => r.id !== id);
     });
   }
+
+  showDeleteConfirmation(content: any, id: number): void {
+    this.roleToDelete = id;
+    this.modalRef = this.modalService.open(content);
+  }
+
+  confirmDelete(): void {
+    if (this.roleToDelete!== null) {
+      this.roleService.deleteRole(this.roleToDelete).subscribe(() => {
+        this.roles = this.roles.filter(f => f.id !== this.roleToDelete);
+        this.roleToDelete = null;
+        this.modalRef?.close();
+      });
+    }
+  }
+
 }

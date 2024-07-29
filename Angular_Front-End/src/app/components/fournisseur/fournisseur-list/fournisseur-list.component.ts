@@ -4,6 +4,7 @@ import { FournisseurService } from '../../../services/fournisseur.service';
 import { Fournisseur } from '../../../models/fournisseur';
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
+import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-fournisseur-list',
@@ -17,7 +18,12 @@ export class FournisseurListComponent implements OnInit{
   fournisseurs: Fournisseur[] = [];
   filteredFournisseurs: Fournisseur[] = [];
 
-  constructor(private fournisseurService: FournisseurService, private router: Router) { }
+
+  fournisseurToDelete: number | null = null;
+  fournisseurToEdit: number | null = null;
+  private modalRef: NgbModalRef | null = null;
+
+  constructor(private fournisseurService: FournisseurService, private router: Router,private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.loadFournisseurs();
@@ -52,4 +58,23 @@ export class FournisseurListComponent implements OnInit{
       fournisseur.fournName.toLowerCase().includes(filterValue)
     );
   }
+
+  showDeleteConfirmation(content: any, id: number): void {
+    this.fournisseurToDelete = id;
+    this.modalRef = this.modalService.open(content);
+  }
+
+  confirmDelete(): void {
+    if (this.fournisseurToDelete !== null) {
+      this.fournisseurService.deleteFournisseur(this.fournisseurToDelete).subscribe(() => {
+        this.fournisseurs = this.fournisseurs.filter(f => f.id !== this.fournisseurToDelete);
+        this.filteredFournisseurs = this.filteredFournisseurs.filter(f => f.id !== this.fournisseurToDelete);
+        this.fournisseurToDelete = null;
+        this.modalRef?.close();
+      });
+    }
+  }
+
+
+
 }
