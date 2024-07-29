@@ -105,6 +105,14 @@ export class UtilisateurFormComponent implements OnInit {
   async onSubmit(event: Event): Promise<void> {
     event.preventDefault();
 
+    if (!this.utilisateur.username || !this.utilisateur.contact || !this.utilisateur.email || !this.utilisateur.password || !this.selectedEntrepot) {
+      this.errorMessage = 'Tous les champs doivent être remplis 😉.';
+      setTimeout(() => {
+        this.errorMessage = '';
+      }, 2000);
+      return;
+    }
+
     if (this.selectedEntrepot && this.currentUser) {
       this.utilisateur.entrepot = this.selectedEntrepot;
 
