@@ -27,7 +27,7 @@ public class DataLoader implements CommandLineRunner {
     createRoleIfNotFound("MANAGER");
     createRoleIfNotFound("ADMIN");
 
-    // Créer les utilisateurs par défaut 
+    // Créer les utilisateurs par défaut
     createUserIfNotFound("admin", "admin@example.com", "password", "ADMIN");
 }
 
