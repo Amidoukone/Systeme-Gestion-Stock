@@ -1,3 +1,510 @@
-<div className="container text-center mt-5">
-          <p className="card-text text-muted">Détails de la statistique 1.</p>
-</div>
+<!-- Content Header (Page header) -->
+
+
+<!-- /.content-header -->
+
+<!-- Main content -->
+<section class="content">
+  <div class="container-fluid">
+    <!-- Info boxes -->
+    <div class="row">
+      <div class="col-12 col-sm-6 col-md-4">
+        <div class="info-box mb-3">
+          <span class="info-box-icon bg-info elevation-1"><i class="fa-solid fa-boxes-stacked"></i></span>
+
+          <div class="info-box-content">
+            <span class="info-box-text">Stock Total</span>
+            <span class="info-box-number">
+              798
+            </span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+      </div>
+      <!-- /.col -->
+      <div class="col-12 col-sm-6 col-md-4">
+        <div class="info-box mb-3">
+          <span class="info-box-icon bg-danger elevation-1"><i class="fa-solid fa-money-bills"></i></span>
+
+          <div class="info-box-content">
+            <span class="info-box-text">Valeur en Stock</span>
+            <span class="info-box-number">4 535 877
+              FCFA</span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+      </div>
+      <!-- /.col -->
+
+      <!-- fix for small devices only -->
+
+      <div class="col-12 col-sm-6 col-md-4">
+        <div class="info-box mb-3">
+          <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
+
+          <div class="info-box-content">
+            <span class="info-box-text">Total des Entrées</span>
+            <span class="info-box-number">309</span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+      </div>
+      <!-- /.col -->
+      <div class="col-12 col-sm-6 col-md-4">
+        <div class="info-box mb-3">
+          <span class="info-box-icon bg-warning elevation-1"><i class="fa-solid fa-hand-holding-dollar"></i></span>
+
+          <div class="info-box-content">
+            <span class="info-box-text">Valeur des Entrées</span>
+            <span class="info-box-number">10 477 868
+              FCFA</span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+      </div>
+      <!-- /.col -->
+
+      <div class="col-12 col-sm-6 col-md-4">
+        <div class="info-box mb-3">
+          <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
+
+          <div class="info-box-content">
+            <span class="info-box-text">Total des sorties</span>
+            <span class="info-box-number">906</span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+      </div>
+
+      <div class="col-12 col-sm-6 col-md-4">
+        <div class="info-box mb-3">
+          <span class="info-box-icon bg-warning elevation-1"><i class="fa-solid fa-money-bill-trend-up"></i></span>
+
+          <div class="info-box-content">
+            <span class="info-box-text">Valeur des sorties</span>
+            <span class="info-box-number">30 477 868
+              FCFA</span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+      </div>
+    </div>
+    <!-- /.row -->
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="card-title">Analyse des Tendances</h5>
+
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <i class="fas fa-minus"></i>
+              </button>
+              <button type="button" class="btn btn-tool" data-card-widget="remove">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body">
+            <div class="row ">
+              <div class="col-md-12">
+                <p class="text-center">
+                  <strong>Ventes : 1 Jan, 2044 - 30 Juil, 2024</strong>
+                </p>
+
+                <div class="card">
+                  <p-chart type="line" [data]="data" [options]="options" />
+                </div>
+                <!-- /.chart-responsive -->
+              </div>
+            </div>
+            <!-- /.row -->
+          </div>
+          <!-- ./card-body -->
+          <div class="card-footer">
+            <div class="row">
+              <div class="col-sm-3 col-6">
+
+                <!-- /.description-block -->
+              </div>
+              <!-- /.col -->
+              <div class="col-sm-3 col-6">
+
+                <!-- /.description-block -->
+              </div>
+              <!-- /.col -->
+              <div class="col-sm-3 col-6">
+
+                <!-- /.description-block -->
+              </div>
+              <!-- /.col -->
+              <div class="col-sm-3 col-6">
+
+                <!-- /.description-block -->
+              </div>
+            </div>
+            <!-- /.row -->
+          </div>
+          <!-- /.card-footer -->
+        </div>
+        <!-- /.card -->
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+
+    <!-- Main row -->
+    <div class="row">
+      <!-- Left col -->
+      <div class="col-md-8">
+        <!-- MAP & BOX PANE -->
+        <div class="card conatinerChart">
+
+          <div class="card-header">
+            <h3 class="card-title">Statistiques des Entrants et Sortants</h3>
+
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <i class="fas fa-minus"></i>
+              </button>
+              <button type="button" class="btn btn-tool" data-card-widget="remove">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-bodyC p-0">
+            <!-- <div class="d-md-flex"> -->
+            <div class="cardC">
+              <p-chart type="bar" [data]="data3" [options]="options3" />
+            </div><br>
+            <!--</div> /.d-md-flex -->
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+        <div class="row cardAD">
+
+          <!-- /.col -->
+
+          <div class="col-md-12 ">
+            <!-- USERS LIST -->
+            <div class="card ">
+              <div class="card-header">
+                <h3 class="card-title">Les utilisateurs</h3>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn btn-tool" data-card-widget="remove">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body p-0">
+                <ul class="users-list clearfix">
+                  <li>
+                    <img src="dist/img/user1-128x128.jpg" alt="User Image">
+                    <a class="users-list-name" href="#">Alexander Pierce</a>
+                    <span class="users-list-date">Today</span>
+                  </li>
+                  <li>
+                    <img src="dist/img/user8-128x128.jpg" alt="User Image">
+                    <a class="users-list-name" href="#">Norman</a>
+                    <span class="users-list-date">Yesterday</span>
+                  </li>
+                  <li>
+                    <img src="dist/img/user7-128x128.jpg" alt="User Image">
+                    <a class="users-list-name" href="#">Jane</a>
+                    <span class="users-list-date">12 Jan</span>
+                  </li>
+                  <li>
+                    <img src="dist/img/user6-128x128.jpg" alt="User Image">
+                    <a class="users-list-name" href="#">John</a>
+                    <span class="users-list-date">12 Jan</span>
+                  </li>
+                  <li>
+                    <img src="dist/img/user2-160x160.jpg" alt="User Image">
+                    <a class="users-list-name" href="#">Alexander</a>
+                    <span class="users-list-date">13 Jan</span>
+                  </li>
+                  <li>
+                    <img src="dist/img/user5-128x128.jpg" alt="User Image">
+                    <a class="users-list-name" href="#">Sarah</a>
+                    <span class="users-list-date">14 Jan</span>
+                  </li>
+                  <li>
+                    <img src="dist/img/user4-128x128.jpg" alt="User Image">
+                    <a class="users-list-name" href="#">Nora</a>
+                    <span class="users-list-date">15 Jan</span>
+                  </li>
+                  <li>
+                    <img src="dist/img/user3-128x128.jpg" alt="User Image">
+                    <a class="users-list-name" href="#">Nadia</a>
+                    <span class="users-list-date">15 Jan</span>
+                  </li>
+                </ul>
+                <!-- /.users-list -->
+              </div>
+              <!-- /.card-body -->
+              <div class="card-footer text-center">
+                <a href="javascript:">Voir tous les utilisateurs</a>
+              </div>
+              <!-- /.card-footer -->
+            </div>
+            <!--/.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+
+        <!-- TABLE: LATEST ORDERS -->
+        <div class="card">
+          <div class="card-header border-transparent">
+            <h3 class="card-title">Dernières commandes</h3>
+
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <i class="fas fa-minus"></i>
+              </button>
+              <button type="button" class="btn btn-tool" data-card-widget="remove">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body p-0">
+            <div class="table-responsive">
+              <table class="table m-0">
+                <thead>
+                  <tr>
+                    <th>Numéro de commandes</th>
+                    <th>Articles</th>
+                    <th>Statut</th>
+                    <th>Prix Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><a href="pages/examples/invoice.html">OR9842</a></td>
+                    <td>Iphone 15 Pro</td>
+                    <td><span class="badge badge-success">Livré</span></td>
+                    <td>
+                      <div class="sparkbar" data-color="#00a65a" data-height="20">7030154987F CFA</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><a href="pages/examples/invoice.html">OR1848</a></td>
+                    <td>Samsung Smart TV</td>
+                    <td><span class="badge badge-warning">En cours</span></td>
+                    <td>
+                      <div class="sparkbar" data-color="#f39c12" data-height="20">8030054987F CFA</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><a href="pages/examples/invoice.html">OR7429</a></td>
+                    <td>iPhone 6 Plus</td>
+                    <td><span class="badge badge-danger">Livré</span></td>
+                    <td>
+                      <div class="sparkbar" data-color="#f56954" data-height="20">9030054987F CFA</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><a href="pages/examples/invoice.html">OR7429</a></td>
+                    <td>Samsung TV</td>
+                    <td><span class="badge badge-info">En cours</span></td>
+                    <td>
+                      <div class="sparkbar" data-color="#00c0ef" data-height="20">3005498799F CFA</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><a href="pages/examples/invoice.html">OR1848</a></td>
+                    <td>Samsung S8 Plus</td>
+                    <td><span class="badge badge-warning">Livré</span></td>
+                    <td>
+                      <div class="sparkbar" data-color="#f39c12" data-height="20">6130054987F CFA</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><a href="pages/examples/invoice.html">OR7429</a></td>
+                    <td>Tecno Spark</td>
+                    <td><span class="badge badge-danger">En cours</span></td>
+                    <td>
+                      <div class="sparkbar" data-color="#f56954" data-height="20">8330054987F CFA</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><a href="pages/examples/invoice.html">OR9842</a></td>
+                    <td>Smart Led</td>
+                    <td><span class="badge badge-success">Livré</span></td>
+                    <td>
+                      <div class="sparkbar" data-color="#00a65a" data-height="20">6330054987F CFA</div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!-- /.table-responsive -->
+          </div>
+          <!-- /.card-body -->
+          <div class="card-footer clearfix">
+            <a href="javascript:void(0)" class="btn btn-sm btn-info float-left" href="/add-bon-entree">Passer une
+              nouvelle commande</a>
+            <a href="javascript:void(0)" class="btn btn-sm btn-secondary float-right" href="/bon-entree">Voir toutes les
+              commandes</a>
+          </div>
+          <!-- /.card-footer -->
+        </div>
+        <!-- /.card -->
+      </div>
+      <!-- /.col -->
+
+      <div class="col-md-4">
+        <!-- Info Boxes Style 2 -->
+
+        <!-- /.info-box -->
+
+        <!-- /.info-box -->
+
+        <!-- /.info-box -->
+
+        <!-- /.info-box -->
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Ventes par Catégories</h3>
+
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <i class="fas fa-minus"></i>
+              </button>
+              <button type="button" class="btn btn-tool" data-card-widget="remove">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body">
+            <div class="row">
+              <div class="card flex justify-content-center">
+                <p-chart type="pie" [data]="data2" [options]="options2" />
+              </div>
+              <!-- /.col -->
+
+              <!-- /.col -->
+            </div>
+            <!-- /.row -->
+          </div>
+          <!-- /.card-body -->
+          <div class="card-footer p-0">
+
+          </div>
+          <!-- /.footer -->
+        </div>
+        <!-- /.card -->
+
+        <!-- PRODUCT LIST -->
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Produits récemment ajoutés</h3>
+
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <i class="fas fa-minus"></i>
+              </button>
+              <button type="button" class="btn btn-tool" data-card-widget="remove">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body p-0">
+            <ul class="products-list product-list-in-card pl-2 pr-2">
+              <li class="item">
+                <div class="product-img">
+                  <img src="dist/img/default-150x150.png" alt="Product Image" class="img-size-50">
+                </div>
+                <div class="product-info">
+                  <a href="javascript:void(0)" class="product-title">Samsung TV
+                    <span class="badge badge-warning float-right">60000F</span></a>
+                  <span class="product-description">
+                    Samsung 32" 1080p 60Hz LED Smart HDTV.
+                  </span>
+                </div>
+              </li>
+              <!-- /.item -->
+              <li class="item">
+                <div class="product-img">
+                  <img src="/src/assets/dist/img/download.jpg" alt="Product Image" class="img-size-50">
+                </div>
+                <div class="product-info">
+                  <a href="javascript:void(0)" class="product-title">Vélo
+                    <span class="badge badge-info float-right">12500</span></a>
+                  <span class="product-description">
+                    26" Mongoose Dolomite Men's 7-speed, Navy Blue.
+                  </span>
+                </div>
+              </li>
+              <!-- /.item -->
+              <li class="item">
+                <div class="product-img">
+                  <img src="dist/img/default-150x150.png" alt="Product Image" class="img-size-50">
+                </div>
+                <div class="product-info">
+                  <a href="javascript:void(0)" class="product-title">
+                    Xbox One <span class="badge badge-danger float-right">
+                      15000F
+                    </span>
+                  </a>
+                  <span class="product-description">
+                    Xbox One Console Bundle with Halo Master Chief Collection.
+                  </span>
+                </div>
+              </li>
+              <!-- /.item -->
+              <li class="item">
+                <div class="product-img">
+                  <img src="dist/img/default-150x150.png" alt="Product Image" class="img-size-50">
+                </div>
+                <div class="product-info">
+                  <a href="javascript:void(0)" class="product-title">PlayStation 4
+                    <span class="badge badge-success float-right">30000F</span></a>
+                  <span class="product-description">
+                    PlayStation 4 500GB Console (PS4)
+                  </span>
+                </div>
+              </li>
+              <!-- /.item -->
+            </ul>
+          </div>
+          <!-- /.card-body -->
+          <div class="card-footer text-center">
+            <a href="javascript:void(0)" class="uppercase" href="/produits">Voir tous les produits</a>
+          </div>
+          <!-- /.card-footer -->
+        </div>
+        <!-- /.card -->
+
+       
+        
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+  </div><!--/. container-fluid -->
+</section>
+<!-- /.content -->
+
+
+
+<router-outlet></router-outlet>
