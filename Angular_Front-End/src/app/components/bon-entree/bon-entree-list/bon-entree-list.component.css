@@ -1,0 +1,28 @@
+span {
+  background-color:  #0d6efd;
+  color: #fff;
+  border-radius: 40%;
+  padding: 5px;
+  font-size: 18px;
+  cursor: pointer;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+/* Ajouter un effet au survol (hover) */
+span:hover {
+  background-color: #0d6efd;
+  transform: scale(1.1);
+}
+
+tr{
+  padding: 35px 10px;
+}
+#table-responsive{
+  border: solid 1px;
+  border-radius: 5px;
+
+}

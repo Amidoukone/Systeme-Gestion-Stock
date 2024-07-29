@@ -1,0 +1,38 @@
+/* Hide print button on print */
+
+@media print {
+
+
+  .card {
+    border: none;
+    box-shadow: none;
+  }
+
+  .table {
+    margin-bottom: 0;
+  }
+
+  .print-container {
+    padding: 20px;
+  }
+}
+
+.print-container {
+  margin: 20px auto;
+  max-width: 800px;
+}
+
+.print-section h1 {
+  margin-bottom: 20px;
+}
+
+.table th,
+.table td {
+  vertical-align: middle;
+}
+
+thead.thead-dark th {
+  color: #fff;
+  background-color: #343a40;
+  border-color: #454d55;
+}

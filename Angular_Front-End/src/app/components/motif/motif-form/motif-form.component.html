@@ -1,0 +1,18 @@
+<div class="container mx-auto px-4 py-6">
+  <div class="card advanced-form-card">
+    <div class="card-header">
+      <h5 class="card-title">{{ isEditMode ? 'Modifier Motif' : 'Ajouter Motif' }}</h5>
+    </div>
+    <div class="card-body">
+      <form (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+          <label for="title" class="form-label">Titre du Motif</label>
+          <input type="text" class="form-control" id="title" name="title" [(ngModel)]="motif.title" required>
+        </div>
+        <div class="d-grid gap-2">
+          <button class="btn btn-primary" type="submit">{{ isEditMode ? 'Modifier' : 'Ajouter' }}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

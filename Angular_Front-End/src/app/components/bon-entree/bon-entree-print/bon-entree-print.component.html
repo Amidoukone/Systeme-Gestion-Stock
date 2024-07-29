@@ -1,0 +1,47 @@
+<div class="print-container" id="print-container">
+  <div class="print-section card">
+    <div class="card-header text-center">
+      <h1>Bon d'Entrée</h1>
+    </div>
+    <div class="card-body">
+      <div class="mb-4">
+        <h5 class="card-title">Bon d'Entrée: {{ bonEntree.id }}</h5>
+        <p><strong>Date:</strong> {{ bonEntree.dateCommande | date }}</p>
+        <p><strong>Statut:</strong> {{ bonEntree.statut }}</p>
+        <p><strong>Fournisseur:</strong> {{ bonEntree.fournisseur.fournName }}</p>
+      </div>
+      <div class="mb-4">
+        <h5 class="card-title">Détails des Sorties</h5>
+        <table class="table table-bordered table-striped">
+          <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Produit</th>
+            <th scope="col">Quantité</th>
+            <th scope="col">Prix</th>
+            <th scope="col">Prix Total</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let detail of bonEntree.detailEntrees; let i = index">
+            <th scope="row">{{ i + 1 }}</th>
+            <td>{{ detail.produit.productName }}</td>
+            <td>{{ detail.quantite }}</td>
+            <td>{{ detail.prix }} FCFA</td>
+            <td>{{ detail.quantite * detail.prix }} FCFA</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="mb-4">
+        <h6 class="card-title text-end">Total TTC</h6>
+        <p class="card-text text-end">{{ getTotalTTC() }} FCFA</p>
+        <h6 class="card-title text-end">Signature</h6>
+        <p class="card-text text-end"></p>
+      </div>
+      <div class="text-center">
+        <button class="btn btn-primary btn-sm imp" id="imp" (click)="printDocument()">Imprimer</button>
+      </div>
+    </div>
+  </div>
+</div>

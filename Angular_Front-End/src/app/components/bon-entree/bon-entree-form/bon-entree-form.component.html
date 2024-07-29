@@ -1,0 +1,39 @@
+<div class="container mx-auto px-4 py-6">
+  <div class="card advanced-form-card">
+    <div class="card-header">
+      <h5 class="card-title">{{ isEditMode ? 'Modifier Bon d\'Entrée' : 'Ajouter Bon d\'Entrée' }}</h5>
+    </div>
+    <div class="card-body">
+      <form id="bonEntreeForm" (ngSubmit)="onSubmit()">
+        <div class="form-group row">
+          <div class="col-md-6 mb-3">
+            <label for="date_commande">Date de Commande</label>
+            <input type="date" class="form-control" id="date_commande" name="date_commande" [(ngModel)]="bonEntree.dateCommande" required>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="statut">Statut</label>
+            <select class="form-control" id="statut" name="statut" [(ngModel)]="bonEntree.statut">
+              <option value="En Cours">En Cours</option>
+              <option value="En Stock">En Stock</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-md-6 mb-3">
+            <label for="fournisseur">Fournisseur</label>
+            <select class="form-control" id="fournisseur" name="fournisseur" [(ngModel)]="selectedFournisseurId">
+              <option *ngFor="let fournisseur of fournisseurs" [value]="fournisseur.id">{{ fournisseur.fournName }}</option>
+            </select>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="utilisateur">Utilisateur</label>
+            <input type="hidden" class="form-control" id="utilisateur" name="utilisateur" [(ngModel)]="bonEntree.utilisateur.id" [value]="bonEntree.utilisateur.id"/>
+          </div>
+        </div>
+        <div class="button-container">
+          <button class="btn btn-primary" type="submit">{{ isEditMode ? 'Modifier' : 'Ajouter' }}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

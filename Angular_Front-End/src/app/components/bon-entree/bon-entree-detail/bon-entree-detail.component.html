@@ -1,0 +1,20 @@
+<div class="container">
+  <h2>Détail Bon d'Entrée</h2>
+  <form (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="produit">Produit</label>
+      <select id="produit" [(ngModel)]="detailEntree.produit" name="produit" class="form-control" required>
+        <option *ngFor="let produit of produits" [ngValue]="produit">{{ produit.productName }}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="quantite">Quantité</label>
+      <input type="number" id="quantite" [(ngModel)]="detailEntree.quantite" name="quantite" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label for="prix">Prix</label>
+      <input type="number" id="prix" [(ngModel)]="detailEntree.prix" name="prix" class="form-control" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Ajouter</button>
+  </form>
+</div>
