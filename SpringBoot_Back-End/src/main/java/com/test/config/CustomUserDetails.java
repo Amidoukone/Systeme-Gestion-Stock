@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
-
+/*
 public class CustomUserDetails implements UserDetails {
 
     private final Utilisateur utilisateur;
@@ -50,4 +50,4 @@ public class CustomUserDetails implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-}
+}*/

@@ -31,7 +31,7 @@ public class UtilisateurController {
         }
     }
 
-    /*@PostMapping("/manager")
+    @PostMapping("/manager")
     public ResponseEntity<Utilisateur> createManager(@RequestBody Utilisateur utilisateur) {
         try {
             Utilisateur newManager = utilisateurService.createManager(utilisateur.getUsername(), utilisateur.getContact(), utilisateur.getEmail(), utilisateur.getPassword());
@@ -39,12 +39,12 @@ public class UtilisateurController {
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(null);
         }
-    }*/
-    @PostMapping("/manager")
+    }
+    /*@PostMapping("/manager")
     public ResponseEntity<Utilisateur> createManager(@RequestBody Utilisateur utilisateurRequest) {
         Utilisateur utilisateur = utilisateurService.createManager(utilisateurRequest.getUsername(), utilisateurRequest.getContact(), utilisateurRequest.getEmail(), utilisateurRequest.getPassword(), utilisateurRequest.getEntrepot());
         return ResponseEntity.ok(utilisateur);
-    }
+    }*/
 
     @PostMapping("/vendeur")
     public ResponseEntity<Utilisateur> createVendeur(@RequestBody Utilisateur utilisateur) {

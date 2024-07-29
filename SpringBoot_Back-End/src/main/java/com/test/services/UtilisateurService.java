@@ -7,6 +7,10 @@ import com.test.repositories.EntrepotRepository;
 import com.test.repositories.RoleRepository;
 import com.test.repositories.UtilisateurRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -14,34 +18,33 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UtilisateurService {
+public class UtilisateurService implements UserDetailsService {
 
     private final UtilisateurRepository utilisateurRepository;
     private final RoleRepository roleRepository;
     private final EntrepotRepository entrepotRepository;
-    private final BCryptPasswordEncoder passwordEncoder;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final MethodeUtil methodeUtil;
 
     @Autowired
-    public UtilisateurService(UtilisateurRepository utilisateurRepository, RoleRepository roleRepository, EntrepotRepository entrepotRepository, BCryptPasswordEncoder passwordEncoder, MethodeUtil methodeUtil) {
+    public UtilisateurService(UtilisateurRepository utilisateurRepository, RoleRepository roleRepository, EntrepotRepository entrepotRepository, BCryptPasswordEncoder bCryptPasswordEncoder, MethodeUtil methodeUtil) {
         this.utilisateurRepository = utilisateurRepository;
         this.roleRepository = roleRepository;
         this.entrepotRepository = entrepotRepository;
-        this.passwordEncoder = passwordEncoder;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.methodeUtil = methodeUtil;
     }
-
     public Utilisateur createAdmin(String username, String contact, String email, String password) {
         return createUser(username, contact, email, password, "ADMIN", null);
     }
 
-    public Utilisateur createManager(String username, String contact, String email, String password, Entrepot entrepot) {
+    /*public Utilisateur createManager(String username, String contact, String email, String password, Entrepot entrepot) {
         validateEmail(email);
         checkUserAlreadyAssignedToEntrepot(email);
         return createUser(username,contact, email, password,"MANAGER", entrepot);
-    }
+    }*/
 
-    /*public Utilisateur createManager(String username, String email, String contact, String password) {
+    public Utilisateur createManager(String username, String email, String contact, String password) {
         Integer userId = methodeUtil.getCurrentUserId();
         if (userId == null) {
             throw new RuntimeException("Utilisateur non authentifié.");
@@ -58,9 +61,8 @@ public class UtilisateurService {
         if (methodeUtil.getEntrepotByUserId(userId) != null) {
             throw new RuntimeException("Cet utilisateur est déjà affecté à un entrepôt.");
         }
-        Entrepot entrepot = null;
         return createUser(username, contact, email, password, "MANAGER", entrepot);
-    }*/
+    }
 
     public Utilisateur createVendeur(String username, String contact, String email, String password) {
         validateEmail(email);
@@ -100,7 +102,7 @@ public class UtilisateurService {
         newUser.setUsername(username);
         newUser.setContact(contact);
         newUser.setEmail(email);
-        newUser.setPassword(passwordEncoder.encode(password));
+        newUser.setPassword(bCryptPasswordEncoder.encode(password));
 
         Role role = roleRepository.findByName(roleName).orElseGet(() -> {
             Role newRole = new Role();
@@ -155,7 +157,7 @@ public class UtilisateurService {
             userToUpdate.setRole(utilisateur.getRole());
             userToUpdate.setEntrepot(utilisateur.getEntrepot());
             if (!utilisateur.getPassword().equals(userToUpdate.getPassword())) {
-                userToUpdate.setPassword(passwordEncoder.encode(utilisateur.getPassword()));
+                userToUpdate.setPassword(bCryptPasswordEncoder.encode(utilisateur.getPassword()));
             }
             return utilisateurRepository.save(userToUpdate);
         } else {
@@ -167,6 +169,12 @@ public class UtilisateurService {
         return entrepotRepository.findById(entrepotId);
     }
 
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        return utilisateurRepository
+                .findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("Utilisateur indisponible"));
+    }
 }
 /*
 
