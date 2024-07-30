@@ -121,7 +121,7 @@
                 </p>
 
                 <div class="card">
-                  <p-chart type="line" [data]="data" [options]="options" />
+                  <p-chart type="line" [data]="data"/>
                 </div>
                 <!-- /.chart-responsive -->
               </div>
@@ -184,7 +184,10 @@
           <div class="card-bodyC p-0">
             <!-- <div class="d-md-flex"> -->
             <div class="cardC">
-              <p-chart type="bar" [data]="data3" [options]="options3" />
+              <canvas baseChart
+              [data]="data3"
+              [options]="options3"
+              chartType="bar"></canvas>
             </div><br>
             <!--</div> /.d-md-flex -->
           </div>
@@ -197,71 +200,11 @@
 
           <div class="col-md-12 ">
             <!-- USERS LIST -->
-            <div class="card ">
-              <div class="card-header">
-                <h3 class="card-title">Les utilisateurs</h3>
-
-                <div class="card-tools">
-                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                    <i class="fas fa-minus"></i>
-                  </button>
-                  <button type="button" class="btn btn-tool" data-card-widget="remove">
-                    <i class="fas fa-times"></i>
-                  </button>
-                </div>>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body p-0">
-                <ul class="users-list clearfix">
-                  <li>
-                    <img src="dist/img/user1-128x128.jpg" alt="User Image">
-                    <a class="users-list-name" href="#">Alexander Pierce</a>
-                    <span class="users-list-date">Today</span>
-                  </li>
-                  <li>
-                    <img src="dist/img/user8-128x128.jpg" alt="User Image">
-                    <a class="users-list-name" href="#">Norman</a>
-                    <span class="users-list-date">Yesterday</span>
-                  </li>
-                  <li>
-                    <img src="dist/img/user7-128x128.jpg" alt="User Image">
-                    <a class="users-list-name" href="#">Jane</a>
-                    <span class="users-list-date">12 Jan</span>
-                  </li>
-                  <li>
-                    <img src="dist/img/user6-128x128.jpg" alt="User Image">
-                    <a class="users-list-name" href="#">John</a>
-                    <span class="users-list-date">12 Jan</span>
-                  </li>
-                  <li>
-                    <img src="dist/img/user2-160x160.jpg" alt="User Image">
-                    <a class="users-list-name" href="#">Alexander</a>
-                    <span class="users-list-date">13 Jan</span>
-                  </li>
-                  <li>
-                    <img src="dist/img/user5-128x128.jpg" alt="User Image">
-                    <a class="users-list-name" href="#">Sarah</a>
-                    <span class="users-list-date">14 Jan</span>
-                  </li>
-                  <li>
-                    <img src="dist/img/user4-128x128.jpg" alt="User Image">
-                    <a class="users-list-name" href="#">Nora</a>
-                    <span class="users-list-date">15 Jan</span>
-                  </li>
-                  <li>
-                    <img src="dist/img/user3-128x128.jpg" alt="User Image">
-                    <a class="users-list-name" href="#">Nadia</a>
-                    <span class="users-list-date">15 Jan</span>
-                  </li>
-                </ul>
-                <!-- /.users-list -->
-              </div>
+            
               <!-- /.card-body -->
-              <div class="card-footer text-center">
-                <a href="javascript:">Voir tous les utilisateurs</a>
-              </div>
+              
               <!-- /.card-footer -->
-            </div>
+            
             <!--/.card -->
           </div>
           <!-- /.col -->
@@ -288,67 +231,67 @@
               <table class="table m-0">
                 <thead>
                   <tr>
-                    <th>Numéro de commandes</th>
-                    <th>Articles</th>
+                    <th>Date de commande</th>
+                    <th>Fournisseurs</th>
                     <th>Statut</th>
-                    <th>Prix Total</th>
+                    <th>Créer par:</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td><a href="pages/examples/invoice.html">OR9842</a></td>
-                    <td>Iphone 15 Pro</td>
+                    <td><a href="pages/examples/invoice.html">20-12-2022</a></td>
+                    <td>Amidou</td>
                     <td><span class="badge badge-success">Livré</span></td>
                     <td>
-                      <div class="sparkbar" data-color="#00a65a" data-height="20">7030154987F CFA</div>
+                      <div class="sparkbar" data-color="#00a65a" data-height="20">manager</div>
                     </td>
                   </tr>
                   <tr>
-                    <td><a href="pages/examples/invoice.html">OR1848</a></td>
-                    <td>Samsung Smart TV</td>
+                    <td><a href="pages/examples/invoice.html">20-12-2023</a></td>
+                    <td>Abdou</td>
                     <td><span class="badge badge-warning">En cours</span></td>
                     <td>
-                      <div class="sparkbar" data-color="#f39c12" data-height="20">8030054987F CFA</div>
+                      <div class="sparkbar" data-color="#f39c12" data-height="20">manager2</div>
                     </td>
                   </tr>
                   <tr>
-                    <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                    <td>iPhone 6 Plus</td>
+                    <td><a href="pages/examples/invoice.html">2-11-2023</a></td>
+                    <td>Moussa</td>
                     <td><span class="badge badge-danger">Livré</span></td>
                     <td>
-                      <div class="sparkbar" data-color="#f56954" data-height="20">9030054987F CFA</div>
+                      <div class="sparkbar" data-color="#f56954" data-height="20">manager7</div>
                     </td>
                   </tr>
                   <tr>
-                    <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                    <td>Samsung TV</td>
+                    <td><a href="pages/examples/invoice.html">10-12-2019</a></td>
+                    <td>Mana</td>
                     <td><span class="badge badge-info">En cours</span></td>
                     <td>
-                      <div class="sparkbar" data-color="#00c0ef" data-height="20">3005498799F CFA</div>
+                      <div class="sparkbar" data-color="#00c0ef" data-height="20">manager5</div>
                     </td>
                   </tr>
                   <tr>
-                    <td><a href="pages/examples/invoice.html">OR1848</a></td>
-                    <td>Samsung S8 Plus</td>
+                    <td><a href="pages/examples/invoice.html">20-10-2020</a></td>
+                    <td>Balla</td>
                     <td><span class="badge badge-warning">Livré</span></td>
                     <td>
-                      <div class="sparkbar" data-color="#f39c12" data-height="20">6130054987F CFA</div>
+                      <div class="sparkbar" data-color="#f39c12" data-height="20">asmanager</div>
                     </td>
                   </tr>
                   <tr>
-                    <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                    <td>Tecno Spark</td>
+                    <td><a href="pages/examples/invoice.html">03-12-2022</a></td>
+                    <td>Miss-Mah</td>
                     <td><span class="badge badge-danger">En cours</span></td>
                     <td>
-                      <div class="sparkbar" data-color="#f56954" data-height="20">8330054987F CFA</div>
+                      <div class="sparkbar" data-color="#f56954" data-height="20">atmanager</div>
                     </td>
                   </tr>
                   <tr>
-                    <td><a href="pages/examples/invoice.html">OR9842</a></td>
-                    <td>Smart Led</td>
+                    <td><a href="pages/examples/invoice.html">20-12-2019</a></td>
+                    <td>Djénéba</td>
                     <td><span class="badge badge-success">Livré</span></td>
                     <td>
-                      <div class="sparkbar" data-color="#00a65a" data-height="20">6330054987F CFA</div>
+                      <div class="sparkbar" data-color="#00a65a" data-height="20">attmanag</div>
                     </td>
                   </tr>
                 </tbody>
@@ -397,7 +340,9 @@
           <div class="card-body">
             <div class="row">
               <div class="card flex justify-content-center">
-                <p-chart type="pie" [data]="data2" [options]="options2" />
+                <canvas id="salesChart"></canvas>
+
+                <!-- <p-chart type="pie" [data]="data2" [options]="options2" /> -->
               </div>
               <!-- /.col -->
 

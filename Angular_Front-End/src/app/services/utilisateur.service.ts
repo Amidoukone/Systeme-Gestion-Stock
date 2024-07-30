@@ -43,8 +43,8 @@ export class UtilisateurService {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
 
-  private handleError(error: HttpErrorResponse) {
-    console.error('An error occurred:', error.error);
-    return throwError(() => new Error(error.error?.message || 'An error occurred'));
-  }
+  // private handleError(error: HttpErrorResponse) {
+  //   console.error('An error occurred:', error.error);
+  //   return throwError(() => new Error(error.error?.message || 'An error occurred'));
+  // }
 }

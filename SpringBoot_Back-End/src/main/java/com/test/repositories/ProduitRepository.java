@@ -3,6 +3,7 @@ package com.test.repositories;
 import com.test.dto.TopEntreeDTO;
 import com.test.dto.TopVenduDTO;
 import com.test.entities.Produit;
+import com.test.entities.DetailSortie;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -10,6 +11,8 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface ProduitRepository extends JpaRepository<Produit, Integer> {
+    @Query("SELECT p.categorie.name, SUM(ds.quantity) FROM Produit p JOIN p.detailsSorties ds GROUP BY p.categorie.name")
+    List<Object[]> countByCategory();
 
     /*@Query("SELECT new com.test.dto.TopVenduDTO(p.productName, p.description, COUNT(p.Id)) " +
             "FROM DetailSortie d JOIN d.bonSortie b JOIN d.produit p JOIN d.bonSortie.motif m " +
