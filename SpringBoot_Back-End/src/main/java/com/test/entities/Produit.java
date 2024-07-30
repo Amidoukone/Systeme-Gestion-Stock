@@ -35,14 +35,9 @@ public class Produit {
     @ManyToOne
     @JoinColumn(name = "categories_id", nullable = false)
     private Categorie categorie;
-
-<<<<<<< Updated upstream
-
-
-    /*@OneToMany(mappedBy = "produit", cascade = CascadeType.ALL, orphanRemoval = true)
-=======
+    
     @OneToMany(mappedBy = "produit", cascade = CascadeType.ALL, orphanRemoval = true)
->>>>>>> Stashed changes
+
     @JsonManagedReference
     private List<DetailSortie> detailsSorties;
 
