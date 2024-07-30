@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <app-navbar *ngIf="authService.currentUserValue" (sidebarToggle)="sidebar?.toggleSidebar()"></app-navbar>
 <div class="row" id="main-wrapper">
   <div class="col-lg-2">
@@ -6,9 +7,22 @@
   <div class="col-lg-10 Atou">
     <router-outlet></router-outlet>
     
+=======
+<div class="d-flex col">
+      <app-sidebar #sidebar [isExpanded]="true" *ngIf="authService.currentUserValue"></app-sidebar>
+  <div class="col" >
+    <app-navbar *ngIf="authService.currentUserValue" (sidebarToggle)="sidebar?.toggleSidebar()"></app-navbar>
+    <div class="col">
+      <router-outlet></router-outlet>
+    </div>
+>>>>>>> 8fffa448a1446a9eb4d6e82ff79b512f7c7508e7
   </div>
   <app-footer *ngIf="authService.currentUserValue"></app-footer>
 
 </div>
 
+<<<<<<< HEAD
 
+=======
+<app-footer *ngIf="authService.currentUserValue"></app-footer>
+>>>>>>> 8fffa448a1446a9eb4d6e82ff79b512f7c7508e7

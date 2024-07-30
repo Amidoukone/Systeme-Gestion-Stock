@@ -1,6 +1,10 @@
+<<<<<<< HEAD
 <nav class="navbar top-navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+=======
+<nav class="navbar navbar-expand navbar-light bg-white topbar  ">
+>>>>>>> 8fffa448a1446a9eb4d6e82ff79b512f7c7508e7
   <div class="container-fluid">
-    <button class="btn btn-link d-md-none rounded-circle mr-3" type="button" (click)="toggleSidebar()">
+    <button class="btn btn-link d-md-none rounded-circle " type="button" (click)="toggleSidebar()">
       <i class="fas fa-bars"></i>
     </button>
     <a class="navbar-brand text-primary"> {{ getEntrepotName() }}</a>
@@ -13,7 +17,7 @@
             <i class="fas fa-bell"></i> Notifications
           </button>
           <!-- Dropdown - Notifications -->
-          <ul *ngIf="showNotifications" class="dropdown-list dropdown-menu-right shadow animated--grow-in">
+          <ul *ngIf="showNotifications" class="dropdown-list dropdown-menu-right  animated--grow-in">
             <li class="dropdown-header">Notifications</li>
             <li *ngFor="let notification of notifications" class="dropdown-item d-flex align-items-center" [ngClass]="{'text-muted': notification.read}">
               <span class="text-start fw-normal ms-0" (click)="markAsRead(notification)">{{ notification.contenu }}</span>

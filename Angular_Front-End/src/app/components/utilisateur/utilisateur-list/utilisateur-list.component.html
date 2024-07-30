@@ -1,22 +1,23 @@
 <div class="container">
   <h1 class="h2 mb-4">Liste des Utilisateurs</h1>
   <div class="d-flex justify-content-between align-items-center mb-3">
-    <button class="btn btn-primary" (click)="addUtilisateur()">Ajouter Utilisateur</button>
-    <div class="form-group mb-0">
+    <button class="btn btn-primary" (click)="addUtilisateur()"> <i class="fas fa-plus-circle"></i>Ajouter Utilisateur</button>
+    <div  class="form-group mb-0 position-relative" id="recherche">
       <label for="search">Rechercher par Nom d'utilisateur</label>
       <input id="search" type="text" class="form-control" (keyup)="applyFilter($event)" placeholder="Nom d'utilisateur">
+      <i class="fa-solid fa-magnifying-glass"></i>
     </div>
   </div>
   <div class="table-responsive">
-    <table class="table table-striped">
+    <table class="table table-striped table-bordered table-hover">
       <thead>
       <tr>
-        <th>#</th>
-        <th>Nom d'utilisateur</th>
-        <th>Email</th>
-        <th>Rôle</th>
-        <th>Entrepôt</th>
-        <th>Actions</th>
+        <th><span>#</span></th>
+        <th><span>Nom d'utilisateur</span></th>
+        <th><span>Email</span></th>
+        <th><span>Rôle</span></th>
+        <th><span>Entrepôt</span></th>
+        <th><span>Actions</span></th>
       </tr>
       </thead>
       <tbody>
@@ -33,8 +34,8 @@
 
         <td>
 
-          <button class="btn btn-warning btn-sm" (click)="editUtilisateur(utilisateur.id)">Modifier</button>
-          <button class="btn btn-danger btn-sm m-2 " (click)="showDeleteConfirmation(deleteModal, utilisateur.id)">Supprimer</button>
+          <button class="btn btn-warning btn-sm" (click)="editUtilisateur(utilisateur.id)"> <i class="fas fa-edit"></i>Modifier</button>
+          <button class="btn btn-danger btn-sm m-2 " (click)="showDeleteConfirmation(deleteModal, utilisateur.id)"><i class="fas fa-trash"></i>Supprimer</button>
         </td>
 
       </tr>
