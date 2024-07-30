@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface ProduitRepository extends JpaRepository<Produit, Integer> {
-    @Query("SELECT p.categorie.name, SUM(ds.quantity) FROM Produit p JOIN p.detailsSorties ds GROUP BY p.categorie.name")
+    @Query("SELECT p.categorie.name, COUNT(p) FROM Produit p GROUP BY p.categorie.name")
     List<Object[]> countByCategory();
 
     /*@Query("SELECT new com.test.dto.TopVenduDTO(p.productName, p.description, COUNT(p.Id)) " +

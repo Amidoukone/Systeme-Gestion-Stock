@@ -184,10 +184,7 @@
           <div class="card-bodyC p-0">
             <!-- <div class="d-md-flex"> -->
             <div class="cardC">
-              <canvas baseChart
-              [data]="data3"
-              [options]="options3"
-              chartType="bar"></canvas>
+              <p-chart type="bar" [data]="data3" [options]="options3" />
             </div><br>
             <!--</div> /.d-md-flex -->
           </div>
@@ -340,9 +337,8 @@
           <div class="card-body">
             <div class="row">
               <div class="card flex justify-content-center">
-                <canvas id="salesChart"></canvas>
-
-                <!-- <p-chart type="pie" [data]="data2" [options]="options2" /> -->
+                
+                <p-chart type="pie" [data]="data2" [options]="options2" />
               </div>
               <!-- /.col -->
 
