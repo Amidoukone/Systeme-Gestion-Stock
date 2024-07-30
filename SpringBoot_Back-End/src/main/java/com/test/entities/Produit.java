@@ -35,13 +35,8 @@ public class Produit {
     @ManyToOne
     @JoinColumn(name = "categories_id", nullable = false)
     private Categorie categorie;
-    
-    @OneToMany(mappedBy = "produit", cascade = CascadeType.ALL, orphanRemoval = true)
 
-    @JsonManagedReference
-    private List<DetailSortie> detailsSorties;
-
-    @OneToMany(mappedBy = "produit", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
-    private List<DetailEntree> detailsEntrees;
+    //@OneToMany(mappedBy = "produit", cascade = CascadeType.ALL, orphanRemoval = true)
+    //@JsonManagedReference
+    //private List<DetailEntree> detailsEntrees;
 }
