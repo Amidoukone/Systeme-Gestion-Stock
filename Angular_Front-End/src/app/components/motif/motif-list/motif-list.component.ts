@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { MotifService } from '../../../services/motif.service';
 import { Motif } from '../../../models/motif';
 import { CommonModule } from '@angular/common';
+import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-motif-list',
@@ -14,7 +15,11 @@ import { CommonModule } from '@angular/common';
 export class MotifListComponent implements OnInit {
   motifs: Motif[] = [];
 
-  constructor(private motifService: MotifService, private router: Router) { }
+  motifToDelete: number | null = null;
+  motifToEdit: number | null = null;
+  private modalRef: NgbModalRef | null = null;
+
+  constructor(private motifService: MotifService, private router: Router, private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.loadMotifs();
@@ -40,4 +45,20 @@ export class MotifListComponent implements OnInit {
       this.motifs = this.motifs.filter(m => m.id !== id);
     });
   }
+
+  showDeleteConfirmation(content: any, id: number): void {
+    this.motifToDelete = id;
+    this.modalRef = this.modalService.open(content);
+  }
+
+  confirmDelete(): void {
+    if (this.motifToDelete !== null) {
+      this.motifService.deleteMotif(this.motifToDelete).subscribe(() => {
+        this.motifs = this.motifs.filter(f => f.id !== this.motifToDelete);
+        this.motifToDelete = null;
+        this.modalRef?.close();
+      });
+    }
+  }
+
 }

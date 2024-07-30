@@ -35,17 +35,15 @@
           <td>
             <button class="btn btn-success btn-sm me-2" (click)="navigateToAddDetail(bonSortie.id)" class="btn btn-success">Add Detail</button>
             <button class="btn btn-secondary btn-sm" (click)="printBonSortie(bonSortie.id)">Imprimer</button>
+            <button class="btn btn-warning btn-sm me-2" routerLink="/edit-bon-sortie/(bonSortie.id)">Modifier</button>
 
-      
-            <button class="btn btn-warning btn-sm m-2" (click)="showEditConfirmation(editModal, bonSortie.id)">Modifier</button>
             <button class="btn btn-danger btn-sm m-2 " (click)="showDeleteConfirmation(deleteModal, bonSortie.id)">Supprimer</button>
-        
+
           </td>
         </tr>
         </tbody>
       </table>
     </div>
-
 
      <!-- Modal de confirmation de suppression -->
   <ng-template #deleteModal let-modal>

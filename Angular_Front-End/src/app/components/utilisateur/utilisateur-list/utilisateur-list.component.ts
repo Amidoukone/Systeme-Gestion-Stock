@@ -8,6 +8,7 @@ import {RoleService} from "../../../services/role.service";
 import {EntrepotService} from "../../../services/entrepot.service";
 import {Role} from "../../../models/role";
 import {Entrepot} from "../../../models/entrepot";
+import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-utilisateur-list',
@@ -21,7 +22,11 @@ export class UtilisateurListComponent implements OnInit {
   utilisateurs: Utilisateur[] = [];
   filteredUtilisateurs: Utilisateur[] = [];
 
-  constructor(private utilisateurService: UtilisateurService, private router: Router) { }
+  utilisateurToDelete: number | null = null;
+  utilisateurToEdit: number | null = null;
+  private modalRef: NgbModalRef | null = null;
+
+  constructor(private utilisateurService: UtilisateurService, private router: Router,private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.utilisateurService.getUtilisateurs().subscribe(data => {
@@ -54,4 +59,36 @@ export class UtilisateurListComponent implements OnInit {
       utilisateur.username.toLowerCase().includes(filterValue)
     );
   }
+
+  showEditConfirmation(content: any, id: number): void {
+    this.utilisateurToEdit = id;
+    this.modalRef = this.modalService.open(content);
+  }
+
+  confirmEdit(): void {
+    if (this.utilisateurToEdit !== null) {
+      this.router.navigate(['/edit-utilisateur', this.utilisateurToEdit]);
+      this.utilisateurToEdit = null;
+      this.modalRef?.close();
+    }
+  }
+
+  showDeleteConfirmation(content: any, id: number): void {
+    this.utilisateurToDelete = id;
+    this.modalRef = this.modalService.open(content);
+  }
+
+  confirmDelete(): void {
+    if (this.utilisateurToDelete !== null) {
+      this.utilisateurService.deleteUtilisateur(this.utilisateurToDelete).subscribe(() => {
+        this.utilisateurs = this.utilisateurs.filter(f => f.id !== this.utilisateurToDelete);
+        this.filteredUtilisateurs = this.filteredUtilisateurs.filter(f => f.id !== this.utilisateurToDelete);
+        this.utilisateurToDelete= null;
+        this.modalRef?.close();
+      });
+    }
+  }
+
+
+
 }

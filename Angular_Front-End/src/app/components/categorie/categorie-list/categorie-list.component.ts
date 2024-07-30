@@ -5,6 +5,7 @@ import { Categorie } from '../../../models/categorie';
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import { AuthService } from "../../../services/auth.service"
+import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-categorie-list',
@@ -16,7 +17,10 @@ import { AuthService } from "../../../services/auth.service"
 export class CategorieListComponent implements OnInit {
   categories: Categorie[] = [];
 
-  constructor(private categorieService: CategorieService, private router: Router, private authService: AuthService) { }
+  categoriesToDelete: number | null = null;
+  private modalRef: NgbModalRef | null = null;
+
+  constructor(private categorieService: CategorieService, private router: Router, private authService: AuthService, private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.loadCategories();
@@ -44,4 +48,22 @@ export class CategorieListComponent implements OnInit {
       this.categories = this.categories.filter(categorie => categorie.id !== id);
     });
   }
+
+
+  showDeleteConfirmation(content: any, id: number): void {
+    this.categoriesToDelete = id;
+    this.modalRef = this.modalService.open(content);
+  }
+
+  confirmDelete(): void {
+    if (this.categoriesToDelete !== null) {
+      this.categorieService.deleteCategorie(this.categoriesToDelete).subscribe(() => {
+        this.categories = this.categories.filter(f => f.id !== this.categoriesToDelete);
+        this.categoriesToDelete = null;
+        this.modalRef?.close();
+      });
+    }
+  }
+
+
 }

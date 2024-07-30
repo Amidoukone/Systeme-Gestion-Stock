@@ -59,20 +59,6 @@ export class FournisseurListComponent implements OnInit{
     );
   }
 
-
-  showEditConfirmation(content: any, id: number): void {
-    this.fournisseurToEdit = id;
-    this.modalRef = this.modalService.open(content);
-  }
-
-  confirmEdit(): void {
-    if (this.fournisseurToEdit !== null) {
-      this.router.navigate(['/edit-fournisseur', this.fournisseurToEdit]);
-      this.fournisseurToEdit = null;
-      this.modalRef?.close();
-    }
-  }
-
   showDeleteConfirmation(content: any, id: number): void {
     this.fournisseurToDelete = id;
     this.modalRef = this.modalService.open(content);

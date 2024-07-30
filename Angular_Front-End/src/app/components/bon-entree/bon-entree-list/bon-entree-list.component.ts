@@ -4,6 +4,7 @@ import {BonEntreeService} from '../../../services/bon-entree.service';
 import {BonEntree} from '../../../models/bon-entree';
 import {HttpClient} from "@angular/common/http";
 import {Router, RouterLink, ActivatedRoute, RouterModule} from "@angular/router";
+import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-bon-entree-list',
@@ -17,10 +18,15 @@ export class BonEntreeListComponent implements OnInit {
   bonEntrees: BonEntree[] = [];
   filteredBonEntrees: BonEntree[] = [];
 
+  bonentreeToDelete: number | null = null;
+  bonentreeToEdit: number | null = null;
+  private modalRef: NgbModalRef | null = null;
+
   constructor(
     private bonEntreeService: BonEntreeService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
@@ -55,4 +61,21 @@ export class BonEntreeListComponent implements OnInit {
   navigateToAddDetail(bonEntreeId: number): void {
     this.router.navigate(['/bon-entree-detail', bonEntreeId]);
   }
+
+  showDeleteConfirmation(content: any, id: number): void {
+    this.bonentreeToDelete= id;
+    this.modalRef = this.modalService.open(content);
+  }
+
+  confirmDelete(): void {
+    if (this.bonentreeToDelete !== null) {
+      this.bonEntreeService.deleteBonEntree(this.bonentreeToDelete).subscribe(() => {
+        this.bonEntrees = this.bonEntrees.filter(f => f.id !== this.bonentreeToDelete);
+        this.filteredBonEntrees = this.filteredBonEntrees.filter(f => f.id !== this.bonentreeToDelete);
+        this.bonentreeToDelete= null;
+        this.modalRef?.close();
+      });
+    }
+  }
+
 }

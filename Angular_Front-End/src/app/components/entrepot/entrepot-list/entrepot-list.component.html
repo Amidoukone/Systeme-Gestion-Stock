@@ -26,12 +26,31 @@
         <td>{{ entrepot.dateCreate }}</td>
         <td>{{ entrepot.abonnementStart }}</td>
         <td>{{ entrepot.abonnementEnd }}</td>
+
         <td>
-          <button class="btn btn-warning btn-sm mr-2" (click)="editEntrepot(entrepot.id)">Modifier</button>
-          <button class="btn btn-danger btn-sm" (click)="deleteEntrepot(entrepot.id)">Supprimer</button>
+          <button class="btn btn-warning btn-sm" (click)="editEntrepot(entrepot.id)">Modifier</button>
+          <button class="btn btn-danger btn-sm m-2" (click)="showDeleteConfirmation(deleteModal, entrepot.id)">Supprimer</button>
         </td>
+
       </tr>
       </tbody>
     </table>
   </div>
+
+
+   <!-- Modal de confirmation de suppression -->
+   <ng-template #deleteModal let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title">Confirmer la suppression</h5>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      Êtes-vous sûr de vouloir supprimer cet entrepôt ?
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modal.dismiss('cancel click')">Non</button>
+      <button type="button" class="btn btn-danger" (click)="confirmDelete()">Oui</button>
+    </div>
+  </ng-template>
+
 </div>
