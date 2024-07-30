@@ -1,0 +1,140 @@
+span{
+  background-color: rgb(106, 106, 241);
+  color: #fff;
+  border-radius: 50%;
+  padding: 10px 10px;
+  font-size: 18px;
+  margin-right: 10px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+
+span {
+  background-color: #0d6efd;
+  color: #fff;
+  border-radius: 30px;
+  padding: 8px 12px;
+  font-size: 18px;
+  margin: 0 10px;
+  cursor: pointer;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+/*span:hover {
+    background-color: #0056b3;
+    transform: scale(1.1);
+}*/
+
+
+tr{
+  padding: 35px 10px;
+}
+#table-responsive{
+  border: solid 1px;
+  border-radius: 5px;
+
+}
+
+.btn {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.btn:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  /*  transform: translateY(-2px); Légère élévation lors du survol */
+  transform: scale(1.1);
+}
+
+
+/* Styles pour l'input */
+input.form-control {
+  z-index: 1;
+  background-color: #0d6efd; /* Fond bleu */
+  color: #ffffff; /* Texte blanc */
+  border-radius: 10px; /* Bords arrondis */
+  padding-left: 50px ; /* Espace pour l'icône */
+
+}
+
+/* Styles pour le placeholder */
+input::placeholder {
+  color: #ffffff; /* Couleur blanche pour le placeholder */
+  opacity: 1; /* Assure que la couleur soit bien appliquée */
+  transition: opacity 0.3s ease-in-out;
+  font-size: 18px;
+  font-weight: bold;
+  font-family: inherit;
+  text-align: left;
+  text-indent: 10px; /* Décalage du texte par rapport à l'icône */
+
+}
+#recherche input{
+  z-index: 1;
+
+
+}
+#recherche i{
+  z-index: 2;
+  background-color: #fff;
+  border-radius: 50%;
+  padding: 5px;
+  position: absolute;
+  left: 10px;
+  top: 29px;
+  font-size: 20px;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+
+}
+
+/* Positionnement de l'icône de recherche */
+.styled-row .cell-container {
+  border: 5px solid #222121; /* Couleur et épaisseur de la bordure */
+  padding: 10px; /* Espace intérieur */
+  margin: -2px 0; /* Pour éviter des espaces supplémentaires dus à la bordure */
+}
+.styled-row{
+  border: 5px ;
+}
+
+/* Retirer le fond du bouton */
+.btn-danger {
+  background-color: transparent;
+  border: none !important;;
+
+}
+
+/* Changer la couleur de l'icône en rouge */
+.btn-danger i {
+  color: #dc3545; /* Rouge bootstrap */
+}
+
+/* Optionnel : changer la couleur du texte du bouton pour qu'il soit visible */
+.btn-danger {
+  color: #1b191a; /* Rouge bootstrap */
+}
+.btn-warning i{
+  color: #ffc107; /* Jaune bootstrap */
+
+}
+.btn-warning{
+  background-color: transparent;
+  border: none !important;;
+}
+.btn-secondary i{
+  color: #6c757d; /* Gris bootstrap */
+
+}
+
+.btn-secondary{
+  background-color: transparent;
+  border: none !important;
+  color: #1b191a;
+}
+
