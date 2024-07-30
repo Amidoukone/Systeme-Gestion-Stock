@@ -1,15 +1,15 @@
 <div class="container">
   <h1 class="h2 font-weight-bold mb-4">Liste des Motifs</h1>
   <div class="mb-3 d-flex justify-content-between align-items-center">
-    <button class="btn btn-primary" (click)="addMotif()">Ajouter Motif</button>
+    <button class="btn btn-primary" (click)="addMotif()"> <i class="fas fa-plus-circle"></i>Ajouter Motif</button>
   </div>
   <div class="table-responsive">
-    <table class="table table-striped table-bordered w-100">
+    <table class="table table-striped table-bordered table-hover w-100">
       <thead class="thead-dark">
       <tr>
-        <th scope="col">#</th>
-        <th scope="col">Titre du Motif</th>
-        <th scope="col">Actions</th>
+        <th scope="col"><span>#</span></th>
+        <th scope="col"><span>Titre du Motif</span></th>
+        <th scope="col"><span>Actions</span></th>
       </tr>
       </thead>
       <tbody>
@@ -18,8 +18,8 @@
         <td>{{ motif.title }}</td>
 
         <td>
-          <button class="btn btn-warning btn-sm" (click)="editMotif(motif.id)">Modifier</button>
-          <button class="btn btn-danger btn-sm m-2 " (click)="showDeleteConfirmation(deleteModal, motif.id)">Supprimer</button>
+          <button class="btn btn-warning btn-sm" (click)="editMotif(motif.id)"> <i class="fas fa-edit"></i>Modifier</button>
+          <button class="btn btn-danger btn-sm m-2 " (click)="showDeleteConfirmation(deleteModal, motif.id)"><i class="fas fa-trash"></i>Supprimer</button>
         </td>
 
       </tr>
