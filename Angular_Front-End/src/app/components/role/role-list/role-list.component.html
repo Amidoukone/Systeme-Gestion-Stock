@@ -16,12 +16,30 @@
       <tr *ngFor="let role of roles; let i = index">
         <td>{{ i + 1 }}</td>
         <td>{{ role.name }}</td>
+
         <td>
-          <button class="btn btn-warning mr-2" (click)="editRole(role.id)">Modifier</button>
-          <button class="btn btn-danger" (click)="deleteRole(role.id)">Supprimer</button>
+           <button class="btn btn-warning btn-sm" (click)="editRole(role.id)">Modifier</button>
+          <button class="btn btn-danger btn-sm m-2" (click)="showDeleteConfirmation(deleteModal, role.id)">Supprimer</button>
         </td>
+
       </tr>
       </tbody>
     </table>
   </div>
+  <!-- Modal de confirmation de suppression -->
+  <ng-template #deleteModal let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title">Confirmer la suppression</h5>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      Êtes-vous sûr de vouloir supprimer ce role ?
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modal.dismiss('cancel click')">Annuler</button>
+      <button type="button" class="btn btn-danger" (click)="confirmDelete()">Supprimer</button>
+    </div>
+  </ng-template>
+
 </div>
+

@@ -4,6 +4,7 @@ import { ProduitService } from '../../../services/produit.service';
 import { Produit } from '../../../models/produit';
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
+import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-produit-list',
@@ -16,7 +17,11 @@ export class ProduitListComponent implements OnInit {
   produits: Produit[] = [];
   filteredProduits: Produit[] = [];
 
-  constructor(private produitService: ProduitService, private router: Router) { }
+  produitsToDelete: number | null = null;
+  produitsToEdit: number | null = null;
+  private modalRef: NgbModalRef | null = null;
+
+  constructor(private produitService: ProduitService, private router: Router, private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.produitService.getProduits().subscribe(data => {
@@ -47,4 +52,23 @@ export class ProduitListComponent implements OnInit {
       produit.productName.toLowerCase().includes(filterValue)
     );
   }
+
+  showDeleteConfirmation(content: any, id: number): void {
+    this.produitsToDelete = id;
+    this.modalRef = this.modalService.open(content);
+  }
+
+  confirmDelete(): void {
+    if (this.produitsToDelete!== null) {
+      this.produitService.deleteProduit(this.produitsToDelete).subscribe(() => {
+        this.produits = this.produits.filter(f => f.id !== this.produitsToDelete);
+        this.filteredProduits = this.filteredProduits.filter(f => f.id !== this.produitsToDelete);
+        this.produitsToDelete = null;
+        this.modalRef?.close();
+      });
+    }
+  }
+
+
+
 }
