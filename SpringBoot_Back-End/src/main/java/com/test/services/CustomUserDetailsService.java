@@ -1,6 +1,6 @@
 package com.test.services;
 
-import com.test.config.CustomUserDetails;
+/*import com.test.config.CustomUserDetails;
 import com.test.entities.Utilisateur;
 import com.test.repositories.UtilisateurRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,4 +23,4 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         return new CustomUserDetails(utilisateur);
     }
-}
+}*/

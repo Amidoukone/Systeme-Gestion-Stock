@@ -1,3 +1,135 @@
-<div className="container text-center mt-5">
-          <p className="card-text text-muted">Détails de la statistique 1.</p>
-</div>
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12 col-sm-6 col-md-4">
+        <div class="info-box mb-3">
+          <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
+          <div class="info-box-content">
+            <span class="info-box-text">Total des Entrées</span>
+            <span class="info-box-number">{{ totalEntrees }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-sm-6 col-md-4">
+        <div class="info-box mb-3">
+          <span class="info-box-icon bg-warning elevation-1"><i class="fa-solid fa-hand-holding-dollar"></i></span>
+          <div class="info-box-content">
+            <span class="info-box-text">Valeur des Entrées</span>
+            <span class="info-box-number">{{ valeurEntrees }} FCFA</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-sm-6 col-md-4">
+        <div class="info-box mb-3">
+          <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
+          <div class="info-box-content">
+            <span class="info-box-text">Total des sorties</span>
+            <span class="info-box-number">{{ totalSorties }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-sm-6 col-md-4">
+        <div class="info-box mb-3">
+          <span class="info-box-icon bg-warning elevation-1"><i class="fa-solid fa-money-bill-trend-up"></i></span>
+          <div class="info-box-content">
+            <span class="info-box-text">Valeur des sorties</span>
+            <span class="info-box-number">{{ valeurSorties }} FCFA</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-sm-6 col-md-4">
+        <div class="info-box mb-3">
+          <span class="info-box-icon bg-info elevation-1"><i class="fa-solid fa-boxes-stacked"></i></span>
+          <div class="info-box-content">
+            <span class="info-box-text">Stock Total</span>
+            <span class="info-box-number">{{ stockTotal }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="card-title">Analyse des Tendances</h5>
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <i class="fas fa-minus"></i>
+              </button>
+              <button type="button" class="btn btn-tool" data-card-widget="remove">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card">
+                  <p-chart type="line" [data]="data"></p-chart>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card containerChart">
+          <div class="card-header">
+            <h3 class="card-title">Ventes par Catégories</h3>
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <i class="fas fa-minus"></i>
+              </button>
+              <button type="button" class="btn btn-tool" data-card-widget="remove">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+          </div>
+          <div class="card-body p-0">
+            <div class="card">
+              <p-chart type="bar" [data]="data3" [options]="options3"></p-chart>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container mt-4">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <h5 class="card-title mb-0">Liste des Bons d'Entrée</h5>
+              <button class="btn btn-success" (click)="exportToExcel('bons_entree', bonEntrees)">Télécharger Excel</button>
+            </div>
+            <div class="card-body">
+              <ngx-datatable class="bootstrap" [rows]="bonEntrees" [columns]="bonEntreeColumns"></ngx-datatable>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-4">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <h5 class="card-title mb-0">Liste des Bons de Sortie</h5>
+              <button class="btn btn-success" (click)="exportToExcel('bons_sortie', bonSorties)">Télécharger Excel</button>
+            </div>
+            <div class="card-body">
+              <ngx-datatable class="bootstrap" [rows]="bonSorties" [columns]="bonSortieColumns"></ngx-datatable>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</section>
+
+<router-outlet></router-outlet>

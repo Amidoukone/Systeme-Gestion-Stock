@@ -46,7 +46,7 @@ public class AuthController {
         if (utilisateur.getEntrepot() != null) {
             Map<String, Object> entrepotInfo = new HashMap<>();
             entrepotInfo.put("entrepotId", utilisateur.getEntrepot().getId());
-            entrepotInfo.put("entrepotNom", utilisateur.getEntrepot().getEntrepotName());
+            entrepotInfo.put("entrepotName", utilisateur.getEntrepot().getEntrepotName());
             response.put("entrepot", entrepotInfo);
         }
         return ResponseEntity.ok(response);

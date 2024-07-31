@@ -1,33 +1,28 @@
-import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BonSortieService } from '../../../services/bon-sortie.service';
-import { BonSortie } from '../../../models/bon-sortie';
-import { RouterModule } from '@angular/router';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { BonSortie } from '../../../models/bon-sortie';
+import { BonSortieService } from '../../../services/bon-sortie.service';
 
 @Component({
   selector: 'app-bon-sortie-list',
-  standalone: true,
-  imports: [CommonModule, RouterModule],
   templateUrl: './bon-sortie-list.component.html',
-  styleUrls: ['./bon-sortie-list.component.css']
+  styleUrls: ['./bon-sortie-list.component.css'],
+  standalone: true,
+  imports: [CommonModule, RouterModule]
 })
 export class BonSortieListComponent implements OnInit {
   bonSorties: BonSortie[] = [];
   filteredBonSorties: BonSortie[] = [];
-
- bonsortieToDelete: number | null = null;
-  bonsortieToEdit: number | null = null;
+  bonSortieToDelete: number | null = null;
   private modalRef: NgbModalRef | null = null;
+  selectedBonSortie: BonSortie | null = null;
 
   constructor(
     private bonSortieService: BonSortieService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private modalService: NgbModal
-
-
+    private modalService: NgbModal,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -36,21 +31,29 @@ export class BonSortieListComponent implements OnInit {
 
   loadBonSorties(): void {
     this.bonSortieService.getBonSorties().subscribe(data => {
-      console.log(data);
       this.bonSorties = data;
       this.filteredBonSorties = data;
+
+      // Assurez-vous que motif est toujours défini
+      this.bonSorties.forEach(bonSortie => {
+        if (!bonSortie.motif) {
+          bonSortie.motif = {createBy: 0, id: 0, title: 'N/A' };
+        }
+      });
     });
   }
 
   applyFilter(event: Event): void {
-    const filterValue = (event.target as HTMLInputElement).value.toLowerCase();
+    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
     this.filteredBonSorties = this.bonSorties.filter(bonSortie =>
-      bonSortie.motif.title.toLowerCase().includes(filterValue));
+      bonSortie.motif && bonSortie.motif.title && bonSortie.motif.title.toLowerCase().includes(filterValue)
+    );
   }
 
   deleteBonSortie(id: number): void {
     this.bonSortieService.deleteBonSortie(id).subscribe(() => {
-      this.loadBonSorties();
+      this.bonSorties = this.bonSorties.filter(b => b.id !== id);
+      this.filteredBonSorties = this.filteredBonSorties.filter(b => b.id !== id);
     });
   }
 
@@ -62,36 +65,24 @@ export class BonSortieListComponent implements OnInit {
     this.router.navigate(['/bon-sortie-detail', bonSortieId]);
   }
 
-
-
-  showEditConfirmation(content: any, id: number): void {
-    this.bonsortieToEdit = id;
-    this.modalRef = this.modalService.open(content);
-  }
-
-  confirmEdit(): void {
-    if (this.bonsortieToEdit !== null) {
-      this.router.navigate(['/edit-fournisseur', this.bonsortieToEdit]);
-      this.bonsortieToEdit = null;
-      this.modalRef?.close();
-    }
-  }
-
   showDeleteConfirmation(content: any, id: number): void {
-    this.bonsortieToDelete= id;
+    this.bonSortieToDelete = id;
     this.modalRef = this.modalService.open(content);
   }
 
   confirmDelete(): void {
-    if (this.bonsortieToDelete !== null) {
-      this.bonSortieService.deleteBonSortie(this.bonsortieToDelete).subscribe(() => {
-        this.bonSorties = this.bonSorties.filter(f => f.id !== this.bonsortieToDelete);
-        this.filteredBonSorties = this.filteredBonSorties.filter(f => f.id !== this.bonsortieToDelete);
-        this.bonsortieToDelete= null;
+    if (this.bonSortieToDelete !== null) {
+      this.bonSortieService.deleteBonSortie(this.bonSortieToDelete).subscribe(() => {
+        this.bonSorties = this.bonSorties.filter(f => f.id !== this.bonSortieToDelete);
+        this.filteredBonSorties = this.filteredBonSorties.filter(f => f.id !== this.bonSortieToDelete);
+        this.bonSortieToDelete = null;
         this.modalRef?.close();
       });
     }
   }
 
-
+  openDetailsModal(content: any, bonSortie: BonSortie): void {
+    this.selectedBonSortie = bonSortie;
+    this.modalRef = this.modalService.open(content);
+  }
 }

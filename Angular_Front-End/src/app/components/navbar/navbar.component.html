@@ -1,19 +1,18 @@
-<nav class="navbar navbar-expand navbar-light bg-white topbar  ">
+<nav class="navbar navbar-expand navbar-light bg-white topbar fixed-top">
   <div class="container-fluid">
-    <button class="btn btn-link d-md-none rounded-circle " type="button" (click)="toggleSidebar()">
+    <button class="btn btn-link d-md-none rounded-circle" type="button" (click)="toggleSidebar()">
       <i class="fas fa-bars"></i>
     </button>
-    <a class="navbar-brand text-primary"> {{ getEntrepotName() }}</a>
+    <a class="navbar-brand text-primary">{{ getEntrepotName() }}</a>
     <div class="collapse navbar-collapse">
       <ul class="navbar-nav ms-auto">
         <!-- Nav Item - Alerts -->
-        <!-- Bouton Notifications -->
         <li class="nav-item dropdown no-arrow">
           <button class="nav-link dropdown-toggle text-primary" (click)="toggleNotifications()">
             <i class="fas fa-bell"></i> Notifications
           </button>
           <!-- Dropdown - Notifications -->
-          <ul *ngIf="showNotifications" class="dropdown-list dropdown-menu-right  animated--grow-in">
+          <ul *ngIf="showNotifications" class="dropdown-list dropdown-menu-right animated--grow-in">
             <li class="dropdown-header">Notifications</li>
             <li *ngFor="let notification of notifications" class="dropdown-item d-flex align-items-center" [ngClass]="{'text-muted': notification.read}">
               <span class="text-start fw-normal ms-0" (click)="markAsRead(notification)">{{ notification.contenu }}</span>
@@ -23,13 +22,13 @@
           </ul>
         </li>
 
-        <!-- Bouton Profil -->
+        <!-- Nav Item - User Information -->
         <li class="nav-item dropdown no-arrow">
           <button *ngIf="currentUser" class="nav-link dropdown-toggle text-primary" (click)="toggleProfile()">
             <i class="fas fa-user-circle"></i> {{ currentUser.username }}
           </button>
-          <!-- Dropdown - Profil -->
-          <ul *ngIf="showProfile" class="dropdown-menu-right shadow animated--grow-in" aria-labelledby="navbarDropdown">
+          <!-- Dropdown - User Information -->
+          <ul *ngIf="showProfile" class="dropdown-menu-right shadow animated--grow-in">
             <li class="list-group-item active">
               <a class="dropdown-item" href="/user-profile">
                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> Mon Profil
@@ -42,7 +41,6 @@
             </li>
           </ul>
         </li>
-
       </ul>
     </div>
   </div>

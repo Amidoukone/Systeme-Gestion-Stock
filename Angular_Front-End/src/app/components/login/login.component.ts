@@ -16,6 +16,7 @@ export class LoginComponent implements  OnInit{
   password: string = '';
   isConnected: boolean = false;
   errorMessage: string = '';
+  passwordVisible: boolean = false;
 
 
   constructor(public authService: AuthService, private router: Router) {}
@@ -24,6 +25,10 @@ export class LoginComponent implements  OnInit{
     this.isConnected = !!localStorage.getItem("currentUser");
   }
 
+  togglePasswordVisibility() {
+    this.passwordVisible = !this.passwordVisible;
+  }
+  
   login() {
     this.authService.login(this.email, this.password).subscribe(
       response => {
