@@ -1,29 +1,28 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink, RouterModule } from '@angular/router';
-import { BonSortieService } from '../../../services/bon-sortie.service';
-import { ProduitService } from '../../../services/produit.service';
-import { DetailSortieService } from '../../../services/detail-sortie.service';
+import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { BonSortie } from '../../../models/bon-sortie';
 import { DetailSortie } from '../../../models/detail-sortie';
 import { Produit } from '../../../models/produit';
-import { BonSortie } from '../../../models/bon-sortie';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { Utilisateur } from '../../../models/utilisateur';
+import { BonSortieService } from '../../../services/bon-sortie.service';
+import { DetailSortieService } from '../../../services/detail-sortie.service';
+import { ProduitService } from '../../../services/produit.service';
 
 @Component({
   selector: 'app-bon-sortie-detail',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterModule, FormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './bon-sortie-detail.component.html',
-  styleUrl: './bon-sortie-detail.component.css'
+  styleUrls: ['./bon-sortie-detail.component.css']
 })
 export class BonSortieDetailComponent implements OnInit {
-  detailSortie: DetailSortie = { produit: {} as Produit } as DetailSortie;
-  bonSortie: BonSortie = {} as BonSortie;
+  bonSortieForm: FormGroup;
   produits: Produit[] = [];
   bonSortieId: number;
 
   constructor(
+    private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private bonSortieService: BonSortieService,
@@ -31,11 +30,18 @@ export class BonSortieDetailComponent implements OnInit {
     private detailSortieService: DetailSortieService
   ) {
     this.bonSortieId = +this.route.snapshot.paramMap.get('id')!;
+    this.bonSortieForm = this.fb.group({
+      details: this.fb.array([]),
+    });
   }
 
   ngOnInit(): void {
     this.loadProduits();
     this.loadBonSortie();
+  }
+
+  get details(): FormArray {
+    return this.bonSortieForm.get('details') as FormArray;
   }
 
   loadProduits(): void {
@@ -46,17 +52,32 @@ export class BonSortieDetailComponent implements OnInit {
 
   loadBonSortie(): void {
     this.bonSortieService.getBonSortieById(this.bonSortieId).subscribe(data => {
-      this.bonSortie = data;
-      if (!this.bonSortie.detailsSorties) {
-        this.bonSortie.detailsSorties = [];
+      if (data && data.detailsSorties) {
+        data.detailsSorties.forEach((detail: DetailSortie) => {
+          this.addDetail(detail);
+        });
       }
     });
   }
 
+  addDetail(detail?: DetailSortie): void {
+    this.details.push(this.fb.group({
+      produit: [detail?.produit || '', Validators.required],
+      quantite: [detail?.quantity || '', Validators.required],
+      prix: [detail?.prix || '', Validators.required]
+    }));
+  }
+
+  removeDetail(index: number): void {
+    this.details.removeAt(index);
+  }
+
   onSubmit(): void {
-    this.detailSortie.bonSortie = this.bonSortie;
-    this.detailSortieService.createDetailSortie(this.detailSortie).subscribe(() => {
-      this.router.navigate(['/bon-sortie']);
+    const formValue = this.bonSortieForm.value;
+    formValue.details.forEach((detail: DetailSortie) => {
+      detail.bonSortie = { id: this.bonSortieId } as BonSortie;
+      this.detailSortieService.createDetailSortie(detail).subscribe();
     });
+    this.router.navigate(['/bon-sortie']);
   }
 }
