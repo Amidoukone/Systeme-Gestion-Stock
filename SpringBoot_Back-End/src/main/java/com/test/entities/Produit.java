@@ -27,17 +27,18 @@ public class Produit {
     @Column(name = "quantity")
     private int quantity;
 
+    @Column(name = "seuil")
+    private int seuil;
+
     private long createBy;
 
     @ManyToOne
     @JoinColumn(name = "categories_id", nullable = false)
     private Categorie categorie;
 
-    /*@OneToMany(mappedBy = "produit", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
-    private List<DetailSortie> detailsSorties;
-
-    @OneToMany(mappedBy = "produit", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
-    private List<DetailEntree> detailsEntrees;*/
+    @OneToMany(mappedBy = "produit")
+    private List<DetailSortie> detailSortie;
+    //@OneToMany(mappedBy = "produit", cascade = CascadeType.ALL, orphanRemoval = true)
+    //@JsonManagedReference
+    //private List<DetailEntree> detailsEntrees;
 }

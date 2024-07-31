@@ -1,10 +1,12 @@
-<app-navbar *ngIf="authService.currentUserValue" (sidebarToggle)="sidebar?.toggleSidebar()"></app-navbar>
-<div class="row me-0" id="main-wrapper">
-  <div class="col-lg-3">
-    <app-sidebar #sidebar [isExpanded]="true" *ngIf="authService.currentUserValue"></app-sidebar>
+<div class="d-flex col">
+      <app-sidebar #sidebar [isExpanded]="true" *ngIf="authService.currentUserValue"></app-sidebar>
+  <div class="col" >
+    <app-navbar *ngIf="authService.currentUserValue" (sidebarToggle)="sidebar?.toggleSidebar()"></app-navbar>
+    <div class="col">
+      <router-outlet></router-outlet>
+    </div>
   </div>
-  <div class="col-lg-8">
-    <router-outlet></router-outlet>
-  </div>
+  
+
 </div>
-<app-footer *ngIf="authService.currentUserValue"></app-footer>
+
