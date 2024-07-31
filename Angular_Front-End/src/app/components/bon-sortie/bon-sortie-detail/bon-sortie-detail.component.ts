@@ -63,7 +63,7 @@ export class BonSortieDetailComponent implements OnInit {
   addDetail(detail?: DetailSortie): void {
     this.details.push(this.fb.group({
       produit: [detail?.produit || '', Validators.required],
-      quantite: [detail?.quantity || '', Validators.required],
+      quantity: [detail?.quantity || '', Validators.required],
       prix: [detail?.prix || '', Validators.required]
     }));
   }

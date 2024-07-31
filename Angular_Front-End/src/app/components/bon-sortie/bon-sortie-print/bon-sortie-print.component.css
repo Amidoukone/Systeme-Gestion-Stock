@@ -1,6 +1,6 @@
 /* Hide print button on print */
 
-@media print {
+/*@media print {
 
 
   .card {
@@ -15,7 +15,7 @@
   .print-container {
     padding: 20px;
   }
-}
+}*/
 
 .print-container {
   margin: 20px auto;

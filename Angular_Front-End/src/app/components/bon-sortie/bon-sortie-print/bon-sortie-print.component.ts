@@ -8,11 +8,12 @@ import { Produit } from '../../../models/produit';
 import { ProduitService } from '../../../services/produit.service';
 import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
+import { NgxPrintModule } from 'ngx-print';
 
 @Component({
   selector: 'app-bon-sortie-print',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, NgxPrintModule],
   templateUrl: './bon-sortie-print.component.html',
   styleUrl: './bon-sortie-print.component.css'
 })
@@ -52,9 +53,8 @@ export class BonSortiePrintComponent implements OnInit {
 
   loadBonSortieById(id: number): void {
     this.bonSortieService.getBonSortieById(id).subscribe(data => {
+      console.log('Bon de Sortie:', data);  // Log pour vérifier les données
       this.bonSortie = data;
-      console.log(data);
-      this.loadProduits();
     });
   }
 
@@ -90,19 +90,10 @@ export class BonSortiePrintComponent implements OnInit {
   printDocument(): void {
     const printContents = document.getElementById('print-container')?.innerHTML;
     const originalContents = document.body.innerHTML;
-    const printimp = document.getElementById('imp');
-
     if (printContents) {
-      if (printimp) {
-        printimp.style.display = 'none';
-      }
-
       document.body.innerHTML = printContents;
       window.print();
       document.body.innerHTML = originalContents;
-      if (printimp) {
-        printimp.style.display = 'block';
-      }
     }
   }
 }
