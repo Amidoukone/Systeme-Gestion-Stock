@@ -7,6 +7,7 @@ import com.test.repositories.EntrepotRepository;
 import com.test.repositories.RoleRepository;
 import com.test.repositories.UtilisateurRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,6 +15,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.security.Principal;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -86,6 +89,50 @@ public class UtilisateurService implements UserDetailsService  {
             throw new RuntimeException("Sorry votre entrepôt ne peu pas avoir plus de deux Vendeur 😎.");
         }
         return createUser(username, contact, email, password, "VENDEUR", entrepot);
+    }
+
+
+    /*public List<Utilisateur> getUtilisateursByUserOrEntrepot(String email) {
+        Optional<Utilisateur> optionalCurrentUser = utilisateurRepository.findByEmail(email);
+
+        if (optionalCurrentUser.isEmpty()) {
+            throw new RuntimeException("Utilisateur non authentifié.");
+        }
+
+        Utilisateur currentUser = optionalCurrentUser.get();
+        if ("ADMIN".equals(currentUser.getRole().getName())) {
+            return utilisateurRepository.findAll();
+        } else if ("MANAGER".equals(currentUser.getRole().getName())) {
+            return utilisateurRepository.findByEntrepotId(currentUser.getEntrepot().getId());
+        } else {
+            return Collections.emptyList();
+        }
+    }
+    public List<Utilisateur> getUtilisateursByUserOrEntrepot(String email) {
+        Optional<Utilisateur> optionalCurrentUser = utilisateurRepository.findByEmail(email);
+
+        if (optionalCurrentUser.isEmpty()) {
+            throw new RuntimeException("Utilisateur non authentifié.");
+        }
+
+        Utilisateur currentUser = optionalCurrentUser.get();
+        if ("ADMIN".equals(currentUser.getRole().getName())) {
+            return utilisateurRepository.findAll();
+        } else if ("MANAGER".equals(currentUser.getRole().getName())) {
+            return utilisateurRepository.findByEntrepotId(currentUser.getEntrepot().getId());
+        } else {
+            return Collections.emptyList();
+        }
+    }*/
+
+    public List<Utilisateur> getUtilisateursByUserOrEntrepot(Utilisateur loggedInUser) {
+        if (loggedInUser.getRole().getName() == "ADMIN") {
+            return utilisateurRepository.findAll();
+        } else if (loggedInUser.getRole().getName() == "MANAGER") {
+            return utilisateurRepository.findByEntrepotId(loggedInUser.getEntrepot().getId());
+        } else {
+            return Collections.emptyList();
+        }
     }
 
     private Utilisateur createUser(String username, String contact, String email, String password, String roleName, Entrepot entrepot) {
@@ -173,5 +220,9 @@ public class UtilisateurService implements UserDetailsService  {
         return utilisateurRepository
                 .findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("Utilisateur indisponible"));
+    }
+
+    public Optional<Utilisateur> findByEmail(String email) {
+        return utilisateurRepository.findByEmail(email);
     }
 }

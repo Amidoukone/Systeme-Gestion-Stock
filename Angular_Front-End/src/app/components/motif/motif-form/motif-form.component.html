@@ -4,6 +4,16 @@
       <h5 class="card-title">{{ isEditMode ? 'Modifier Motif' : 'Ajouter Motif' }}</h5>
     </div>
     <div class="card-body">
+      <!-- Display success message -->
+      <div *ngIf="successMessage" class="alert alert-success" role="alert">
+        {{ successMessage }}
+      </div>
+
+      <!-- Display error message -->
+      <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+        {{ errorMessage }}
+      </div>
+
       <form (ngSubmit)="onSubmit()">
         <div class="mb-3">
           <label for="title" class="form-label">Titre du Motif</label>
@@ -11,6 +21,7 @@
         </div>
         <div class="d-grid gap-2">
           <button class="btn btn-primary" type="submit">{{ isEditMode ? 'Modifier' : 'Ajouter' }}</button>
+          <button class="btn btn-primary m-5" (click)="navigateToBonEntree()">Annuler</button>
         </div>
       </form>
     </div>

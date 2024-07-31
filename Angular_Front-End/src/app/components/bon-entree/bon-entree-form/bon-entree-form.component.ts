@@ -3,23 +3,22 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BonEntreeService } from '../../../services/bon-entree.service';
 import { FournisseurService } from '../../../services/fournisseur.service';
-import { UtilisateurService } from '../../../services/utilisateur.service';
 import { ProduitService } from '../../../services/produit.service';
 import { BonEntree } from '../../../models/bon-entree';
 import { Fournisseur } from '../../../models/fournisseur';
-import { Utilisateur } from '../../../models/utilisateur';
 import { Produit } from '../../../models/produit';
 import { DetailEntree } from '../../../models/detail-entree';
-import {AuthService} from "../../../services/auth.service";
-import {FormsModule} from "@angular/forms";
+import { AuthService } from "../../../services/auth.service";
+import { FormsModule } from "@angular/forms";
 import { format } from 'date-fns';
+import { Utilisateur } from '../../../models/utilisateur';
 
 @Component({
   selector: 'app-bon-entree-form',
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './bon-entree-form.component.html',
-  styleUrl: './bon-entree-form.component.css'
+  styleUrls: ['./bon-entree-form.component.css']
 })
 export class BonEntreeFormComponent implements OnInit {
   bonEntree: BonEntree = {} as BonEntree;
@@ -28,6 +27,8 @@ export class BonEntreeFormComponent implements OnInit {
   selectedFournisseurId: number | any;
   detailsEntrees: DetailEntree[] = [];
   isEditMode: boolean = false;
+  successMessage: string = '';
+  errorMessage: string = '';
 
   constructor(
     private bonEntreeService: BonEntreeService,
@@ -69,6 +70,10 @@ export class BonEntreeFormComponent implements OnInit {
       this.bonEntree = data;
       this.detailsEntrees = data.detailEntrees || [];
       this.selectedFournisseurId = data.fournisseur.id;
+    }, error => {
+      console.error('Error loading Bon d\'Entrée:', error);
+      this.errorMessage = 'Erreur lors du chargement du bon d\'entrée.';
+      setTimeout(() => this.errorMessage = '', 3000);
     });
   }
 
@@ -77,13 +82,10 @@ export class BonEntreeFormComponent implements OnInit {
   }
 
   onSubmit(): void {
-
     this.bonEntree.detailEntrees = this.detailsEntrees;
     this.bonEntree.fournisseur = this.selectedFournisseurId
       ? this.fournisseurs?.find(f => f.id === +this.selectedFournisseurId) ?? {} as Fournisseur
       : {} as Fournisseur;
-
-    console.log(this.bonEntree.detailEntrees, this.bonEntree, this.selectedFournisseurId);
 
     const formattedBonEntree = {
       ...this.bonEntree,
@@ -93,13 +95,29 @@ export class BonEntreeFormComponent implements OnInit {
     };
 
     if (this.isEditMode) {
-      this.bonEntreeService.updateBonEntree(this.bonEntree.id, this.bonEntree).subscribe(() => {
-        this.router.navigate(['/bon-entree']);
+      this.bonEntreeService.updateBonEntree(this.bonEntree.id, formattedBonEntree).subscribe(() => {
+        this.successMessage = 'Bon d\'Entrée mis à jour avec succès!';
+        setTimeout(() => this.successMessage = '', 3000);
+        setTimeout(() => this.router.navigate(['/bon-entree']), 3000);
+      }, error => {
+        console.error('Error updating Bon d\'Entrée:', error);
+        this.errorMessage = 'Erreur lors de la mise à jour du bon d\'entrée.';
+        setTimeout(() => this.errorMessage = '', 3000);
       });
     } else {
-      this.bonEntreeService.createBonEntree(this.bonEntree).subscribe(() => {
-        this.router.navigate(['/bon-entree']);
+      this.bonEntreeService.createBonEntree(formattedBonEntree).subscribe(() => {
+        this.successMessage = 'Bon d\'Entrée créé avec succès!';
+        setTimeout(() => this.successMessage = '', 3000);
+        setTimeout(() => this.router.navigate(['/bon-entree']), 3000);
+      }, error => {
+        console.error('Error creating Bon d\'Entrée:', error);
+        this.errorMessage = 'Erreur lors de la création du bon d\'entrée.';
+        setTimeout(() => this.errorMessage = '', 3000);
       });
     }
+  }
+
+  navigateToBonEntree() {
+    this.router.navigate(['/bon-entree']);
   }
 }

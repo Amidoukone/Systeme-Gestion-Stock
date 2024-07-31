@@ -33,13 +33,20 @@ export class BonSortieListComponent implements OnInit {
     this.bonSortieService.getBonSorties().subscribe(data => {
       this.bonSorties = data;
       this.filteredBonSorties = data;
+
+      // Assurez-vous que motif est toujours défini
+      this.bonSorties.forEach(bonSortie => {
+        if (!bonSortie.motif) {
+          bonSortie.motif = {createBy: 0, id: 0, title: 'N/A' };
+        }
+      });
     });
   }
 
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
     this.filteredBonSorties = this.bonSorties.filter(bonSortie =>
-      bonSortie.motif.title.toLowerCase().includes(filterValue)
+      bonSortie.motif && bonSortie.motif.title && bonSortie.motif.title.toLowerCase().includes(filterValue)
     );
   }
 

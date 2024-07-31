@@ -1,13 +1,12 @@
+import { CommonModule } from "@angular/common";
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from "@angular/forms";
 import { ActivatedRoute } from '@angular/router';
-import { BonSortieService } from '../../../services/bon-sortie.service';
 import { BonSortie } from '../../../models/bon-sortie';
-import { DetailSortieService } from '../../../services/detail-sortie.service';
-import { DetailSortie } from '../../../models/detail-sortie';
 import { Produit } from '../../../models/produit';
+import { BonSortieService } from '../../../services/bon-sortie.service';
+import { DetailSortieService } from '../../../services/detail-sortie.service';
 import { ProduitService } from '../../../services/produit.service';
-import {CommonModule} from "@angular/common";
-import {FormsModule} from "@angular/forms";
 
 @Component({
   selector: 'app-bon-sortie-print',

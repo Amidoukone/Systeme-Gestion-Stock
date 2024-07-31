@@ -1,108 +1,58 @@
-<!-- Content Header (Page header) -->
-
-
-<!-- /.content-header -->
-
-<!-- Main content -->
 <section class="content">
   <div class="container-fluid">
-    <!-- Info boxes -->
     <div class="row">
       <div class="col-12 col-sm-6 col-md-4">
         <div class="info-box mb-3">
-          <span class="info-box-icon bg-info elevation-1"><i class="fa-solid fa-boxes-stacked"></i></span>
-
-          <div class="info-box-content">
-            <span class="info-box-text">Stock Total</span>
-            <span class="info-box-number">
-              798
-            </span>
-          </div>
-          <!-- /.info-box-content -->
-        </div>
-        <!-- /.info-box -->
-      </div>
-      <!-- /.col -->
-      <div class="col-12 col-sm-6 col-md-4">
-        <div class="info-box mb-3">
-          <span class="info-box-icon bg-danger elevation-1"><i class="fa-solid fa-money-bills"></i></span>
-
-          <div class="info-box-content">
-            <span class="info-box-text">Valeur en Stock</span>
-            <span class="info-box-number">4 535 877
-              FCFA</span>
-          </div>
-          <!-- /.info-box-content -->
-        </div>
-        <!-- /.info-box -->
-      </div>
-      <!-- /.col -->
-
-      <!-- fix for small devices only -->
-
-      <div class="col-12 col-sm-6 col-md-4">
-        <div class="info-box mb-3">
           <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
-
           <div class="info-box-content">
             <span class="info-box-text">Total des Entrées</span>
-            <span class="info-box-number">309</span>
+            <span class="info-box-number">{{ totalEntrees }}</span>
           </div>
-          <!-- /.info-box-content -->
         </div>
-        <!-- /.info-box -->
       </div>
-      <!-- /.col -->
       <div class="col-12 col-sm-6 col-md-4">
         <div class="info-box mb-3">
           <span class="info-box-icon bg-warning elevation-1"><i class="fa-solid fa-hand-holding-dollar"></i></span>
-
           <div class="info-box-content">
             <span class="info-box-text">Valeur des Entrées</span>
-            <span class="info-box-number">10 477 868
-              FCFA</span>
+            <span class="info-box-number">{{ valeurEntrees }} FCFA</span>
           </div>
-          <!-- /.info-box-content -->
         </div>
-        <!-- /.info-box -->
       </div>
-      <!-- /.col -->
-
       <div class="col-12 col-sm-6 col-md-4">
         <div class="info-box mb-3">
           <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
-
           <div class="info-box-content">
             <span class="info-box-text">Total des sorties</span>
-            <span class="info-box-number">906</span>
+            <span class="info-box-number">{{ totalSorties }}</span>
           </div>
-          <!-- /.info-box-content -->
         </div>
-        <!-- /.info-box -->
       </div>
-
       <div class="col-12 col-sm-6 col-md-4">
         <div class="info-box mb-3">
           <span class="info-box-icon bg-warning elevation-1"><i class="fa-solid fa-money-bill-trend-up"></i></span>
-
           <div class="info-box-content">
             <span class="info-box-text">Valeur des sorties</span>
-            <span class="info-box-number">30 477 868
-              FCFA</span>
+            <span class="info-box-number">{{ valeurSorties }} FCFA</span>
           </div>
-          <!-- /.info-box-content -->
         </div>
-        <!-- /.info-box -->
+      </div>
+      <div class="col-12 col-sm-6 col-md-4">
+        <div class="info-box mb-3">
+          <span class="info-box-icon bg-info elevation-1"><i class="fa-solid fa-boxes-stacked"></i></span>
+          <div class="info-box-content">
+            <span class="info-box-text">Stock Total</span>
+            <span class="info-box-number">{{ stockTotal }}</span>
+          </div>
+        </div>
       </div>
     </div>
-    <!-- /.row -->
 
     <div class="row">
       <div class="col-md-12">
         <div class="card">
           <div class="card-header">
             <h5 class="card-title">Analyse des Tendances</h5>
-
             <div class="card-tools">
               <button type="button" class="btn btn-tool" data-card-widget="collapse">
                 <i class="fas fa-minus"></i>
@@ -112,218 +62,24 @@
               </button>
             </div>
           </div>
-          <!-- /.card-header -->
           <div class="card-body">
-            <div class="row ">
-              <div class="col-md-12">
-                <p class="text-center">
-                  <strong>Ventes : 1 Jan, 2044 - 30 Juil, 2024</strong>
-                </p>
-
-                <div class="card">
-                  <p-chart type="line" [data]="data"/>
-                </div>
-                <!-- /.chart-responsive -->
-              </div>
-            </div>
-            <!-- /.row -->
-          </div>
-          <!-- ./card-body -->
-          <div class="card-footer">
             <div class="row">
-              <div class="col-sm-3 col-6">
-
-                <!-- /.description-block -->
-              </div>
-              <!-- /.col -->
-              <div class="col-sm-3 col-6">
-
-                <!-- /.description-block -->
-              </div>
-              <!-- /.col -->
-              <div class="col-sm-3 col-6">
-
-                <!-- /.description-block -->
-              </div>
-              <!-- /.col -->
-              <div class="col-sm-3 col-6">
-
-                <!-- /.description-block -->
+              <div class="col-md-12">
+                <div class="card">
+                  <p-chart type="line" [data]="data"></p-chart>
+                </div>
               </div>
             </div>
-            <!-- /.row -->
           </div>
-          <!-- /.card-footer -->
         </div>
-        <!-- /.card -->
       </div>
-      <!-- /.col -->
     </div>
-    <!-- /.row -->
 
-    <!-- Main row -->
     <div class="row">
-      <!-- Left col -->
-      <div class="col-md-8">
-        <!-- MAP & BOX PANE -->
-        <div class="card conatinerChart">
-
-          <div class="card-header">
-            <h3 class="card-title">Statistiques des Entrants et Sortants</h3>
-
-            <div class="card-tools">
-              <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                <i class="fas fa-minus"></i>
-              </button>
-              <button type="button" class="btn btn-tool" data-card-widget="remove">
-                <i class="fas fa-times"></i>
-              </button>
-            </div>
-          </div>
-          <!-- /.card-header -->
-          <div class="card-bodyC p-0">
-            <!-- <div class="d-md-flex"> -->
-            <div class="cardC">
-              <p-chart type="bar" [data]="data3" [options]="options3" />
-            </div><br>
-            <!--</div> /.d-md-flex -->
-          </div>
-          <!-- /.card-body -->
-        </div>
-        <!-- /.card -->
-        <div class="row cardAD">
-
-          <!-- /.col -->
-
-          <div class="col-md-12 ">
-            <!-- USERS LIST -->
-            
-              <!-- /.card-body -->
-              
-              <!-- /.card-footer -->
-            
-            <!--/.card -->
-          </div>
-          <!-- /.col -->
-        </div>
-        <!-- /.row -->
-
-        <!-- TABLE: LATEST ORDERS -->
-        <div class="card">
-          <div class="card-header border-transparent">
-            <h3 class="card-title">Dernières commandes</h3>
-
-            <div class="card-tools">
-              <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                <i class="fas fa-minus"></i>
-              </button>
-              <button type="button" class="btn btn-tool" data-card-widget="remove">
-                <i class="fas fa-times"></i>
-              </button>
-            </div>
-          </div>
-          <!-- /.card-header -->
-          <div class="card-body p-0">
-            <div class="table-responsive">
-              <table class="table m-0">
-                <thead>
-                  <tr>
-                    <th>Date de commande</th>
-                    <th>Fournisseurs</th>
-                    <th>Statut</th>
-                    <th>Créer par:</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><a href="pages/examples/invoice.html">20-12-2022</a></td>
-                    <td>Amidou</td>
-                    <td><span class="badge badge-success">Livré</span></td>
-                    <td>
-                      <div class="sparkbar" data-color="#00a65a" data-height="20">manager</div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><a href="pages/examples/invoice.html">20-12-2023</a></td>
-                    <td>Abdou</td>
-                    <td><span class="badge badge-warning">En cours</span></td>
-                    <td>
-                      <div class="sparkbar" data-color="#f39c12" data-height="20">manager2</div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><a href="pages/examples/invoice.html">2-11-2023</a></td>
-                    <td>Moussa</td>
-                    <td><span class="badge badge-danger">Livré</span></td>
-                    <td>
-                      <div class="sparkbar" data-color="#f56954" data-height="20">manager7</div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><a href="pages/examples/invoice.html">10-12-2019</a></td>
-                    <td>Mana</td>
-                    <td><span class="badge badge-info">En cours</span></td>
-                    <td>
-                      <div class="sparkbar" data-color="#00c0ef" data-height="20">manager5</div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><a href="pages/examples/invoice.html">20-10-2020</a></td>
-                    <td>Balla</td>
-                    <td><span class="badge badge-warning">Livré</span></td>
-                    <td>
-                      <div class="sparkbar" data-color="#f39c12" data-height="20">asmanager</div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><a href="pages/examples/invoice.html">03-12-2022</a></td>
-                    <td>Miss-Mah</td>
-                    <td><span class="badge badge-danger">En cours</span></td>
-                    <td>
-                      <div class="sparkbar" data-color="#f56954" data-height="20">atmanager</div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><a href="pages/examples/invoice.html">20-12-2019</a></td>
-                    <td>Djénéba</td>
-                    <td><span class="badge badge-success">Livré</span></td>
-                    <td>
-                      <div class="sparkbar" data-color="#00a65a" data-height="20">attmanag</div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <!-- /.table-responsive -->
-          </div>
-          <!-- /.card-body -->
-          <div class="card-footer clearfix">
-            <a href="javascript:void(0)" class="btn btn-sm btn-info float-left" href="/add-bon-entree">Passer une
-              nouvelle commande</a>
-            <a href="javascript:void(0)" class="btn btn-sm btn-secondary float-right" href="/bon-entree">Voir toutes les
-              commandes</a>
-          </div>
-          <!-- /.card-footer -->
-        </div>
-        <!-- /.card -->
-      </div>
-      <!-- /.col -->
-
-      <div class="col-md-4">
-        <!-- Info Boxes Style 2 -->
-
-        <!-- /.info-box -->
-
-        <!-- /.info-box -->
-
-        <!-- /.info-box -->
-
-        <!-- /.info-box -->
-
-        <div class="card">
+      <div class="col-md-12">
+        <div class="card containerChart">
           <div class="card-header">
             <h3 class="card-title">Ventes par Catégories</h3>
-
             <div class="card-tools">
               <button type="button" class="btn btn-tool" data-card-widget="collapse">
                 <i class="fas fa-minus"></i>
@@ -333,119 +89,47 @@
               </button>
             </div>
           </div>
-          <!-- /.card-header -->
-          <div class="card-body">
-            <div class="row">
-              <div class="card flex justify-content-center">
-                
-                <p-chart type="pie" [data]="data2" [options]="options2" />
-              </div>
-              <!-- /.col -->
-
-              <!-- /.col -->
-            </div>
-            <!-- /.row -->
-          </div>
-          <!-- /.card-body -->
-          <div class="card-footer p-0">
-
-          </div>
-          <!-- /.footer -->
-        </div>
-        <!-- /.card -->
-
-        <!-- PRODUCT LIST -->
-        <div class="card">
-          <div class="card-header">
-            <h3 class="card-title">Produits récemment ajoutés</h3>
-
-            <div class="card-tools">
-              <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                <i class="fas fa-minus"></i>
-              </button>
-              <button type="button" class="btn btn-tool" data-card-widget="remove">
-                <i class="fas fa-times"></i>
-              </button>
-            </div>
-          </div>
-          <!-- /.card-header -->
           <div class="card-body p-0">
-            <ul class="products-list product-list-in-card pl-2 pr-2">
-              <li class="item">
-                <div class="product-img">
-                  <img src="dist/img/default-150x150.png" alt="Product Image" class="img-size-50">
-                </div>
-                <div class="product-info">
-                  <a href="javascript:void(0)" class="product-title">Samsung TV
-                    <span class="badge badge-warning float-right">60000F</span></a>
-                  <span class="product-description">
-                    Samsung 32" 1080p 60Hz LED Smart HDTV.
-                  </span>
-                </div>
-              </li>
-              <!-- /.item -->
-              <li class="item">
-                <div class="product-img">
-                  <img src="/src/assets/dist/img/download.jpg" alt="Product Image" class="img-size-50">
-                </div>
-                <div class="product-info">
-                  <a href="javascript:void(0)" class="product-title">Vélo
-                    <span class="badge badge-info float-right">12500</span></a>
-                  <span class="product-description">
-                    26" Mongoose Dolomite Men's 7-speed, Navy Blue.
-                  </span>
-                </div>
-              </li>
-              <!-- /.item -->
-              <li class="item">
-                <div class="product-img">
-                  <img src="dist/img/default-150x150.png" alt="Product Image" class="img-size-50">
-                </div>
-                <div class="product-info">
-                  <a href="javascript:void(0)" class="product-title">
-                    Xbox One <span class="badge badge-danger float-right">
-                      15000F
-                    </span>
-                  </a>
-                  <span class="product-description">
-                    Xbox One Console Bundle with Halo Master Chief Collection.
-                  </span>
-                </div>
-              </li>
-              <!-- /.item -->
-              <li class="item">
-                <div class="product-img">
-                  <img src="dist/img/default-150x150.png" alt="Product Image" class="img-size-50">
-                </div>
-                <div class="product-info">
-                  <a href="javascript:void(0)" class="product-title">PlayStation 4
-                    <span class="badge badge-success float-right">30000F</span></a>
-                  <span class="product-description">
-                    PlayStation 4 500GB Console (PS4)
-                  </span>
-                </div>
-              </li>
-              <!-- /.item -->
-            </ul>
+            <div class="card">
+              <p-chart type="bar" [data]="data3" [options]="options3"></p-chart>
+            </div>
           </div>
-          <!-- /.card-body -->
-          <div class="card-footer text-center">
-            <a href="javascript:void(0)" class="uppercase" href="/produits">Voir tous les produits</a>
-          </div>
-          <!-- /.card-footer -->
         </div>
-        <!-- /.card -->
-
-       
-        
       </div>
-      <!-- /.col -->
     </div>
-    <!-- /.row -->
-  </div><!--/. container-fluid -->
+
+    <div class="container mt-4">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <h5 class="card-title mb-0">Liste des Bons d'Entrée</h5>
+              <button class="btn btn-success" (click)="exportToExcel('bons_entree', bonEntrees)">Télécharger Excel</button>
+            </div>
+            <div class="card-body">
+              <ngx-datatable class="bootstrap" [rows]="bonEntrees" [columns]="bonEntreeColumns"></ngx-datatable>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-4">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <h5 class="card-title mb-0">Liste des Bons de Sortie</h5>
+              <button class="btn btn-success" (click)="exportToExcel('bons_sortie', bonSorties)">Télécharger Excel</button>
+            </div>
+            <div class="card-body">
+              <ngx-datatable class="bootstrap" [rows]="bonSorties" [columns]="bonSortieColumns"></ngx-datatable>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
 </section>
-<!-- /.content -->
-
-
 
 <router-outlet></router-outlet>
