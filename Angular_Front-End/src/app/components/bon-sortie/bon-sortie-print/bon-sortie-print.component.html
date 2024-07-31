@@ -7,7 +7,7 @@
       <div class="mb-4">
         <h5 class="card-title">Bon de Sortie: {{ bonSortie.id }}</h5>
         <p><strong>Date:</strong> {{ bonSortie.dateSortie | date }}</p>
-        <p><strong>Motif:</strong> {{ bonSortie.motif.title }}</p>
+        <p><strong>Motif:</strong> {{ bonSortie.motif?.title}}</p>
       </div>
       <div class="mb-4">
         <h5 class="card-title">Détails des Sorties</h5>
@@ -26,8 +26,8 @@
             <th scope="row">{{ i + 1 }}</th>
             <td>{{ detail.produit.productName }}</td>
             <td>{{ detail.quantity }}</td>
-            <td>{{ detail.prix }}  FCFA</td>
-            <td>{{ detail.quantity * detail.prix}}  FCFA</td>
+            <td>{{ detail.prix }} FCFA</td>
+            <td>{{ detail.quantity * detail.prix }} FCFA</td>
           </tr>
           </tbody>
         </table>
@@ -37,7 +37,6 @@
         <p class="card-text text-end">{{ getTotalTTC() }} FCFA</p>
         <h6 class="card-title text-end">Signature</h6>
         <p class="card-text text-end"></p>
-
       </div>
       <div class="text-center">
         <button class="btn btn-primary btn-sm imp" id="imp" (click)="printDocument()">Imprimer</button>

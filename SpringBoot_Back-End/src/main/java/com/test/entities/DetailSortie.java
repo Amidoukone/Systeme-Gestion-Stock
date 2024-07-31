@@ -30,6 +30,6 @@ public class DetailSortie {
     private BonSortie bonSortie;
 
     @ManyToOne
-    @JoinColumn(name = "produit_id", nullable = false)
+    @JoinColumn(name = "produit_id")
     private Produit produit;
 }
