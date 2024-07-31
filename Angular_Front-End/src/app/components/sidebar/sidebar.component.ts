@@ -15,7 +15,7 @@ export class SidebarComponent {
   @Input() isExpanded = true;
   currentUser: any;
 
-  constructor(public authService: AuthService) {
+  constructor(public authService: AuthService, private router: Router) {
     this.currentUser = this.authService.currentUserValue;
   }
 
@@ -26,4 +26,8 @@ export class SidebarComponent {
   toggleSidebar() {
     this.isExpanded = !this.isExpanded;
   }
+
+isActive(url: string): boolean {
+  return this.router.url === url || (this.router.url === '/' && url === '/dashboard');
+}
 }
