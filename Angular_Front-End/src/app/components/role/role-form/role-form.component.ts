@@ -48,4 +48,8 @@ export class RoleFormComponent implements OnInit {
       });
     }
   }
+
+  navigateToBonEntree() {
+    this.router.navigate(['/roles']);
+  }
 }

@@ -50,4 +50,8 @@ export class CategorieFormComponent implements OnInit {
       });
     }
   }
+
+  navigateToBonEntree() {
+    this.router.navigate(['/categories']);
+  }
 }

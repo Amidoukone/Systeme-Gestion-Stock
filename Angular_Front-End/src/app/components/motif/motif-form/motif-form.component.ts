@@ -51,4 +51,8 @@ export class MotifFormComponent implements OnInit {
       });
     }
   }
+
+  navigateToBonEntree() {
+    this.router.navigate(['/motif']);
+  }
 }

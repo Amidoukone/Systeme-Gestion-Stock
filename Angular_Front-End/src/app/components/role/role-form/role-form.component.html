@@ -10,7 +10,8 @@
           <input type="text" class="form-control" id="name" name="name" [(ngModel)]="role.name" required>
         </div>
         <div class="d-grid gap-2">
-          <button class="btn btn-primary" type="submit">{{ isEditMode ? 'Modifier' : 'Ajouter' }}</button>
+          <button class="btn btn-primary -5" type="submit">{{ isEditMode ? 'Modifier' : 'Ajouter' }}</button>
+          <button class="btn btn-primary m-5" (click)="navigateToBonEntree()">Annuler</button>
         </div>
       </form>
     </div>

@@ -49,4 +49,8 @@ export class EntrepotFormComponent implements OnInit {
       });
     }
   }
+
+  navigateToBonEntree() {
+    this.router.navigate(['/entrepots']);
+  }
 }

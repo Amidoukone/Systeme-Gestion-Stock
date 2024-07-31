@@ -31,7 +31,9 @@
           </div>
         </div>
         <div class="button-container">
-          <button class="btn btn-primary" type="submit">{{ isEditMode ? 'Modifier' : 'Ajouter' }}</button>
+          <button class="btn btn-primary "  type="submit">{{ isEditMode ? 'Modifier' : 'Ajouter' }}</button>
+          <button class="btn btn-primary m-5" (click)="navigateToBonEntree()">Annuler</button>
+
         </div>
       </form>
     </div>

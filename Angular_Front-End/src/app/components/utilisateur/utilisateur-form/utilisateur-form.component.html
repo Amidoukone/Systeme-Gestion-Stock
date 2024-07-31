@@ -29,10 +29,11 @@
         <select class="form-control" id="entrepots_id" name="entrepots_id" [(ngModel)]="selectedEntrepot" (change)="onEntrepotChange($event)">
           <option *ngFor="let entrepot of entrepots" [value]="entrepot.id">{{ entrepot.entrepotName }}</option>
         </select>
-      </div> 
+      </div>
     </div>
     <div class="form-group">
       <button type="submit" class="btn btn-primary">{{ isEditMode ? 'Modifier' : 'Ajouter' }}</button>
+      <button class="btn btn-primary m-5" (click)="navigateToBonEntree()">Annuler</button>
     </div>
     <div *ngIf="successMessage" class="alert alert-success">
       {{ successMessage }}

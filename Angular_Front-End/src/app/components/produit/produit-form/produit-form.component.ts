@@ -88,4 +88,8 @@ export class ProduitFormComponent implements OnInit {
       console.error('Category must be selected');
     }
   }
+
+  navigateToBonEntree() {
+    this.router.navigate(['/produits']);
+  }
 }
