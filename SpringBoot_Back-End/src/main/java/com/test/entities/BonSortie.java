@@ -25,7 +25,7 @@ public class BonSortie {
 
     @ManyToOne
     @JoinColumn(name = "motif_id", nullable = false)
-    @JsonBackReference
+    //@JsonBackReference
     private Motif motif;
 
     @ManyToOne

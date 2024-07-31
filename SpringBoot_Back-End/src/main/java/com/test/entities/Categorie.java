@@ -21,5 +21,11 @@ public class Categorie {
     @Column(name = "name")
     private String name;
 
-    private long createBy;
+    @ManyToOne
+    @JoinColumn(name = "created_by", nullable = false)
+    private Utilisateur createdBy;
+
+    @ManyToOne
+    @JoinColumn(name = "entrepot_id", nullable = false)
+    private Entrepot entrepot;
 }

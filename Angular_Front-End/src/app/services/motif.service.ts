@@ -15,12 +15,20 @@ export class MotifService {
     return this.http.get<Motif[]>(`${this.baseUrl}`);
   }
 
+
   getMotifById(id: number): Observable<Motif> {
     return this.http.get<Motif>(`${this.baseUrl}/${id}`);
   }
 
-  createMotif(motif: Motif): Observable<Motif> {
-    return this.http.post<Motif>(`${this.baseUrl}`, motif);
+  // createMotif(motif: Motif): Observable<Motif> {
+  //   return this.http.post<Motif>(`${this.baseUrl}`, motif);
+  // }
+  getMotifsForCurrentUser(email: string): Observable<Motif[]> {
+    return this.http.get<Motif[]>(`${this.baseUrl}/current?email=${email}`);
+  }
+
+  createMotif(name: string, email: string): Observable<Motif> {
+    return this.http.post<Motif>(`${this.baseUrl}/create?email=${email}`, { name });
   }
 
   updateMotif(id: number, motif: Motif): Observable<Motif> {

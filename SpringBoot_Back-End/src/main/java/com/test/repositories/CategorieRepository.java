@@ -13,6 +13,7 @@ public interface CategorieRepository extends JpaRepository<Categorie, Integer> {
     //Nombre de Catégories
     @Query("SELECT COUNT(*) FROM Categorie")
     int countCategories();
+    List<Categorie> findByEntrepotId(int entrepotId);
 
     /*Categories d'un Entrepot
     @Query("SELECT COUNT(DISTINCT p.categorie) FROM Produit p WHERE p.entrepots.Id = :entrepotId")

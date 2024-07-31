@@ -41,4 +41,8 @@ public class MotifService {
   public int getNombreMotif() {
   return motifRepository.countMotifs();
   }
+
+  public List<Motif> findByEntrepotId(int entrepotId) {
+    return motifRepository.findByEntrepotId(entrepotId);
+  }
 }
