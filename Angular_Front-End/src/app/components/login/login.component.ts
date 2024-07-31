@@ -1,17 +1,22 @@
-import {Component, OnInit} from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import {CommonModule} from "@angular/common";
-import {FormsModule} from "@angular/forms";
+
 
 @Component({
   selector: 'app-login',
-  standalone: true,
+  standalone:true,
   imports: [CommonModule, FormsModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements  OnInit{
+export class LoginComponent implements OnInit {
+togglePasswordVisibility() {
+throw new Error('Method not implemented.');
+}
+
 
   email: string = '';
   password: string = '';
@@ -19,42 +24,31 @@ export class LoginComponent implements  OnInit{
   errorMessage: string = '';
   passwordVisible: boolean = false;
 
-  constructor(public authService: AuthService, private router: Router) {}
 
-  ngOnInit() {
-    // Vérifie si l'objet localStorage est disponible (environnement navigateur)
-    if (typeof window !== 'undefined' && window.localStorage) {
-      this.isConnected = !!localStorage.getItem("currentUser");
-    } else {
-      console.warn('localStorage is not available.');
-      this.isConnected = false;
+
+
+  constructor(private authService: AuthService, private router: Router) { }
+
+
+  ngOnInit(): void {
+    // Vérifier si le code s'exécute dans un navigateur avant d'accéder à localStorage
+    if (this.authService.isBrowser()) {
+      const currentUser = localStorage.getItem('currentUser');
+      if (currentUser) {
+        this.authService.currentUserSubject.next(JSON.parse(currentUser));
+      }
     }
   }
 
-  togglePasswordVisibility() {
-    this.passwordVisible = !this.passwordVisible;
-  }
 
-  login() {
+  login(): void {
     this.authService.login(this.email, this.password).subscribe(
-      response => {
-        console.log('Login successful', response);
-        // Stocke les informations de l'utilisateur connecté dans le localStorage si disponible
-        if (typeof window !== 'undefined' && window.localStorage) {
-          localStorage.setItem("currentUser", JSON.stringify(response));
-        }
+      user => {
         this.router.navigate(['/dashboard']);
       },
       error => {
-        console.error('Connexion échouée🥱', error);
-        this.errorMessage = 'Connexion échouée🥱: ' + (error.error?.message || 'Email ou mot de passe invalide');
-        setTimeout(() => {
-          this.errorMessage = '';
-        }, 2000);
-        this.email = '';
-        this.password = '';
+        console.error('Login failed', error);
       }
     );
   }
-
 }
