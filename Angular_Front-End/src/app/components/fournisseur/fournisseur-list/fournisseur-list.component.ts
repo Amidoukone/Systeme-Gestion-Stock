@@ -5,11 +5,12 @@ import { Fournisseur } from '../../../models/fournisseur';
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
+import {NgxPaginationModule} from "ngx-pagination";
 
 @Component({
   selector: 'app-fournisseur-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NgxPaginationModule],
   templateUrl: './fournisseur-list.component.html',
   styleUrl: './fournisseur-list.component.css'
 })
@@ -17,6 +18,9 @@ export class FournisseurListComponent implements OnInit{
 
   fournisseurs: Fournisseur[] = [];
   filteredFournisseurs: Fournisseur[] = [];
+
+  page: number = 1;
+  itemsPerPage: number = 6;  // Nombre d'éléments par page
 
 
   fournisseurToDelete: number | null = null;

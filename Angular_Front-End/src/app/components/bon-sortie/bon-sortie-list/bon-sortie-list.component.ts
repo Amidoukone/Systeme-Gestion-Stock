@@ -4,13 +4,14 @@ import { Router, RouterModule } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { BonSortie } from '../../../models/bon-sortie';
 import { BonSortieService } from '../../../services/bon-sortie.service';
+import {NgxPaginationModule} from "ngx-pagination";
 
 @Component({
   selector: 'app-bon-sortie-list',
   templateUrl: './bon-sortie-list.component.html',
   styleUrls: ['./bon-sortie-list.component.css'],
   standalone: true,
-  imports: [CommonModule, RouterModule]
+  imports: [CommonModule, RouterModule, NgxPaginationModule]
 })
 export class BonSortieListComponent implements OnInit {
   bonSorties: BonSortie[] = [];
@@ -18,6 +19,9 @@ export class BonSortieListComponent implements OnInit {
   bonSortieToDelete: number | null = null;
   private modalRef: NgbModalRef | null = null;
   selectedBonSortie: BonSortie | null = null;
+
+  page: number = 1;
+  itemsPerPage: number = 6;  // Nombre d'éléments par page
 
   constructor(
     private bonSortieService: BonSortieService,
@@ -31,7 +35,9 @@ export class BonSortieListComponent implements OnInit {
 
   loadBonSorties(): void {
     this.bonSortieService.getBonSorties().subscribe(data => {
+      console.log('BonSorties reçus:', data);
       this.bonSorties = data;
+
       this.filteredBonSorties = data;
 
       // Assurez-vous que motif est toujours défini

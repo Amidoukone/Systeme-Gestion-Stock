@@ -10,11 +10,12 @@ import {Role} from "../../../models/role";
 import {Entrepot} from "../../../models/entrepot";
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import { AuthService } from '../../../services/auth.service';
+import {NgxPaginationModule} from "ngx-pagination";
 
 @Component({
   selector: 'app-utilisateur-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NgxPaginationModule],
   templateUrl: './utilisateur-list.component.html',
   styleUrl: './utilisateur-list.component.css',
   schemas: [ NO_ERRORS_SCHEMA ]
@@ -22,6 +23,8 @@ import { AuthService } from '../../../services/auth.service';
 export class UtilisateurListComponent implements OnInit {
   utilisateurs: Utilisateur[] = [];
   filteredUtilisateurs: Utilisateur[] = [];
+  page: number = 1;
+  itemsPerPage: number = 6;  // Nombre d'éléments par page
 
   utilisateurToDelete: number | null = null;
   utilisateurToEdit: number | null = null;

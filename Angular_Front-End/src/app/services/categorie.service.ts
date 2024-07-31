@@ -15,13 +15,20 @@ export class CategorieService {
     return this.http.get<Categorie[]>(this.apiUrl);
   }
 
+  getCategoriesForCurrentUser(email: string): Observable<Categorie[]> {
+    return this.http.get<Categorie[]>(`${this.apiUrl}/current?email=${email}`);
+  }
+
+  createCategorie(name: string, email: string): Observable<Categorie> {
+    return this.http.post<Categorie>(`${this.apiUrl}/create?email=${email}`, { name });
+  }
   getCategorieById(id: number): Observable<Categorie> {
     return this.http.get<Categorie>(`${this.apiUrl}/${id}`);
   }
 
-  createCategorie(categorie: Categorie): Observable<Categorie> {
-    return this.http.post<Categorie>(this.apiUrl, categorie);
-  }
+  // createCategorie(categorie: Categorie): Observable<Categorie> {
+  //   return this.http.post<Categorie>(this.apiUrl, categorie);
+  // }
 
   updateCategorie(id: number, categorie: Categorie): Observable<Categorie> {
     return this.http.put<Categorie>(`${this.apiUrl}/${id}`, categorie);

@@ -60,7 +60,8 @@ public class Utilisateur implements UserDetails {
 
     @Override
     public String getUsername() {
-        return email;
+        //return email;
+        return username;
     }
 
     @Override

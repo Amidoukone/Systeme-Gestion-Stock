@@ -41,31 +41,38 @@ export class MotifFormComponent implements OnInit {
     }, error => {
       console.error('Error loading motif:', error);
       this.errorMessage = 'Erreur lors du chargement du motif.';
-      setTimeout(() => this.errorMessage = '', 3000);
+      setTimeout(() => this.errorMessage = '', 2000);
     });
   }
 
   onSubmit(): void {
-    this.motif.createBy = this.authService.currentUserValue.id;
+    const currentUser = this.authService.currentUserValue;
+    if (!currentUser || !currentUser.email) {
+      this.errorMessage = 'Erreur: email utilisateur non trouvé';
+      return;
+    }
+    const email = currentUser.email;
+    
+    
     if (this.isEditMode) {
       this.motifService.updateMotif(this.motif.id, this.motif).subscribe(() => {
         this.successMessage = 'Motif mis à jour avec succès!';
-        setTimeout(() => this.successMessage = '', 3000);
+        setTimeout(() => this.successMessage = '', 2000);
         setTimeout(() => this.router.navigate(['/motif']), 3000);
       }, error => {
         console.error('Error updating motif:', error);
         this.errorMessage = 'Erreur lors de la mise à jour du motif.';
-        setTimeout(() => this.errorMessage = '', 3000);
+        setTimeout(() => this.errorMessage = '', 2000);
       });
     } else {
-      this.motifService.createMotif(this.motif).subscribe(() => {
-        this.successMessage = 'Motif ajouté avec succès!';
-        setTimeout(() => this.successMessage = '', 3000);
+      this.motifService.createMotif(this.motif.title, email).subscribe(() => {
+        this.successMessage = 'Motif ajoutée avec succès!';
+        setTimeout(() => this.successMessage = '', 2000);
         setTimeout(() => this.router.navigate(['/motif']), 3000);
       }, error => {
-        console.error('Error creating motif:', error);
-        this.errorMessage = 'Erreur lors de l\'ajout du motif.';
-        setTimeout(() => this.errorMessage = '', 3000);
+        console.error('Erreur lors de l\'ajout de la catégorie:', error);
+        this.errorMessage = 'Erreur lors de l\'ajout de la catégorie.';
+        setTimeout(() => this.errorMessage = '', 2000);
       });
     }
   }

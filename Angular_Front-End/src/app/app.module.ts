@@ -47,6 +47,7 @@ import { ProduitService } from './services/produit.service';
 import { RoleService } from './services/role.service';
 import { UtilisateurService } from './services/utilisateur.service';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {NgxPaginationModule} from "ngx-pagination";
 
 @NgModule({
   declarations: [
@@ -83,6 +84,8 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     FormsModule,
     CommonModule,
     BrowserAnimationsModule,
+    NgxPaginationModule
+
   ],
   providers: [
     BonEntreeService,

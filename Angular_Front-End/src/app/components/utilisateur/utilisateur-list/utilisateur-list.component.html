@@ -21,8 +21,8 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let utilisateur of filteredUtilisateurs; let i = index">
-        <td>{{ i + 1 }}</td>
+      <tr *ngFor="let utilisateur of filteredUtilisateurs | paginate: { itemsPerPage: itemsPerPage, currentPage: page}">
+        <td>{{ utilisateur.id }}</td>
         <td>{{ utilisateur.username }}</td>
         <td>{{ utilisateur.email }}</td>
         <td>{{ utilisateur.role?.name }}</td>
@@ -34,14 +34,22 @@
 
         <td>
 
-          <button class="btn btn-warning btn-sm" (click)="editUtilisateur(utilisateur.id)"> <i class="fas fa-edit"></i>Modifier</button>
-          <button class="btn btn-danger btn-sm m-2 " (click)="showDeleteConfirmation(deleteModal, utilisateur.id)"><i class="fas fa-trash"></i>Supprimer</button>
+          <button title="Modifier" class="btn btn-warning btn-sm" (click)="editUtilisateur(utilisateur.id)"> <i class="fas fa-edit"></i></button>
+          <button title="Supprimer" class="btn btn-danger btn-sm m-2 " (click)="showDeleteConfirmation(deleteModal, utilisateur.id)"><i class="fas fa-trash"></i></button>
         </td>
 
       </tr>
       </tbody>
     </table>
   </div>
+
+
+  <!-- Pagination Controls -->
+  <div class="footer-pagination">
+    <pagination-controls (pageChange)="page = $event"></pagination-controls>
+  </div>
+
+
   <!-- Modal de confirmation de suppression -->
   <ng-template #deleteModal let-modal>
     <div class="modal-header">

@@ -13,19 +13,25 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let role of roles; let i = index">
-        <td>{{ i + 1 }}</td>
+      <tr *ngFor="let role of roles | paginate: { itemsPerPage: itemsPerPage, currentPage: page}">
+        <td>{{ role.id }}</td>
         <td>{{ role.name }}</td>
 
         <td>
-           <button class="btn btn-warning btn-sm" (click)="editRole(role.id)"> <i class="fas fa-edit"></i>Modifier</button>
-          <button class="btn btn-danger btn-sm m-2" (click)="showDeleteConfirmation(deleteModal, role.id)"><i class="fas fa-trash"></i>Supprimer</button>
+           <button title="Modifier" class="btn btn-warning btn-sm" (click)="editRole(role.id)"> <i class="fas fa-edit"></i></button>
+          <button title="Supprimer" class="btn btn-danger btn-sm m-2" (click)="showDeleteConfirmation(deleteModal, role.id)"><i class="fas fa-trash"></i></button>
         </td>
 
       </tr>
       </tbody>
     </table>
   </div>
+
+  <!-- Pagination Controls -->
+  <div class="footer-pagination">
+    <pagination-controls (pageChange)="page = $event"></pagination-controls>
+  </div>
+
   <!-- Modal de confirmation de suppression -->
   <ng-template #deleteModal let-modal>
     <div class="modal-header">

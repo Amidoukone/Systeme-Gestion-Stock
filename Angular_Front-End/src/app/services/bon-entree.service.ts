@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { BonEntree } from '../models/bon-entree';
 
+
 @Injectable({
   providedIn: 'root'
 })

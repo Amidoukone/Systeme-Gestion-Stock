@@ -3,7 +3,9 @@ package com.test.controllers;
 import com.test.dto.TopEntreeDTO;
 import com.test.dto.TopVenduDTO;
 import com.test.entities.Produit;
+import com.test.entities.Utilisateur;
 import com.test.services.ProduitService;
+import com.test.services.UtilisateurService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,8 @@ public class ProduitController {
 
     @Autowired
     private ProduitService produitService;
+    @Autowired
+    private UtilisateurService utilisateurService;
 
     @GetMapping
     public List<Produit> getAllProduits() {
@@ -50,7 +54,7 @@ public class ProduitController {
                 .map(produit -> {
                     produit.setProductName(produitDetails.getProductName());
                     produit.setDescription(produitDetails.getDescription());
-                    produit.setCreateBy(produitDetails.getCreateBy());
+                    produit.setCreatedBy(produitDetails.getCreatedBy());
                     produit.setQuantity(produitDetails.getQuantity());
                     //produit.setSeuil(produitDetails.getSeuil());
                     produit.setCategorie(produitDetails.getCategorie());
@@ -65,27 +69,23 @@ public class ProduitController {
         return ResponseEntity.noContent().build();
     }
 
-    /*@GetMapping("/top-vendus")
-    public List<TopVenduDTO> getTopVendus() {
-        return produitService.getTopVendus();
+    @PostMapping("/create")
+    public ResponseEntity<Produit> createProduit(@RequestBody Produit produit, @RequestParam String email) {
+        Utilisateur utilisateur = utilisateurService.findByOneEmail(email);
+        if (utilisateur == null) {
+            return ResponseEntity.badRequest().body(null);
+        }
+
+        produit.setCreatedBy(utilisateur);
+        produit.setEntrepot(utilisateur.getEntrepot());
+
+        Produit savedProduit = produitService.save(produit);
+        return ResponseEntity.ok(savedProduit);
     }
 
-    //Entre
-    @GetMapping("/top-entrees")
-    public List<TopEntreeDTO> getTopEntrees() {
-        return produitService.getTopEntrees();
-    }
-
-    //Nombre de produits d'une entreprot
-    @GetMapping("/nombreProduits/{entrepotId}")
-    public ResponseEntity<Long> countProductsByEntrepotId(@PathVariable Long entrepotId) {
-        long count = produitService.countProductsByEntrepotId(entrepotId);
-        return ResponseEntity.ok(count);
-    }
-    //Liste des produits d'une Entrepots
-    @GetMapping("/listProduits/{entrepotId}")
-    public ResponseEntity<List<Produit>> findProductsByEntrepotId(@PathVariable Long entrepotId) {
-        List<Produit> produits = produitService.findProductsByEntrepotId(entrepotId);
+    @GetMapping("/entrepot/{entrepotId}")
+    public ResponseEntity<List<Produit>> getProduitsByEntrepot(@PathVariable int entrepotId) {
+        List<Produit> produits = produitService.findByEntrepotId(entrepotId);
         return ResponseEntity.ok(produits);
-    }*/
+    }
 }
