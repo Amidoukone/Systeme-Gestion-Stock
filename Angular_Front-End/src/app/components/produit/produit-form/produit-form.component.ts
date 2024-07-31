@@ -1,25 +1,27 @@
-import {Component, OnInit, NO_ERRORS_SCHEMA} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {ActivatedRoute, Router} from '@angular/router';
-import {ProduitService} from '../../../services/produit.service';
-import {CategorieService} from '../../../services/categorie.service';
-import {Produit} from '../../../models/produit';
-import {Categorie} from '../../../models/categorie';
-import {FormsModule} from "@angular/forms";
-import {AuthService} from "../../../services/auth.service";
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ProduitService } from '../../../services/produit.service';
+import { CategorieService } from '../../../services/categorie.service';
+import { Produit } from '../../../models/produit';
+import { Categorie } from '../../../models/categorie';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-produit-form',
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './produit-form.component.html',
-  styleUrl: './produit-form.component.css'
+  styleUrls: ['./produit-form.component.css']
 })
 export class ProduitFormComponent implements OnInit {
   categories: Categorie[] = [];
   produit: Produit = {} as Produit;
   isEditMode: boolean = false;
   selectedCategoryId: number | null = null;
+  successMessage: string = '';
+  errorMessage: string = '';
 
   constructor(
     private produitService: ProduitService,
@@ -27,8 +29,7 @@ export class ProduitFormComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService
-  ) {
-  }
+  ) { }
 
   ngOnInit(): void {
     this.loadCategories();
@@ -46,6 +47,8 @@ export class ProduitFormComponent implements OnInit {
       console.log('Categories loaded:', this.categories);
     } catch (error) {
       console.error('Error loading categories:', error);
+      this.errorMessage = 'Erreur lors du chargement des catégories.';
+      setTimeout(() => this.errorMessage = '', 3000);
     }
   }
 
@@ -59,6 +62,8 @@ export class ProduitFormComponent implements OnInit {
       }
     } catch (error) {
       console.error('Error loading produit:', error);
+      this.errorMessage = 'Erreur lors du chargement du produit.';
+      setTimeout(() => this.errorMessage = '', 3000);
     }
   }
 
@@ -77,15 +82,22 @@ export class ProduitFormComponent implements OnInit {
       try {
         if (this.isEditMode) {
           await this.produitService.updateProduit(this.produit.id, this.produit).toPromise();
+          this.successMessage = 'Produit mis à jour avec succès!';
         } else {
           await this.produitService.createProduit(this.produit).toPromise();
+          this.successMessage = 'Produit ajouté avec succès!';
         }
-        this.router.navigate(['/produits']);
+        setTimeout(() => this.successMessage = '', 3000);
+        setTimeout(() => this.router.navigate(['/produits']), 3000);
       } catch (error) {
         console.error('Error saving produit:', error);
+        this.errorMessage = 'Erreur lors de l\'enregistrement du produit.';
+        setTimeout(() => this.errorMessage = '', 3000);
       }
     } else {
       console.error('Category must be selected');
+      this.errorMessage = 'La catégorie doit être sélectionnée.';
+      setTimeout(() => this.errorMessage = '', 3000);
     }
   }
 

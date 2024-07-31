@@ -4,6 +4,16 @@
       <h5 class="card-title">{{ isEditMode ? 'Modifier Bon de Sortie' : 'Ajouter Bon de Sortie' }}</h5>
     </div>
     <div class="card-body">
+      <!-- Display success message -->
+      <div *ngIf="successMessage" class="alert alert-success" role="alert">
+        {{ successMessage }}
+      </div>
+
+      <!-- Display error message -->
+      <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+        {{ errorMessage }}
+      </div>
+
       <form (ngSubmit)="onSubmit()">
         <div class="form-group row">
           <div class="col-md-6 mb-3">

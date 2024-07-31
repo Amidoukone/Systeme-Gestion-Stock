@@ -1,6 +1,6 @@
 package com.test.config;
 
-import com.test.entities.Utilisateur;
+/*import com.test.entities.Utilisateur;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -50,4 +50,4 @@ public class CustomUserDetails implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-}
+}*/

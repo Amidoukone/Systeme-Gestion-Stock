@@ -1,0 +1,35 @@
+#sidebar-wrapper {
+    width: 250px;
+    height: 100vh;
+    overflow-y: auto;
+    position: fixed;
+  }
+  
+  .topbar {
+    width: calc(100% - 250px);
+    left: 250px;
+    z-index: 1000;
+  }
+  
+  .content {
+    margin-top: 56px; /* height of the navbar */
+    padding: 20px;
+    margin-left: 250px;
+  }
+  
+  .navbar-brand {
+    font-weight: bold;
+  }
+  
+  .dropdown-list {
+    position: absolute;
+    right: 0;
+    top: 100%;
+    z-index: 1000;
+  }
+  
+  .animated--grow-in {
+    transition: all 0.2s ease-in-out;
+    transform: scale(1);
+  }
+  
