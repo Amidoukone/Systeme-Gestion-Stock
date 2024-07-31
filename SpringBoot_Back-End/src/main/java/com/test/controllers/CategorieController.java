@@ -1,13 +1,17 @@
 package com.test.controllers;
 
 import com.test.entities.Categorie;
+import com.test.entities.Utilisateur;
 import com.test.services.CategorieService;
+import com.test.services.UtilisateurService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/categories")
@@ -15,6 +19,8 @@ public class CategorieController {
 
     @Autowired
     private CategorieService categorieService;
+    @Autowired
+    private UtilisateurService utilisateurService;
 
     @GetMapping
     public List<Categorie> getAllCategories() {
@@ -38,7 +44,6 @@ public class CategorieController {
         return categorieService.findById(id)
                 .map(categorie -> {
                     categorie.setName(categorieDetails.getName());
-                    categorie.setCreateBy(categorieDetails.getCreateBy());
                     Categorie updatedCategorie = categorieService.save(categorie);
                     return ResponseEntity.ok().body(updatedCategorie);
                 }).orElse(ResponseEntity.notFound().build());
@@ -50,25 +55,22 @@ public class CategorieController {
         return ResponseEntity.noContent().build();
     }
 
-    /*@GetMapping("/entrepot/{entrepotId}")
-    public ResponseEntity<List<Categorie>> getCategoriesByEntrepot(@PathVariable int entrepotId) {
-        try {
-            List<Categorie> categories = categorieService.getCategoriesByEntrepot(entrepotId);
-            return ResponseEntity.ok(categories);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        }
+    @GetMapping("/current")
+    public ResponseEntity<List<Categorie>> getCategoriesForCurrentUser(@RequestParam String email) {
+        Utilisateur utilisateur = utilisateurService.findByEmail(email).orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
+        List<Categorie> categories = categorieService.findByEntrepotId(utilisateur.getEntrepot().getId());
+        return ResponseEntity.ok(categories);
     }
 
-    @GetMapping("/{entrepotId}/nombre-categories")
-    public ResponseEntity<Long> countCategoriesByEntrepotId(@PathVariable int entrepotId) {
-        long count = categorieService.countCategoriesByEntrepotId(entrepotId);
-        return ResponseEntity.ok(count);
+    @PostMapping("/create")
+    public ResponseEntity<Categorie> createCategorie(@RequestBody Map<String, String> categorieData, @RequestParam String email) {
+        Utilisateur utilisateur = utilisateurService.findByEmail(email).orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
+        Categorie categorie = new Categorie();
+        categorie.setName(categorieData.get("name"));
+        categorie.setCreatedBy(utilisateur);
+        categorie.setEntrepot(utilisateur.getEntrepot());
+        Categorie savedCategorie = categorieService.save(categorie);
+        return ResponseEntity.ok(savedCategorie);
     }
 
-    @GetMapping("/nombre-categories")
-    public ResponseEntity<Long> countCategories(){
-        long count = categorieService.countCategories();
-        return ResponseEntity.ok(count);
-    }*/
 }

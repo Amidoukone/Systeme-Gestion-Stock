@@ -45,26 +45,31 @@ export class CategorieFormComponent implements OnInit {
     });
   }
 
-  onSubmit(): void {
-    this.categorie.createBy = this.authService.currentUserValue.id;
-    
+  onSubmit(): void { 
+    const currentUser = this.authService.currentUserValue;
+    if (!currentUser || !currentUser.email) {
+      this.errorMessage = 'Erreur: email utilisateur non trouvé';
+      return;
+    }
+    const email = currentUser.email;
+
     if (this.isEditMode) {
       this.categorieService.updateCategorie(this.categorie.id, this.categorie).subscribe(() => {
         this.successMessage = 'Catégorie mise à jour avec succès!';
         setTimeout(() => this.successMessage = '', 3000);
         setTimeout(() => this.router.navigate(['/categories']), 3000);
       }, error => {
-        console.error('Error updating categorie:', error);
+        console.error('Erreur lors de la mise à jour de la catégorie:', error);
         this.errorMessage = 'Erreur lors de la mise à jour de la catégorie.';
         setTimeout(() => this.errorMessage = '', 3000);
       });
     } else {
-      this.categorieService.createCategorie(this.categorie).subscribe(() => {
+      this.categorieService.createCategorie(this.categorie.name, email).subscribe(() => {
         this.successMessage = 'Catégorie ajoutée avec succès!';
         setTimeout(() => this.successMessage = '', 3000);
         setTimeout(() => this.router.navigate(['/categories']), 3000);
       }, error => {
-        console.error('Error creating categorie:', error);
+        console.error('Erreur lors de l\'ajout de la catégorie:', error);
         this.errorMessage = 'Erreur lors de l\'ajout de la catégorie.';
         setTimeout(() => this.errorMessage = '', 3000);
       });

@@ -4,6 +4,7 @@ import { MotifService } from '../../../services/motif.service';
 import { Motif } from '../../../models/motif';
 import { CommonModule } from '@angular/common';
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-motif-list',
@@ -18,19 +19,33 @@ export class MotifListComponent implements OnInit {
   motifToDelete: number | null = null;
   motifToEdit: number | null = null;
   private modalRef: NgbModalRef | null = null;
+  infoMessage: string = '';
+  errorMessage: string = '';
 
-  constructor(private motifService: MotifService, private router: Router, private modalService: NgbModal) { }
+  constructor(private motifService: MotifService, private router: Router, private authService: AuthService, private modalService: NgbModal) { }
 
   ngOnInit(): void {
-    this.loadMotifs();
+    const currentUser = this.authService.currentUserValue;
+    if (!currentUser || !currentUser.email) {
+      this.errorMessage = 'Erreur: email utilisateur non trouvé';
+      return;
+    }
+    const email = currentUser.email;
+  
+    this.motifService.getMotifsForCurrentUser(email).subscribe(motifs => {
+      if (motifs.length === 0) {
+        this.infoMessage = 'Aucune motif trouvée pour cet Entrepot.';
+        setTimeout(() => this.infoMessage = '', 2000);
+      } else {
+        this.motifs = motifs;
+      }
+    }, error => {
+        console.error('Erreur lors de la récupération des catégories:', error);
+        this.errorMessage = 'Erreur lors de la récupération des catégories.';
+      });
+    
   }
 
-  loadMotifs(): void {
-    this.motifService.getMotifs().subscribe(data => {
-      this.motifs = data;
-      console.log('Motifs loaded:', this.motifs);
-    });
-  }
 
   addMotif(): void {
     this.router.navigate(['/add-motif']);

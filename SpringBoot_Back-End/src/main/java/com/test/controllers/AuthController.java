@@ -35,7 +35,6 @@ public class AuthController {
         String sessionId = authService.generateSessionId();
 
         Map<String, Object> response = new HashMap<>();
-        response.put("message", "Login successful");
         response.put("token", token);
         response.put("username", utilisateur.getUsername());
         response.put("email", utilisateur.getEmail());
