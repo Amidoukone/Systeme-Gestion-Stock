@@ -3,19 +3,23 @@ import { CommonModule } from '@angular/common';
 import { CategorieService } from '../../../services/categorie.service';
 import { Categorie } from '../../../models/categorie';
 import {HttpClient} from "@angular/common/http";
-import {Router} from "@angular/router";
+import {Router, RouterLink} from "@angular/router";
 import { AuthService } from "../../../services/auth.service"
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
+import {NgxPaginationModule} from "ngx-pagination";
 
 @Component({
   selector: 'app-categorie-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NgxPaginationModule, RouterLink],
   templateUrl: './categorie-list.component.html',
   styleUrl: './categorie-list.component.css'
 })
 export class CategorieListComponent implements OnInit {
   categories: Categorie[] = [];
+
+  page: number = 1;
+  itemsPerPage: number = 6;  // Nombre d'éléments par page
 
   categoriesToDelete: number | null = null;
   private modalRef: NgbModalRef | null = null;

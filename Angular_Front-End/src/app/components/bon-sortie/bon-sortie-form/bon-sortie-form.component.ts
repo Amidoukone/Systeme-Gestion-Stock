@@ -51,13 +51,15 @@ export class BonSortieFormComponent implements OnInit {
   loadMotifs(): void {
     this.motifService.getMotifs().subscribe(data => {
       this.motifs = data;
+      console.log('Motifs reçus:', data); // Ajoutez cette ligne
+
     });
   }
 
   loadBonSortieById(id: number): void {
     this.bonSortieService.getBonSortieById(id).subscribe(data => {
       this.bonSortie = data;
-      this.selectedMotifId = data.motif.id;
+      this.selectedMotifId = data.motif ? data.motif.id : null;
     }, error => {
       console.error('Error loading bon de sortie:', error);
       this.errorMessage = 'Erreur lors du chargement du bon de sortie.';
@@ -66,6 +68,8 @@ export class BonSortieFormComponent implements OnInit {
   }
 
   onSubmit(): void {
+    const selectedMotif = this.motifs.find(motif => motif.id === this.selectedMotifId);
+    console.log('Motif sélectionné:', selectedMotif);
     this.bonSortie.detailsSorties = this.detailSortie;
     this.bonSortie.motif = {id: this.selectedMotifId} as Motif;
 

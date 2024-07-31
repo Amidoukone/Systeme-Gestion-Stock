@@ -4,16 +4,20 @@ import { MotifService } from '../../../services/motif.service';
 import { Motif } from '../../../models/motif';
 import { CommonModule } from '@angular/common';
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
+import {NgxPaginationModule} from "ngx-pagination";
 
 @Component({
   selector: 'app-motif-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NgxPaginationModule],
   templateUrl: './motif-list.component.html',
   styleUrls: ['./motif-list.component.css']
 })
 export class MotifListComponent implements OnInit {
   motifs: Motif[] = [];
+
+  page: number = 1;
+  itemsPerPage: number = 10;  // Nombre d'éléments par page
 
   motifToDelete: number | null = null;
   motifToEdit: number | null = null;

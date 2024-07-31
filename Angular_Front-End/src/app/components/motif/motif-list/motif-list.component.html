@@ -13,19 +13,26 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let motif of motifs; let i = index">
-        <td>{{ i + 1 }}</td>
+      <tr *ngFor="let motif of motifs | paginate: { itemsPerPage: itemsPerPage, currentPage: page}">
+        <td>{{ motif.id}}</td>
         <td>{{ motif.title }}</td>
 
         <td>
-          <button class="btn btn-warning btn-sm" (click)="editMotif(motif.id)"> <i class="fas fa-edit"></i>Modifier</button>
-          <button class="btn btn-danger btn-sm m-2 " (click)="showDeleteConfirmation(deleteModal, motif.id)"><i class="fas fa-trash"></i>Supprimer</button>
+          <button title="Modifier" class="btn btn-warning btn-sm" (click)="editMotif(motif.id)"> <i class="fas fa-edit"></i>Modifier</button>
+          <button title="Supprimer" class="btn btn-danger btn-sm m-2 " (click)="showDeleteConfirmation(deleteModal, motif.id)"><i class="fas fa-trash"></i>Supprimer</button>
         </td>
 
       </tr>
       </tbody>
     </table>
   </div>
+
+  <!-- Pagination Controls -->
+  <div class="footer-pagination">
+    <pagination-controls (pageChange)="page = $event"></pagination-controls>
+  </div>
+
+
 <!-- Modal de confirmation de suppression -->
 <ng-template #deleteModal let-modal>
   <div class="modal-header">

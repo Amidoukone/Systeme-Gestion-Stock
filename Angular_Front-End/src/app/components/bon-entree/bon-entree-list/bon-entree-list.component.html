@@ -19,25 +19,31 @@
         <th scope="col"><span>Date de Commande</span></th>
         <th scope="col"><span>Statut</span></th>
         <th scope="col"><span>Utilisateur</span></th>
-        <th scope="col"><span>Actions</span></th>
+        <th scope="col" class="text-center"><span>Actions</span></th>
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let bonEntree of filteredBonEntrees; let i = index">
-        <th scope="row">{{ i + 1 }}</th>
+      <tr *ngFor="let bonEntree of filteredBonEntrees | paginate: { itemsPerPage: itemsPerPage, currentPage: page}">
+        <th scope="row">{{ bonEntree.id }}</th>
         <td>{{ bonEntree.dateCommande | date }}</td>
         <td>{{ bonEntree.statut }}</td>
         <td>{{ bonEntree.utilisateur.username }}</td>
         <td>
-          <button class="btn btn-success btn-sm me-2" (click)="navigateToAddDetail(bonEntree.id)">Add Detail</button>
-          <button class="btn btn-primary btn-sm me-2" (click)="openDetailsModal(detailsModal, bonEntree)">Voir Details</button>
-          <button class="btn btn-warning btn-sm me-2" routerLink="/edit-bon-entree/{{ bonEntree.id }}">Modifier</button>
-          <button class="btn btn-danger btn-sm m-2" (click)="showDeleteConfirmation(deleteModal, bonEntree.id)">Supprimer</button>
-          <button class="btn btn-secondary btn-sm" (click)="printBonEntree(bonEntree.id)">Imprimer</button>
+
+          <button title="Modifier" class="btn btn-warning btn-sm me-2" routerLink="/edit-bon-entree/{{ bonEntree.id }}"><i class="fas fa-edit"></i></button>
+          <button title="Supprimer" class="btn btn-danger btn-sm m-2" (click)="showDeleteConfirmation(deleteModal, bonEntree.id)"><i class="fas fa-trash"></i></button>
+          <button title="Imprimer" class="btn btn-secondary btn-sm me-2" (click)="printBonEntree(bonEntree.id)"><i class="fas fa-print"></i></button>
+          <button title="Ajouter Detail" class="btn btn-success btn-sm me-2" (click)="navigateToAddDetail(bonEntree.id)"><i class="fa fa-plus-circle"></i> Detail</button>
+          <button title="Voir Detail" class="btn btn-primary btn-sm me-2" (click)="openDetailsModal(detailsModal, bonEntree)"><i class="fa fa-eye"></i> Details</button>
         </td>
       </tr>
       </tbody>
     </table>
+  </div>
+
+  <!-- Pagination Controls -->
+  <div class="footer-pagination">
+    <pagination-controls (pageChange)="page = $event"></pagination-controls>
   </div>
 
   <ng-template #deleteModal let-modal>

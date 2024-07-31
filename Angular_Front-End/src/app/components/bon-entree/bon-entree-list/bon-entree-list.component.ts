@@ -4,13 +4,14 @@ import { Router, RouterModule } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { BonEntree } from '../../../models/bon-entree';
 import { BonEntreeService } from '../../../services/bon-entree.service';
+import {NgxPaginationModule} from "ngx-pagination";
 
 @Component({
   selector: 'app-bon-entree-list',
   templateUrl: './bon-entree-list.component.html',
   styleUrls: ['./bon-entree-list.component.css'],
   standalone: true,
-  imports: [CommonModule, RouterModule]
+  imports: [CommonModule, RouterModule, NgxPaginationModule]
 })
 export class BonEntreeListComponent implements OnInit {
   bonEntrees: BonEntree[] = [];
@@ -18,6 +19,10 @@ export class BonEntreeListComponent implements OnInit {
   bonentreeToDelete: number | null = null;
   private modalRef: NgbModalRef | null = null;
   selectedBonEntree: BonEntree | null = null;
+
+  page: number = 1;
+  itemsPerPage: number = 6;  // Nombre d'éléments par page page: number = 1;
+
 
   constructor(
     private bonEntreeService: BonEntreeService,

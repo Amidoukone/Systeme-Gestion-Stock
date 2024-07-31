@@ -86,7 +86,7 @@ input::placeholder {
   padding: 5px;
   position: absolute;
   left: 10px;
-  top: 29px;
+  top: 35px;
   font-size: 20px;
   cursor: pointer;
   transition: transform 0.3s ease-in-out;
@@ -138,3 +138,14 @@ input::placeholder {
   color: #1b191a;
 }
 
+/* Assurez-vous que le conteneur principal a une hauteur minimale pour pousser la pagination en bas */
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.pagination-container {
+  margin-top: auto; /* Pousse la pagination vers le bas */
+  padding: 20px 0;
+}

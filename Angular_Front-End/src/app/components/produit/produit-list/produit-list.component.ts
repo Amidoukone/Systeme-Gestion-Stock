@@ -5,17 +5,21 @@ import { Produit } from '../../../models/produit';
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
+import {NgxPaginationModule} from "ngx-pagination";
 
 @Component({
   selector: 'app-produit-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NgxPaginationModule],
   templateUrl: './produit-list.component.html',
   styleUrl: './produit-list.component.css'
 })
 export class ProduitListComponent implements OnInit {
   produits: Produit[] = [];
   filteredProduits: Produit[] = [];
+
+  page: number = 1;
+  itemsPerPage: number = 6;  // Nombre d'éléments par page
 
   produitsToDelete: number | null = null;
   produitsToEdit: number | null = null;
@@ -70,5 +74,5 @@ export class ProduitListComponent implements OnInit {
   }
 
 
-
+    protected readonly Produit = Produit;
 }

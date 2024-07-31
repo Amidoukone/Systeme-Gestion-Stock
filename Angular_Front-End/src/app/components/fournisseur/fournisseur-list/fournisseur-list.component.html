@@ -20,15 +20,15 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let fournisseur of filteredFournisseurs; let i = index">
-        <td>{{ i + 1 }}</td>
+      <tr *ngFor="let fournisseur of filteredFournisseurs | paginate: { itemsPerPage: itemsPerPage, currentPage: page}">
+        <td>{{ fournisseur.id }}</td>
         <td>{{ fournisseur.fournName }}</td>
         <td>{{ fournisseur.adresse }}</td>
         <td>{{ fournisseur.telephone }}</td>
 
         <td>
-          <button class="btn btn-warning btn-sm" (click)="editFournisseur(fournisseur.id)"> <i class="fas fa-edit"></i>Modifier</button>
-          <button class="btn btn-danger btn-sm m-2 " (click)="showDeleteConfirmation(deleteModal, fournisseur.id)"><i class="fas fa-trash"></i>Supprimer</button>
+          <button title="Modifier" class="btn btn-warning btn-sm" (click)="editFournisseur(fournisseur.id)"> <i class="fas fa-edit"></i></button>
+          <button title="Supprimer" class="btn btn-danger btn-sm m-2 " (click)="showDeleteConfirmation(deleteModal, fournisseur.id)"><i class="fas fa-trash"></i></button>
         </td>
 
       </tr>
@@ -36,6 +36,7 @@
     </table>
   </div>
 
+  <pagination-controls (pageChange)="page = $event"></pagination-controls>
 
    <!-- Modal de confirmation de suppression -->
    <ng-template #deleteModal let-modal>
