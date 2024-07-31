@@ -100,4 +100,8 @@ export class ProduitFormComponent implements OnInit {
       setTimeout(() => this.errorMessage = '', 3000);
     }
   }
+
+  navigateToBonEntree() {
+    this.router.navigate(['/produits']);
+  }
 }

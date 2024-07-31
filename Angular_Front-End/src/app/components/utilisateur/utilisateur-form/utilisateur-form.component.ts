@@ -27,7 +27,7 @@ export class UtilisateurFormComponent implements OnInit {
 
   entrepots: Entrepot[] = [];
   utilisateur: Utilisateur = {} as Utilisateur;
-  isEditMode: boolean = false; 
+  isEditMode: boolean = false;
   selectedEntrepot: Entrepot | null = null;
   successMessage: string = '';
   errorMessage: string = '';
@@ -72,7 +72,7 @@ export class UtilisateurFormComponent implements OnInit {
       const utilisateur = await this.utilisateurService.getUtilisateurById(id).toPromise();
 
       if (utilisateur) {
-        this.utilisateur = utilisateur; 
+        this.utilisateur = utilisateur;
         this.selectedEntrepot = utilisateur.entrepot || null;
         console.log('Utilisateur loaded:', this.utilisateur);
       }
@@ -124,7 +124,7 @@ export class UtilisateurFormComponent implements OnInit {
             case 'ADMIN':
               await this.utilisateurService.createManager(this.utilisateur).toPromise();
               break;
-            case 'MANAGER': 
+            case 'MANAGER':
               await this.utilisateurService.createVendeur(this.utilisateur, this.currentUser.id).toPromise();
               break;
             case 'VENDEUR':
@@ -164,4 +164,7 @@ export class UtilisateurFormComponent implements OnInit {
     }
   }
 
+  navigateToBonEntree() {
+    this.router.navigate(['/utilisateurs']);
+  }
 }

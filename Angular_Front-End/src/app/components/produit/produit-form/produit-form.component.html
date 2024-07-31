@@ -38,7 +38,8 @@
           </select>
         </div>
         <div class="d-grid gap-2">
-          <button class="btn btn-primary" type="submit">{{ isEditMode ? 'Modifier' : 'Ajouter' }}</button>
+          <button class="btn btn-primary m-auto" type="submit">{{ isEditMode ? 'Modifier' : 'Ajouter' }}</button>
+          <button class="btn btn-primary m-5" (click)="navigateToBonEntree()">Annuler</button>
         </div>
       </form>
     </div>

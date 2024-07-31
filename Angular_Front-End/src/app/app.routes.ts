@@ -28,6 +28,7 @@ import {MotifFormComponent} from "./components/motif/motif-form/motif-form.compo
 import {MotifListComponent} from "./components/motif/motif-list/motif-list.component";
 import {BonEntreeDetailComponent} from "./components/bon-entree/bon-entree-detail/bon-entree-detail.component";
 import {BonSortieDetailComponent} from "./components/bon-sortie/bon-sortie-detail/bon-sortie-detail.component";
+import {RouterLink} from "@angular/router";
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full'},

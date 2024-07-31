@@ -72,4 +72,9 @@ export class FournisseurFormComponent implements OnInit {
       });
     }
   }
+
+
+  navigateToBonEntree() {
+    this.router.navigate(['/fournisseurs']);
+  }
 }

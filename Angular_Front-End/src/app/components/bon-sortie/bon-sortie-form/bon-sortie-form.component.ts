@@ -98,4 +98,8 @@ export class BonSortieFormComponent implements OnInit {
       });
     }
   }
+
+  navigateToBonEntree() {
+    this.router.navigate(['/bon-sortie']);
+  }
 }

@@ -116,4 +116,8 @@ export class BonEntreeFormComponent implements OnInit {
       });
     }
   }
+
+  navigateToBonEntree() {
+    this.router.navigate(['/bon-entree']);
+  }
 }
