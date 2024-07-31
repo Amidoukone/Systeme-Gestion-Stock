@@ -5,22 +5,26 @@ import { Motif } from '../../../models/motif';
 import { CommonModule } from '@angular/common';
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import { AuthService } from '../../../services/auth.service';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @Component({
   selector: 'app-motif-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NgxPaginationModule],
   templateUrl: './motif-list.component.html',
   styleUrls: ['./motif-list.component.css']
 })
 export class MotifListComponent implements OnInit {
   motifs: Motif[] = [];
+  page: number = 1;
+  itemsPerPage: number = 6;
 
   motifToDelete: number | null = null;
   motifToEdit: number | null = null;
   private modalRef: NgbModalRef | null = null;
   infoMessage: string = '';
   errorMessage: string = '';
+
 
   constructor(private motifService: MotifService, private router: Router, private authService: AuthService, private modalService: NgbModal) { }
 

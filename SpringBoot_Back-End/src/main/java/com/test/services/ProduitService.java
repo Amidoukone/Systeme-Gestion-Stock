@@ -33,19 +33,8 @@ ProduitService {
         produitRepository.deleteById(id);
     }
 
-     /*public List<TopVenduDTO> getTopVendus() {
-        return produitRepository.findTopVendus();
-    }
 
-    public List<TopEntreeDTO> getTopEntrees() {
-        return produitRepository.findTopEntrees();
+    public List<Produit> findByEntrepotId(int entrepotId) {
+        return produitRepository.findByEntrepotId(entrepotId);
     }
-
-   public long countProductsByEntrepotId(Long entrepotId) {
-        return produitRepository.countProductsByEntrepotId(entrepotId);
-    }
-
-    public List<Produit> findProductsByEntrepotId(Long entrepotId) {
-        return produitRepository.findProductsByEntrepotId(entrepotId);
-    }*/
 }

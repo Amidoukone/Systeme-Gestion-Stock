@@ -27,18 +27,15 @@ public class Produit {
     @Column(name = "quantity")
     private int quantity;
 
-    /*@Column(name = "seuil")
-    private int seuil;*/
-
-    private long createBy;
-
     @ManyToOne
     @JoinColumn(name = "categories_id", nullable = false)
     private Categorie categorie;
 
-    /*@OneToMany(mappedBy = "produit")
-    private List<DetailSortie> detailSortie;
-    @OneToMany(mappedBy = "produit", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
-    private List<DetailEntree> detailsEntrees;*/
+    @ManyToOne
+    @JoinColumn(name = "created_by", nullable = false)
+    private Utilisateur createdBy;
+
+    @ManyToOne
+    @JoinColumn(name = "entrepot_id", nullable = false)
+    private Entrepot entrepot;
 }

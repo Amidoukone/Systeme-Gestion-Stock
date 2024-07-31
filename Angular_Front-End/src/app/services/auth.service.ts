@@ -36,12 +36,12 @@ export class AuthService {
   login(email: string, password: string) {
     return this.http.post<any>(`${this.apiUrl}/login`, { email, password })
       .pipe(
-        map(user => {
-          if (user && user.token && this.isBrowser()) {
-            localStorage.setItem('currentUser', JSON.stringify(user));
-            this.currentUserSubject.next(user);
+        map(data => {
+          if (data && data.token && this.isBrowser()) {
+            localStorage.setItem('currentUser', JSON.stringify(data));
+            this.currentUserSubject.next(data);
           }
-          return user;
+          return data;
         }),
         catchError(this.handleError)
       );

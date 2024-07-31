@@ -49,6 +49,7 @@ export class CategorieListComponent implements OnInit {
       });
     
   }
+  
   addCategorie(): void {
     this.router.navigate(['/add-categorie']);
   }

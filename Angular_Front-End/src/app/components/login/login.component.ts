@@ -12,11 +12,8 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
-togglePasswordVisibility() {
-throw new Error('Method not implemented.');
-}
 
+export class LoginComponent implements OnInit {
 
   email: string = '';
   password: string = '';
@@ -30,8 +27,7 @@ throw new Error('Method not implemented.');
   constructor(private authService: AuthService, private router: Router) { }
 
 
-  ngOnInit(): void {
-    // Vérifier si le code s'exécute dans un navigateur avant d'accéder à localStorage
+  ngOnInit(): void { 
     if (this.authService.isBrowser()) {
       const currentUser = localStorage.getItem('currentUser');
       if (currentUser) {
@@ -41,14 +37,27 @@ throw new Error('Method not implemented.');
   }
 
 
-  login(): void {
+  login() {
     this.authService.login(this.email, this.password).subscribe(
-      user => {
+      response => {
+        console.log('Login successful', response);
         this.router.navigate(['/dashboard']);
       },
       error => {
-        console.error('Login failed', error);
+        // console.error('Login failed', error);
+        console.error('Connexion échouée🥱', error);
+        this.errorMessage = 'Connexion échouée🥱: ' + (error.error?.message || 'Email or Password invalide');
+        setTimeout(() => {
+          this.errorMessage = '';
+        }, 2000);
+        this.email = '';
+        this.password = '';
+        
       }
     );
+  } 
+
+  togglePasswordVisibility() {
+    this.passwordVisible = !this.passwordVisible;
   }
 }

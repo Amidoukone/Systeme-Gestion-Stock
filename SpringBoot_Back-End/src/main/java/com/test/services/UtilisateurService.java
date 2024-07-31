@@ -225,4 +225,9 @@ public class UtilisateurService implements UserDetailsService  {
     public Optional<Utilisateur> findByEmail(String email) {
         return utilisateurRepository.findByEmail(email);
     }
+
+    public Utilisateur findByOneEmail(String email) {
+        return utilisateurRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé avec l'email: " + email));
+    }
 }

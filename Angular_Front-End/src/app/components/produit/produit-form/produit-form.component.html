@@ -3,18 +3,16 @@
     <div class="card-header">
       <h5 class="card-title">{{ isEditMode ? 'Modifier Produit' : 'Ajouter Produit' }}</h5>
     </div>
-    <div class="card-body">
-      <!-- Display success message -->
+    <div class="card-body"> 
       <div *ngIf="successMessage" class="alert alert-success" role="alert">
         {{ successMessage }}
-      </div>
-
-      <!-- Display error message -->
+      </div> 
+      
       <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
         {{ errorMessage }}
       </div>
 
-      <form id="produitForm" (ngSubmit)="onSubmit($event)">
+      <form id="produitForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
           <div class="mb-3">
             <label for="productName" class="form-label">Nom de Produit</label>

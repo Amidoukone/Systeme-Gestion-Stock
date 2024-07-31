@@ -23,7 +23,7 @@ public class Categorie {
 
     @ManyToOne
     @JoinColumn(name = "created_by", nullable = false)
-    private Utilisateur createdBy;
+    private Utilisateur CreatedBy;
 
     @ManyToOne
     @JoinColumn(name = "entrepot_id", nullable = false)

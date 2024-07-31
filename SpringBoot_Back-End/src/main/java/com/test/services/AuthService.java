@@ -32,6 +32,7 @@ public class AuthService {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(email, password)
         );
+        System.out.println("contenu auth=============="+authentication.getDetails());
         SecurityContextHolder.getContext().setAuthentication(authentication);
         return utilisateurRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
     }
