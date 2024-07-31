@@ -1,17 +1,15 @@
 <div class="container mt-4">
-    <h1 class="h2 mb-4">Liste des Bons de Sortie</h1>
-    <div class="mb-4 d-flex justify-content-between align-items-center">
-      <button class="btn btn-primary" routerLink="/add-bon-sortie"> <i class="fas fa-plus-circle"></i>Ajouter Bon de Sortie</button>
-
-      <div class="form-group mb-0 position-relative" id="recherche">
-        <label for="search" class="form-label">Rechercher par Statut</label>
-        <input id="search" type="text" class="form-control" (keyup)="applyFilter($event)" placeholder="Statut">
-        <i class="fa-solid fa-magnifying-glass"></i>
-      </div>
+  <h1 class="h2 mb-4">Liste des Bons de Sortie</h1>
+  <div class="mb-4 d-flex justify-content-between align-items-center">
+    <button class="btn btn-primary" routerLink="/add-bon-sortie">Ajouter Bon de Sortie</button>
+    <div class="form-group mb-0">
+      <label for="search" class="form-label">Rechercher par Motif</label>
+      <input id="search" type="text" class="form-control" (keyup)="applyFilter($event)" placeholder="Motif">
     </div>
-    <div class="table-responsive">
-      <table class="table table-striped table-bordered table-hover">
-        <thead>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
         <tr>
           <th scope="col"><span>#</span></th>
           <th scope="col"><span>Motif</span></th>
@@ -19,43 +17,32 @@
           <th scope="col"><span>Utilisateur</span></th>
           <th scope="col"><span>Actions</span></th>
         </tr>
-        </thead>
-        <tbody>
+      </thead>
+      <tbody>
         <tr *ngFor="let bonSortie of filteredBonSorties; let i = index">
           <th scope="row">{{ i + 1 }}</th>
           <td>{{ bonSortie.motif.title || 'N/A' }}</td>
-          <td>{{ bonSortie.dateSortie | date}}</td>
+          <td>{{ bonSortie.dateSortie | date }}</td>
           <td>{{ bonSortie.utilisateur.username }}</td>
-          <!--td>
-            <button class="btn btn-success btn-sm me-2" (click)="navigateToAddDetail(bonSortie.id)" class="btn btn-success">Add Detail</button>
-            <button class="btn btn-warning btn-sm me-2" routerLink="/edit-bon-sortie/{{ bonSortie.id }}">Modifier</button>
-            <button class="btn btn-danger btn-sm me-2" (click)="deleteBonSortie(bonSortie.id)">Supprimer</button>
-            <button class="btn btn-secondary btn-sm" (click)="printBonSortie(bonSortie.id)">Imprimer</button>
-          </td-->
-
-
           <td>
-            <button class="btn btn-success btn-sm me-2" (click)="navigateToAddDetail(bonSortie.id)" class="btn btn-success"><i class="fa fa-list"></i> Ajouter Détail</button>
-
-            <button class="btn btn-warning btn-sm me-2" routerLink="/edit-bon-sortie/(bonSortie.id)"> <i class="fas fa-edit"></i>Modifier</button>
-
-            <button class="btn btn-danger btn-sm m-2 " (click)="showDeleteConfirmation(deleteModal, bonSortie.id)"><i class="fas fa-trash"></i>Supprimer</button>
-            <button class="btn btn-secondary btn-sm" (click)="printBonSortie(bonSortie.id)"><i class="fas fa-print"></i>Imprimer</button>
-
+            <button class="btn btn-success btn-sm me-2" (click)="navigateToAddDetail(bonSortie.id)">Ajouter Détail</button>
+            <button class="btn btn-primary btn-sm me-2" (click)="openDetailsModal(detailsModal, bonSortie)">Voir Détails</button>
+            <button class="btn btn-warning btn-sm me-2" routerLink="/edit-bon-sortie/{{ bonSortie.id }}">Modifier</button>
+            <button class="btn btn-danger btn-sm" (click)="showDeleteConfirmation(deleteModal, bonSortie.id)">Supprimer</button>
+            <button class="btn btn-secondary btn-sm" (click)="printBonSortie(bonSortie.id)">Imprimer</button>
           </td>
         </tr>
-        </tbody>
-      </table>
-    </div>
+      </tbody>
+    </table>
+  </div>
 
-     <!-- Modal de confirmation de suppression -->
   <ng-template #deleteModal let-modal>
     <div class="modal-header">
       <h5 class="modal-title">Confirmer la suppression</h5>
       <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
     </div>
     <div class="modal-body">
-      Êtes-vous sûr de vouloir supprimer ce fournisseur ?
+      Êtes-vous sûr de vouloir supprimer ce bon de sortie ?
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-secondary" (click)="modal.dismiss('cancel click')">Non</button>
@@ -63,18 +50,22 @@
     </div>
   </ng-template>
 
-  <!-- Modal de confirmation de modification -->
-  <ng-template #editModal let-modal>
+  <ng-template #detailsModal let-modal>
     <div class="modal-header">
-      <h5 class="modal-title">Confirmer la modification</h5>
+      <h5 class="modal-title">Détails du Bon de Sortie</h5>
       <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
     </div>
     <div class="modal-body">
-      Êtes-vous sûr de vouloir modifier ce fournisseur ?
+      <div *ngIf="selectedBonSortie">
+        <div *ngFor="let detail of selectedBonSortie.detailsSorties">
+          <p>Produit: {{ detail.produit.productName }}</p>
+          <p>Quantité: {{ detail.quantity }}</p>
+          <p>Prix: {{ detail.prix }}</p>
+        </div>
+      </div>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" (click)="modal.dismiss('cancel click')">Non</button>
-      <button type="button" class="btn btn-primary" (click)="confirmEdit()">Oui</button>
+      <button type="button" class="btn btn-secondary" (click)="modal.dismiss('cancel click')">Fermer</button>
     </div>
   </ng-template>
-  </div>
+</div>

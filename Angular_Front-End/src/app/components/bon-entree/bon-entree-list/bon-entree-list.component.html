@@ -28,34 +28,18 @@
         <td>{{ bonEntree.dateCommande | date }}</td>
         <td>{{ bonEntree.statut }}</td>
         <td>{{ bonEntree.utilisateur.username }}</td>
-        <!--td>
-          <button class="btn btn-success btn-sm me-2" (click)="navigateToAddDetail(bonEntree.id)" class="btn btn-success">Add Detail</button>
-          <button class="btn btn-warning btn-sm me-2" routerLink="/edit-bon-entree/{{ bonEntree.id }}">Modifier</button>
-          <button class="btn btn-danger btn-sm me-2" (click)="deleteBonEntree(bonEntree.id)">Supprimer</button>
-          <button class="btn btn-secondary btn-sm" (click)="printBonEntree(bonEntree.id)">Imprimer</button>
-        </td-->
-
         <td>
-          <button class="btn btn-success btn-sm me-2" (click)="navigateToAddDetail(bonEntree.id)" class="btn btn-success"><i class="fa fa-list"></i>Ajouter Détail</button>
-
-          <button class="btn btn-warning btn-sm me-2" routerLink="/edit-bon-entree/{{ bonEntree.id }}">
-            <i class="fas fa-edit"></i> Modifier
-          </button>
-          <button class="btn btn-danger btn-sm me-2" (click)="deleteBonEntree(bonEntree.id)">
-            <i class="fas fa-trash"></i> Supprimer
-          </button>
-
-          <button class="btn btn-secondary btn-sm" (click)="printBonEntree(bonEntree.id)">
-            <i class="fas fa-print"></i> Imprimer
-          </button>
-          </td>
-
+          <button class="btn btn-success btn-sm me-2" (click)="navigateToAddDetail(bonEntree.id)">Add Detail</button>
+          <button class="btn btn-primary btn-sm me-2" (click)="openDetailsModal(detailsModal, bonEntree)">Voir Details</button>
+          <button class="btn btn-warning btn-sm me-2" routerLink="/edit-bon-entree/{{ bonEntree.id }}">Modifier</button>
+          <button class="btn btn-danger btn-sm m-2" (click)="showDeleteConfirmation(deleteModal, bonEntree.id)">Supprimer</button>
+          <button class="btn btn-secondary btn-sm" (click)="printBonEntree(bonEntree.id)">Imprimer</button>
+        </td>
       </tr>
       </tbody>
     </table>
   </div>
 
-  <!-- Modal de confirmation de suppression -->
   <ng-template #deleteModal let-modal>
     <div class="modal-header">
       <h5 class="modal-title">Confirmer la suppression</h5>
@@ -70,5 +54,22 @@
     </div>
   </ng-template>
 
+  <ng-template #detailsModal let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title">Détails du Bon d'Entrée</h5>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      <div *ngIf="selectedBonEntree">
+        <div *ngFor="let detail of selectedBonEntree.detailEntrees">
+          <p>Produit: {{ detail.produit.productName }}</p>
+          <p>Quantité: {{ detail.quantite }}</p>
+          <p>Prix: {{ detail.prix }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modal.dismiss('cancel click')">Fermer</button>
+    </div>
+  </ng-template>
 </div>
-

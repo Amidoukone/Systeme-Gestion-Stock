@@ -1,32 +1,28 @@
-import {Component, NO_ERRORS_SCHEMA, OnInit} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {BonEntreeService} from '../../../services/bon-entree.service';
-import {BonEntree} from '../../../models/bon-entree';
-import {HttpClient} from "@angular/common/http";
-import {Router, RouterLink, ActivatedRoute, RouterModule} from "@angular/router";
-import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
+import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { BonEntree } from '../../../models/bon-entree';
+import { BonEntreeService } from '../../../services/bon-entree.service';
 
 @Component({
   selector: 'app-bon-entree-list',
-  standalone: true,
-  imports: [CommonModule, RouterLink],
   templateUrl: './bon-entree-list.component.html',
-  styleUrl: './bon-entree-list.component.css',
-  schemas: [NO_ERRORS_SCHEMA]
+  styleUrls: ['./bon-entree-list.component.css'],
+  standalone: true,
+  imports: [CommonModule, RouterModule]
 })
 export class BonEntreeListComponent implements OnInit {
   bonEntrees: BonEntree[] = [];
   filteredBonEntrees: BonEntree[] = [];
-
   bonentreeToDelete: number | null = null;
-  bonentreeToEdit: number | null = null;
   private modalRef: NgbModalRef | null = null;
+  selectedBonEntree: BonEntree | null = null;
 
   constructor(
     private bonEntreeService: BonEntreeService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -63,7 +59,7 @@ export class BonEntreeListComponent implements OnInit {
   }
 
   showDeleteConfirmation(content: any, id: number): void {
-    this.bonentreeToDelete= id;
+    this.bonentreeToDelete = id;
     this.modalRef = this.modalService.open(content);
   }
 
@@ -72,10 +68,14 @@ export class BonEntreeListComponent implements OnInit {
       this.bonEntreeService.deleteBonEntree(this.bonentreeToDelete).subscribe(() => {
         this.bonEntrees = this.bonEntrees.filter(f => f.id !== this.bonentreeToDelete);
         this.filteredBonEntrees = this.filteredBonEntrees.filter(f => f.id !== this.bonentreeToDelete);
-        this.bonentreeToDelete= null;
+        this.bonentreeToDelete = null;
         this.modalRef?.close();
       });
     }
   }
 
+  openDetailsModal(content: any, bonEntree: BonEntree): void {
+    this.selectedBonEntree = bonEntree;
+    this.modalRef = this.modalService.open(content);
+  }
 }
