@@ -23,9 +23,9 @@
 <app-footer></app-footer> -->
 
 <div class="d-flex">
-  <app-sidebar></app-sidebar>
+  <app-sidebar #sidebar [isExpanded]="true" *ngIf="authService.currentUserValue"></app-sidebar>
   <div class="col content-wrapper">
-    <app-navbar></app-navbar>
+    <app-navbar *ngIf="authService.currentUserValue" (sidebarToggle)="sidebar?.toggleSidebar()"></app-navbar>
     <div class="content">
       <router-outlet></router-outlet>
     </div>

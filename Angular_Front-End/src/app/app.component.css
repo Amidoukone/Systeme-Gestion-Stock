@@ -1,48 +1,4 @@
-/* .d-flex {
-    display: flex;
-  }
-  
-  #sidebar-wrapper {
-    width: 250px;
-    height: 100vh;
-    position: fixed;
-  }
-  
-  .topbar {
-    width: calc(100% - 250px);
-    left: 250px;
-    z-index: 1000;
-  }
-  
-  .content {
-    margin-top: 56px;
-    padding: 20px;
-    margin-left: 250px;
-  }
-  
-  .navbar-brand {
-    font-weight: bold;
-  }
-  
-  .dropdown-list {
-    position: absolute;
-    right: 0;
-    top: 100%;
-    z-index: 1000;
-  }
-  
-  .animated--grow-in {
-    transition: all 0.2s ease-in-out;
-    transform: scale(1);
-  }
-  
-  .active {
-    background-color: blue;
-    color: white;
-  }
-   */
-
-   .d-flex {
+.d-flex {
     display: flex;
   }
   
@@ -64,7 +20,7 @@
     flex-grow: 1;
     overflow-y: auto;
     padding: 20px;
-    margin-top: 56px; /* height of the navbar */
+    margin-top: 40px;
   }
   
   .footer {
