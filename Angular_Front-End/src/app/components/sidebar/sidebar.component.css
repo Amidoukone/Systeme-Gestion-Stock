@@ -20,3 +20,15 @@
   background-color: #f8f9fa;
   color: #00B7FF;
 }
+
+@media (max-width: 768px) {
+  #sidebar-wrapper {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+
+  #sidebar-wrapper.toggled {
+    width: 100%;
+  }
+}
