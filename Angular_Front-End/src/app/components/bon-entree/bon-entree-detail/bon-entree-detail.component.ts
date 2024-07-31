@@ -8,8 +8,6 @@ import { Produit } from '../../../models/produit';
 import { BonEntree } from '../../../models/bon-entree';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Fournisseur } from '../../../models/fournisseur';
-import { Utilisateur } from '../../../models/utilisateur';
 
 @Component({
   selector: 'app-bon-entree-detail',
@@ -23,6 +21,8 @@ export class BonEntreeDetailComponent implements OnInit {
   bonEntree: BonEntree = {} as BonEntree;
   produits: Produit[] = [];
   bonEntreeId: number;
+  successMessage: string = '';
+  errorMessage: string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -40,24 +40,45 @@ export class BonEntreeDetailComponent implements OnInit {
   }
 
   loadProduits(): void {
-    this.produitService.getProduits().subscribe(data => {
-      this.produits = data;
-    });
+    this.produitService.getProduits().subscribe(
+      data => this.produits = data,
+      error => {
+        console.error('Error loading produits:', error);
+        this.errorMessage = 'Erreur lors du chargement des produits.';
+        setTimeout(() => this.errorMessage = '', 3000);
+      }
+    );
   }
 
   loadBonEntree(): void {
-    this.bonEntreeService.getBonEntreeById(this.bonEntreeId).subscribe(data => {
-      this.bonEntree = data;
-      if (!this.bonEntree.detailEntrees) {
-        this.bonEntree.detailEntrees = [];
+    this.bonEntreeService.getBonEntreeById(this.bonEntreeId).subscribe(
+      data => {
+        this.bonEntree = data;
+        if (!this.bonEntree.detailEntrees) {
+          this.bonEntree.detailEntrees = [];
+        }
+      },
+      error => {
+        console.error('Error loading bon entree:', error);
+        this.errorMessage = 'Erreur lors du chargement du bon d\'entrée.';
+        setTimeout(() => this.errorMessage = '', 3000);
       }
-    });
+    );
   }
 
   onSubmit(): void {
     this.detailEntree.bonEntree = this.bonEntree;
-    this.detailEntreeService.createDetailEntree(this.detailEntree).subscribe(() => {
-      this.router.navigate(['/bon-entree']);
-    });
+    this.detailEntreeService.createDetailEntree(this.detailEntree).subscribe(
+      () => {
+        this.successMessage = 'Détail ajouté avec succès!';
+        setTimeout(() => this.successMessage = '', 3000);
+        this.router.navigate(['/bon-entree']);
+      },
+      error => {
+        console.error('Error saving detail entree:', error);
+        this.errorMessage = 'Erreur lors de l\'ajout du détail.';
+        setTimeout(() => this.errorMessage = '', 3000);
+      }
+    );
   }
 }

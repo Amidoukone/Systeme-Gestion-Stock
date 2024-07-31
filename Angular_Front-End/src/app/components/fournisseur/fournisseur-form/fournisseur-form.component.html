@@ -4,6 +4,16 @@
       <h5 class="card-title">{{ isEditMode ? 'Modifier Fournisseur' : 'Ajouter Fournisseur' }}</h5>
     </div>
     <div class="card-body">
+      <!-- Display success message -->
+      <div *ngIf="successMessage" class="alert alert-success" role="alert">
+        {{ successMessage }}
+      </div>
+
+      <!-- Display error message -->
+      <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+        {{ errorMessage }}
+      </div>
+
       <form (ngSubmit)="onSubmit()">
         <div class="form-group">
           <label for="fourn_name">Nom du fournisseur</label>

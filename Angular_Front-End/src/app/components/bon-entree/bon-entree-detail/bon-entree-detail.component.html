@@ -1,5 +1,16 @@
 <div class="container">
   <h2>Détail Bon d'Entrée</h2>
+
+  <!-- Display success message -->
+  <div *ngIf="successMessage" class="alert alert-success" role="alert">
+    {{ successMessage }}
+  </div>
+
+  <!-- Display error message -->
+  <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+    {{ errorMessage }}
+  </div>
+
   <form (ngSubmit)="onSubmit()">
     <div class="form-group">
       <label for="produit">Produit</label>
