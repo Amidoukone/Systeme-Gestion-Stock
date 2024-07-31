@@ -50,4 +50,5 @@ public class AuthService {
     public String generateSessionId() {
         return UUID.randomUUID().toString();
     }
+
 }

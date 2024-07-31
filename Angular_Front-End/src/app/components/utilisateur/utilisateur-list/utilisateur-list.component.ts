@@ -9,6 +9,7 @@ import {EntrepotService} from "../../../services/entrepot.service";
 import {Role} from "../../../models/role";
 import {Entrepot} from "../../../models/entrepot";
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-utilisateur-list',
@@ -25,17 +26,34 @@ export class UtilisateurListComponent implements OnInit {
   utilisateurToDelete: number | null = null;
   utilisateurToEdit: number | null = null;
   private modalRef: NgbModalRef | null = null;
+  errorMessage = '';
 
-  constructor(private utilisateurService: UtilisateurService, private router: Router,private modalService: NgbModal) { }
+  constructor(private utilisateurService: UtilisateurService, private router: Router, private authService: AuthService, private modalService: NgbModal) { }
+
+  // ngOnInit(): void {
+  //   this.utilisateurService.getUtilisateurs().subscribe(data => {
+
+  //     this.utilisateurs = data;
+  //     console.log('Utilisateurs loaded:', data);
+  //     this.filteredUtilisateurs = data;
+  //     console.log('Utilisateurs loaded:', this.utilisateurs);
+  //   });
+  // }
 
   ngOnInit(): void {
-    this.utilisateurService.getUtilisateurs().subscribe(data => {
-
-      this.utilisateurs = data;
-      console.log('Utilisateurs loaded:', data);
-      this.filteredUtilisateurs = data;
-      console.log('Utilisateurs loaded:', this.utilisateurs);
-    });
+    const email = localStorage.getItem('email') || ''; // Vous pouvez obtenir l'email stocké ici
+    this.utilisateurService.getUtilisateursByUserOrEntrepot("bon@bon.bon").subscribe(
+      (data) => {
+        this.utilisateurs = data;
+        if (data.length === 0) {
+          this.errorMessage = 'Aucun utilisateur trouvé pour cet entrepôt.';
+        }
+      },
+      (error) => {
+        console.error('Error fetching utilisateurs:', error);
+        this.errorMessage = 'Erreur lors de la récupération des utilisateurs.';
+      }
+    );
   }
 
   addUtilisateur(): void {
