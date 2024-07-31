@@ -1,8 +1,8 @@
-import { Component, OnInit, NO_ERRORS_SCHEMA } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FournisseurService } from '../../../services/fournisseur.service';
-import { Fournisseur } from '../../../models/fournisseur'
+import { Fournisseur } from '../../../models/fournisseur';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -10,12 +10,14 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './fournisseur-form.component.html',
-  styleUrl: './fournisseur-form.component.css'
+  styleUrls: ['./fournisseur-form.component.css']
 })
-export class FournisseurFormComponent implements OnInit{
+export class FournisseurFormComponent implements OnInit {
 
   fournisseur: Fournisseur = new Fournisseur();
   isEditMode: boolean = false;
+  successMessage: string = '';
+  errorMessage: string = '';
 
   constructor(
     private fournisseurService: FournisseurService,
@@ -34,23 +36,45 @@ export class FournisseurFormComponent implements OnInit{
   loadFournisseurById(id: number): void {
     this.fournisseurService.getFournisseurById(id).subscribe(data => {
       this.fournisseur = data;
+    }, error => {
+      console.error('Error loading fournisseur:', error);
+      this.errorMessage = 'Erreur lors du chargement du fournisseur.';
+      setTimeout(() => this.errorMessage = '', 3000);
     });
   }
 
   onSubmit(): void {
     if (!this.fournisseur.fournName) {
-      console.error('Nom du fournisseur est requis');
+      this.errorMessage = 'Nom du fournisseur est requis.';
+      setTimeout(() => this.errorMessage = '', 3000);
       return;
     }
 
     if (this.isEditMode) {
       this.fournisseurService.updateFournisseur(this.fournisseur.id, this.fournisseur).subscribe(() => {
-        this.router.navigate(['/fournisseurs']);
+        this.successMessage = 'Fournisseur mis à jour avec succès!';
+        setTimeout(() => this.successMessage = '', 3000);
+        setTimeout(() => this.router.navigate(['/fournisseurs']), 3000);
+      }, error => {
+        console.error('Error updating fournisseur:', error);
+        this.errorMessage = 'Erreur lors de la mise à jour du fournisseur.';
+        setTimeout(() => this.errorMessage = '', 3000);
       });
     } else {
       this.fournisseurService.createFournisseur(this.fournisseur).subscribe(() => {
-        this.router.navigate(['/fournisseurs']);
+        this.successMessage = 'Fournisseur ajouté avec succès!';
+        setTimeout(() => this.successMessage = '', 3000);
+        setTimeout(() => this.router.navigate(['/fournisseurs']), 3000);
+      }, error => {
+        console.error('Error creating fournisseur:', error);
+        this.errorMessage = 'Erreur lors de l\'ajout du fournisseur.';
+        setTimeout(() => this.errorMessage = '', 3000);
       });
     }
+  }
+
+
+  navigateToBonEntree() {
+    this.router.navigate(['/fournisseurs']);
   }
 }
