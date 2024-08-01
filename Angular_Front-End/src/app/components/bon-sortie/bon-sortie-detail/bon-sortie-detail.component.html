@@ -1,23 +1,28 @@
 <div class="container mt-4">
-  <h2>Détail Bon de Sortie</h2>
-  <form [formGroup]="bonSortieForm" (ngSubmit)="onSubmit()">
-    <div formArrayName="details">
-      <div *ngFor="let detail of details.controls; let i = index" [formGroupName]="i" class="form-group">
-        <label for="produit">Produit</label>
-        <select id="produit" formControlName="produit" class="form-control" required>
-          <option *ngFor="let produit of produits" [ngValue]="produit">{{ produit.productName }}</option>
-        </select>
-
-        <label for="quantite">Quantité</label>
-        <input type="number" formControlName="quantite" class="form-control" required>
-
-        <label for="prix">Prix</label>
-        <input type="number" formControlName="prix" class="form-control" required>
-
-        <button type="button" class="btn btn-danger" (click)="removeDetail(i)">Supprimer</button>
+    <h2>Détail Bon de Sortie</h2>
+    <form [formGroup]="bonSortieForm" (ngSubmit)="onSubmit()">
+      <div formArrayName="details">
+        <div *ngFor="let detail of details.controls; let i = index" [formGroupName]="i" class="form-group">
+          <label for="produit">Produit</label>
+          <select id="produit" formControlName="produit" class="form-control" required>
+            <option *ngFor="let produit of produits" [ngValue]="produit">{{ produit.productName }}</option>
+          </select>
+  
+  
+          <label for="quantity">Quantité</label>
+          <input type="number" formControlName="quantity" class="form-control" required>
+  
+  
+          <label for="prix">Prix</label>
+          <input type="number" formControlName="prix" class="form-control" required>
+  
+  
+          <button type="button" class="btn btn-danger" (click)="removeDetail(i)">Supprimer</button>
+        </div>
       </div>
-    </div>
-    <button type="button" class="btn btn-secondary" (click)="addDetail()">Ajouter Détail</button>
-    <button type="submit" class="btn btn-primary">Ajouter</button>
-  </form>
-</div>
+      <button *ngIf="!isDetailsPresent()" type="button" class="btn btn-secondary" (click)="addDetail()">Ajouter Détail</button>
+      <button type="submit" class="btn btn-primary">Ajouter</button>
+    </form>
+  </div>
+  
+  

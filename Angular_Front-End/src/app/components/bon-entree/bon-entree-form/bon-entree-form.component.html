@@ -15,7 +15,7 @@
       </div>
 
       <form id="bonEntreeForm" (ngSubmit)="onSubmit()">
-        <div class="form-group row">
+        <!-- <div class="form-group row">
           <div class="col-md-6 mb-3">
             <label for="date_commande">Date de Commande</label>
             <input type="date" class="form-control" id="date_commande" name="date_commande" [(ngModel)]="bonEntree.dateCommande" required>
@@ -27,7 +27,7 @@
               <option value="En Stock">En Stock</option>
             </select>
           </div>
-        </div>
+        </div> -->
         <div class="form-group row">
           <div class="col-md-6 mb-3">
             <label for="fournisseur">Fournisseur</label>
@@ -35,10 +35,10 @@
               <option *ngFor="let fournisseur of fournisseurs" [value]="fournisseur.id">{{ fournisseur.fournName }}</option>
             </select>
           </div>
-          <div class="col-md-6 mb-3">
+          <!-- <div class="col-md-6 mb-3">
             <label for="utilisateur">Utilisateur</label>
             <input type="hidden" class="form-control" id="utilisateur" name="utilisateur" [(ngModel)]="bonEntree.utilisateur.id" [value]="bonEntree.utilisateur.id"/>
-          </div>
+          </div> -->
         </div>
         <div class="button-container">
           <button class="btn btn-primary "  type="submit">{{ isEditMode ? 'Modifier' : 'Ajouter' }}</button>

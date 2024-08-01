@@ -63,10 +63,11 @@ export class BonSortieDetailComponent implements OnInit {
   addDetail(detail?: DetailSortie): void {
     this.details.push(this.fb.group({
       produit: [detail?.produit || '', Validators.required],
-      quantite: [detail?.quantity || '', Validators.required],
+      quantity: [detail?.quantity || '', Validators.required],
       prix: [detail?.prix || '', Validators.required]
     }));
   }
+  
 
   removeDetail(index: number): void {
     this.details.removeAt(index);
@@ -79,5 +80,8 @@ export class BonSortieDetailComponent implements OnInit {
       this.detailSortieService.createDetailSortie(detail).subscribe();
     });
     this.router.navigate(['/bon-sortie']);
+  }
+  isDetailsPresent(): boolean {
+    return this.details.length > 0;
   }
 }

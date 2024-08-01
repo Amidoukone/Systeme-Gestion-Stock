@@ -62,4 +62,10 @@ public class BonEntreeController {
         bonEntreeService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PostMapping("/valider/{id}")
+    public ResponseEntity<BonEntree> validerBonEntree(@PathVariable Long id) {
+        BonEntree bonEntreeValide = bonEntreeService.validerBonEntree(id);
+        return ResponseEntity.ok(bonEntreeValide);
+    }
 }
