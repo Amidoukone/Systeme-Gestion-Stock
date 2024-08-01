@@ -1,17 +1,17 @@
-import { Component, OnInit, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { FormsModule } from "@angular/forms";
 import { ActivatedRoute, Router } from '@angular/router';
+import { format } from 'date-fns';
+import { BonEntree } from '../../../models/bon-entree';
+import { DetailEntree } from '../../../models/detail-entree';
+import { Fournisseur } from '../../../models/fournisseur';
+import { Produit } from '../../../models/produit';
+import { Utilisateur } from '../../../models/utilisateur';
+import { AuthService } from "../../../services/auth.service";
 import { BonEntreeService } from '../../../services/bon-entree.service';
 import { FournisseurService } from '../../../services/fournisseur.service';
 import { ProduitService } from '../../../services/produit.service';
-import { BonEntree } from '../../../models/bon-entree';
-import { Fournisseur } from '../../../models/fournisseur';
-import { Produit } from '../../../models/produit';
-import { DetailEntree } from '../../../models/detail-entree';
-import { AuthService } from "../../../services/auth.service";
-import { FormsModule } from "@angular/forms";
-import { format } from 'date-fns';
-import { Utilisateur } from '../../../models/utilisateur';
 
 @Component({
   selector: 'app-bon-entree-form',

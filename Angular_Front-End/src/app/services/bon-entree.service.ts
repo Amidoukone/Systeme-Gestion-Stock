@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BonEntree } from '../models/bon-entree';
 
@@ -28,6 +28,10 @@ export class BonEntreeService {
     return this.http.put<BonEntree>(`${this.baseUrl}/${id}`, bonEntree);
   }
 
+  validateBonEntree(id: number): Observable<BonEntree> {
+    return this.http.post<BonEntree>(`${this.baseUrl}/valider/${id}`, {});
+  }
+  
   deleteBonEntree(id: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }

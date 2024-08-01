@@ -2,9 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { NgxPaginationModule } from 'ngx-pagination';
 import { BonSortie } from '../../../models/bon-sortie';
 import { BonSortieService } from '../../../services/bon-sortie.service';
-import {NgxPaginationModule} from "ngx-pagination";
 
 @Component({
   selector: 'app-bon-sortie-list',
@@ -21,7 +21,7 @@ export class BonSortieListComponent implements OnInit {
   selectedBonSortie: BonSortie | null = null;
 
   page: number = 1;
-  itemsPerPage: number = 6;  // Nombre d'éléments par page
+  itemsPerPage: number = 6;
 
   constructor(
     private bonSortieService: BonSortieService,
@@ -37,13 +37,10 @@ export class BonSortieListComponent implements OnInit {
     this.bonSortieService.getBonSorties().subscribe(data => {
       console.log('BonSorties reçus:', data);
       this.bonSorties = data;
-
       this.filteredBonSorties = data;
-
-      // Assurez-vous que motif est toujours défini
       this.bonSorties.forEach(bonSortie => {
         if (!bonSortie.motif) {
-          bonSortie.motif = {createBy: 0, id: 0, title: 'N/A' };
+          bonSortie.motif = { createBy: 0, id: 0, title: 'N/A' };
         }
       });
     });
@@ -90,5 +87,9 @@ export class BonSortieListComponent implements OnInit {
   openDetailsModal(content: any, bonSortie: BonSortie): void {
     this.selectedBonSortie = bonSortie;
     this.modalRef = this.modalService.open(content);
+  }
+
+  hasDetails(bonSortie: BonSortie): boolean {
+    return bonSortie.detailsSorties && bonSortie.detailsSorties.length > 0;
   }
 }

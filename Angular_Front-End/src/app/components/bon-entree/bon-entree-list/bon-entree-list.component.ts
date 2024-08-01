@@ -2,9 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { NgxPaginationModule } from 'ngx-pagination';
 import { BonEntree } from '../../../models/bon-entree';
 import { BonEntreeService } from '../../../services/bon-entree.service';
-import {NgxPaginationModule} from "ngx-pagination";
 
 @Component({
   selector: 'app-bon-entree-list',
@@ -17,12 +17,12 @@ export class BonEntreeListComponent implements OnInit {
   bonEntrees: BonEntree[] = [];
   filteredBonEntrees: BonEntree[] = [];
   bonentreeToDelete: number | null = null;
+  bonentreeToValidate: number | null = null;  // Add this line
   private modalRef: NgbModalRef | null = null;
   selectedBonEntree: BonEntree | null = null;
 
   page: number = 1;
   itemsPerPage: number = 6;  // Nombre d'éléments par page page: number = 1;
-
 
   constructor(
     private bonEntreeService: BonEntreeService,
@@ -71,9 +71,8 @@ export class BonEntreeListComponent implements OnInit {
   confirmDelete(): void {
     if (this.bonentreeToDelete !== null) {
       this.bonEntreeService.deleteBonEntree(this.bonentreeToDelete).subscribe(() => {
-        this.bonEntrees = this.bonEntrees.filter(f => f.id !== this.bonentreeToDelete);
-        this.filteredBonEntrees = this.filteredBonEntrees.filter(f => f.id !== this.bonentreeToDelete);
-        this.bonentreeToDelete = null;
+        this.bonEntrees = this.bonEntrees.filter(b => b.id !== this.bonentreeToDelete);
+        this.filteredBonEntrees = this.filteredBonEntrees.filter(b => b.id !== this.bonentreeToDelete);
         this.modalRef?.close();
       });
     }
@@ -81,6 +80,20 @@ export class BonEntreeListComponent implements OnInit {
 
   openDetailsModal(content: any, bonEntree: BonEntree): void {
     this.selectedBonEntree = bonEntree;
+    this.modalService.open(content, { size: 'lg' });
+  }
+
+  showValidateConfirmation(content: any, id: number): void {
+    this.bonentreeToValidate = id;
     this.modalRef = this.modalService.open(content);
+  }
+
+  confirmValidate(): void {
+    if (this.bonentreeToValidate !== null) {
+      this.bonEntreeService.validateBonEntree(this.bonentreeToValidate).subscribe(() => {
+        this.loadBonEntrees();
+        this.modalRef?.close();
+      });
+    }
   }
 }
