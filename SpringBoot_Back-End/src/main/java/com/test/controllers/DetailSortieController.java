@@ -2,9 +2,11 @@ package com.test.controllers;
 
 import com.test.entities.DetailSortie;
 import com.test.services.DetailSortieService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,8 +31,13 @@ public class DetailSortieController {
     }
 
     @PostMapping
-    public DetailSortie createDetailsSortie(@RequestBody DetailSortie detailsSortie) {
-        return detailSortieService.save(detailsSortie);
+    public ResponseEntity<DetailSortie> createDetailSortie(@RequestBody DetailSortie detailSortie) {
+        try {
+            DetailSortie savedDetailSortie = detailSortieService.save(detailSortie);
+            return ResponseEntity.status(HttpStatus.CREATED).body(savedDetailSortie);
+        } catch (RuntimeException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
+        }
     }
 
     @PutMapping("/{id}")

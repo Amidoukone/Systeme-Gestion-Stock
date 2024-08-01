@@ -1,7 +1,10 @@
 package com.test.services;
 
+import com.test.entities.BonEntree;
+import com.test.entities.BonSortie;
 import com.test.entities.DetailSortie;
 import com.test.entities.Produit;
+import com.test.repositories.BonSortieRepository;
 import com.test.repositories.DetailSortieRepository;
 import com.test.repositories.ProduitRepository;
 import jakarta.transaction.Transactional;
@@ -19,6 +22,9 @@ public class DetailSortieService {
 
     @Autowired
     private ProduitRepository produitRepository;
+    @Autowired
+    private BonSortieRepository bonSortieRepository;
+
     public List<DetailSortie> findAll() {
         return detailSortieRepository.findAll();
     }
@@ -32,15 +38,25 @@ public class DetailSortieService {
         // Sauvegarder le détail de sortie
         DetailSortie savedDetailSortie = detailSortieRepository.save(detailSortie);
 
-        // Mettre à jour la quantité du produit associé
-        Produit produit = detailSortie.getProduit();
-        if (produit != null) {
-            produit.setQuantity(produit.getQuantity() - detailSortie.getQuantity());
-            System.out.println(produit.getQuantity());
-            produitRepository.save(produit);
-        }
+        BonSortie bonSortie = bonSortieRepository.findById(savedDetailSortie.getBonSortie().getId())
+                .orElseThrow(() -> new RuntimeException("BonSortie not found with id " + savedDetailSortie.getBonSortie().getId()));
 
-        return savedDetailSortie;
+        // Mettre à jour la quantité du produit associé
+        int nouvelleQte = savedDetailSortie.getQuantity();
+        Produit produit = detailSortie.getProduit();
+
+        if (produit != null) {
+            if (nouvelleQte > produit.getQuantity()) {
+                throw new RuntimeException("La quantité du BonSortie ne peut pas être supérieure à la quantité disponible du produit.");
+            }
+                produit.setQuantity(produit.getQuantity() - nouvelleQte);
+                System.out.println(produit.getQuantity());
+                produitRepository.save(produit);
+                bonSortieRepository.save(bonSortie);
+            }
+
+            return savedDetailSortie;
+
     }
 
     public void deleteById(int id) {

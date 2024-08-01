@@ -48,7 +48,6 @@ export class BonEntreeFormComponent implements OnInit {
       this.isEditMode = true;
       this.loadBonEntreeById(+id);
     } else {
-      // Assurez-vous que detailsEntrees est initialisé
       this.detailsEntrees = [];
     }
   }
@@ -91,7 +90,7 @@ export class BonEntreeFormComponent implements OnInit {
       ...this.bonEntree,
       date_commande: this.bonEntree.dateCommande
         ? format(new Date(this.bonEntree.dateCommande), 'yyyy-MM-dd')
-        : null // Handle invalid or missing date
+        : null 
     };
 
     if (this.isEditMode) {

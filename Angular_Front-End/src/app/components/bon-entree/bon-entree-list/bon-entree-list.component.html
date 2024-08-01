@@ -32,11 +32,15 @@
             <button title="Supprimer" class="btn btn-danger btn-sm m-2" (click)="showDeleteConfirmation(deleteModal, bonEntree.id)"><i class="fas fa-trash"></i></button>
             <button title="Imprimer" class="btn btn-secondary btn-sm me-2" (click)="printBonEntree(bonEntree.id)"><i class="fas fa-print"></i></button>
             <button title="Voir Detail" class="btn btn-primary btn-sm me-2" (click)="openDetailsModal(detailsModal, bonEntree)"><i class="fa fa-eye"></i> Details</button>
-            <!-- Conditionally hide the Add Detail button -->
             <button *ngIf="!bonEntree.detailEntrees || bonEntree.detailEntrees.length === 0" title="Ajouter Detail" class="btn btn-success btn-sm me-2" (click)="navigateToAddDetail(bonEntree.id)"><i class="fa fa-plus-circle"></i> Detail</button>
-            <!-- Conditionally hide the Validate button -->
-            <button *ngIf="bonEntree.statut !== 'En stock'" title="Valider" class="btn btn-info btn-sm me-2" (click)="showValidateConfirmation(validateModal, bonEntree.id)"><i class="fa fa-check-circle"></i> Valider</button>
-          </td>
+          
+            <button *ngIf="bonEntree.statut !== 'En stock' && bonEntree.detailEntrees.length > 0" 
+              title="Valider" 
+              class="btn btn-info btn-sm me-2" 
+              (click)="showValidateConfirmation(validateModal, bonEntree.id)">
+            <i class="fa fa-check-circle"></i> Valider
+            </button>
+                </td>
         </tr>
       </tbody>
     </table>
