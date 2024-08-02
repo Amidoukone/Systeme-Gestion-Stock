@@ -33,7 +33,6 @@ ProduitService {
         produitRepository.deleteById(id);
     }
 
-
     public List<Produit> findByEntrepotId(int entrepotId) {
         return produitRepository.findByEntrepotId(entrepotId);
     }

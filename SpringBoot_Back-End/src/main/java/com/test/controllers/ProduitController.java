@@ -56,7 +56,7 @@ public class ProduitController {
                     produit.setDescription(produitDetails.getDescription());
                     produit.setCreatedBy(produitDetails.getCreatedBy());
                     produit.setQuantity(produitDetails.getQuantity());
-                    //produit.setSeuil(produitDetails.getSeuil());
+                    produit.setSeuil(produitDetails.getSeuil());
                     produit.setCategorie(produitDetails.getCategorie());
                     Produit updatedProduit = produitService.save(produit);
                     return ResponseEntity.ok().body(updatedProduit);
