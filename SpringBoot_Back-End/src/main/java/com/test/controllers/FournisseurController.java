@@ -1,6 +1,7 @@
 package com.test.controllers;
 
 import com.test.entities.Fournisseur;
+import com.test.entities.Produit;
 import com.test.entities.Utilisateur;
 import com.test.services.FournisseurService;
 import com.test.services.UtilisateurService;
@@ -36,9 +37,17 @@ public class FournisseurController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping
-    public Fournisseur createFournisseur(@RequestBody Fournisseur fournisseur) {
-        return fournisseurService.save(fournisseur);
+    @PostMapping("/create")
+    public ResponseEntity<Fournisseur> createFournisseur(@RequestBody Fournisseur fournisseur, @RequestParam String email) {
+        Utilisateur utilisateur = utilisateurService.findByOneEmail(email);
+        if (utilisateur == null) {
+            return ResponseEntity.badRequest().body(null);
+        }
+        fournisseur.setCreatedBy(utilisateur);
+        fournisseur.setEntrepot(utilisateur.getEntrepot());
+
+        Fournisseur savedFournisseur = fournisseurService.save(fournisseur);
+        return ResponseEntity.ok(savedFournisseur);
     }
 
     @GetMapping("/current")
