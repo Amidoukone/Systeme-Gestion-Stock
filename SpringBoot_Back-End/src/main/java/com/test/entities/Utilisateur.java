@@ -43,12 +43,12 @@ public class Utilisateur implements UserDetails {
     @JoinColumn(name = "entrepots_id")
     private Entrepot entrepot;
 
-    @ManyToOne
+    /*@ManyToOne
     @JoinColumn(name = "created_by", nullable = true)
     private Utilisateur createdBy;
 
     @OneToMany(mappedBy = "createdBy", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Utilisateur> createdUsers;
+    private List<Utilisateur> createdUsers;*/
 
     @ManyToOne
     @JoinColumn(name = "roles_id", nullable = false)

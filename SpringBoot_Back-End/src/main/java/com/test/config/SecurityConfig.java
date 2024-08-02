@@ -31,14 +31,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.disable())
                 .authorizeHttpRequests(auth -> auth
-                        //.requestMatchers("/api/utilisateurs/login").permitAll()
-                        //.requestMatchers("/api/utilisateurs/**").permitAll()
-                        //.requestMatchers("/api/utilisateurs/**", "/api/roles/**", "/api/entrepots/**").hasRole("ADMIN")
-                        //.requestMatchers("/api/bonentrees/**", "/api/detailsentrees/**").hasAnyRole("ADMIN", "MANAGER")
-                        //.requestMatchers("/api/bonsorties/**", "/api/detailssorties/**").hasAnyRole("ADMIN", "MANAGER")
-                        //.requestMatchers("/api/produits/**").hasAnyRole("ADMIN", "MANAGER", "VENDEUR")
-                        //.requestMatchers("/api/fournisseurs/**", "/api/categories/**", "/api/notifications/**").hasAnyRole("ADMIN", "MANAGER")
-                        .anyRequest().permitAll()
+                       .anyRequest().permitAll()
                 )
                 .httpBasic(withDefaults())
                 .sessionManagement(session -> session
