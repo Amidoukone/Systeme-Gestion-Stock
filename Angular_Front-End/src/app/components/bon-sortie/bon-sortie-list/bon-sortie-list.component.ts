@@ -4,6 +4,7 @@ import { Router, RouterModule } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { BonSortie } from '../../../models/bon-sortie';
+import { AuthService } from '../../../services/auth.service';
 import { BonSortieService } from '../../../services/bon-sortie.service';
 
 @Component({
@@ -22,29 +23,54 @@ export class BonSortieListComponent implements OnInit {
 
   page: number = 1;
   itemsPerPage: number = 6;
+  infoMessage= '';
+  errorMessage= '';
 
   constructor(
     private bonSortieService: BonSortieService,
     private modalService: NgbModal,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
     this.loadBonSorties();
   }
 
+  // loadBonSorties(): void {
+  //   this.bonSortieService.getBonSorties().subscribe(data => {
+  //     console.log('BonSorties reçus:', data);
+  //     this.bonSorties = data;
+  //     this.filteredBonSorties = data;
+  //     this.bonSorties.forEach(bonSortie => {
+  //       if (!bonSortie.motif) {
+  //         bonSortie.motif = { createBy: 0, id: 0, title: 'N/A' };
+  //       }
+  //     });
+  //   });
+  // }
   loadBonSorties(): void {
-    this.bonSortieService.getBonSorties().subscribe(data => {
-      console.log('BonSorties reçus:', data);
-      this.bonSorties = data;
-      this.filteredBonSorties = data;
-      this.bonSorties.forEach(bonSortie => {
-        if (!bonSortie.motif) {
-          bonSortie.motif = { createBy: 0, id: 0, title: 'N/A' };
+    const currentUser = this.authService.currentUserValue;
+    if (currentUser && currentUser.entrepot) {
+      const entrepotId = currentUser.entrepot.entrepotId;
+      this.bonSortieService.getBonSortiesByEntrepots(entrepotId).subscribe(data => {
+        console.log('Données reçues:', data); // Debugging
+        if (data.length === 0) {
+          this.infoMessage = 'Aucun Bon Entrees trouvée pour cet Entrepot.';
+          setTimeout(() => this.infoMessage = '', 2000);
+        } else {
+          this.bonSorties = data;
+          this.filteredBonSorties = data;
         }
+      }, error => {
+        console.error('Erreur lors de la récupération des Bon Entrees:', error);
+        this.errorMessage = 'Erreur lors de la récupération des Bon Entrees.';
       });
-    });
+    } else {
+      this.errorMessage = 'Erreur: entrepôt utilisateur non trouvé';
+    }
   }
+  
 
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();

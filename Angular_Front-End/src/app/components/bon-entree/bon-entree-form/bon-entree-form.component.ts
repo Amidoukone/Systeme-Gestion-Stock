@@ -27,8 +27,9 @@ export class BonEntreeFormComponent implements OnInit {
   selectedFournisseurId: number | any;
   detailsEntrees: DetailEntree[] = [];
   isEditMode: boolean = false;
-  successMessage: string = '';
-  errorMessage: string = '';
+  successMessage= '';
+  errorMessage= '';
+  infoMessage= '';
 
   constructor(
     private bonEntreeService: BonEntreeService,
@@ -53,9 +54,23 @@ export class BonEntreeFormComponent implements OnInit {
   }
 
   loadProduits(): void {
-    this.produitService.getProduits().subscribe(data => {
-      this.produits = data;
-    });
+    const currentUser = this.authService.currentUserValue;
+    if (currentUser && currentUser.entrepot) {
+      const entrepotId = currentUser.entrepot.entrepotId;
+      this.produitService.getProduitsByEntrepot(entrepotId).subscribe(produits => {
+        if (produits.length === 0) {
+          this.infoMessage = 'Aucun produit trouvée pour cet Entrepot.';
+          setTimeout(() => this.infoMessage = '', 2000);
+        }else{
+          this.produits = produits;
+        }
+      }, error => {
+        console.error('Erreur lors de la récupération des produits:', error);
+        this.errorMessage = 'Erreur lors de la récupération des produits.';
+      });
+    } else {
+      this.errorMessage = 'Erreur: entrepôt utilisateur non trouvé';
+    }
   }
 
   loadFournisseurs(): void {
@@ -81,6 +96,14 @@ export class BonEntreeFormComponent implements OnInit {
   }
 
   onSubmit(): void {
+    const currentUserEmail = this.authService.currentUserValue?.email; 
+
+    if (!currentUserEmail) {
+      this.errorMessage = 'Erreur : utilisateur non authentifié.';
+      setTimeout(() => this.errorMessage = '', 3000);
+      return;
+    }
+
     this.bonEntree.detailEntrees = this.detailsEntrees;
     this.bonEntree.fournisseur = this.selectedFournisseurId
       ? this.fournisseurs?.find(f => f.id === +this.selectedFournisseurId) ?? {} as Fournisseur
@@ -104,7 +127,7 @@ export class BonEntreeFormComponent implements OnInit {
         setTimeout(() => this.errorMessage = '', 3000);
       });
     } else {
-      this.bonEntreeService.createBonEntree(formattedBonEntree).subscribe(() => {
+      this.bonEntreeService.createBonEntree(formattedBonEntree, currentUserEmail).subscribe(() => {
         this.successMessage = 'Bon d\'Entrée créé avec succès!';
         setTimeout(() => this.successMessage = '', 3000);
         setTimeout(() => this.router.navigate(['/bon-entree']), 3000);

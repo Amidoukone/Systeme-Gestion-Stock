@@ -1,4 +1,5 @@
 export interface Entrepot {
+  // entrepotId: any;
   id: number;
   entrepotName: string;
   lieu: string;
