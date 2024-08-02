@@ -28,7 +28,7 @@ public class Produit {
     private int quantity;
 
     @Column(name="seuil")
-    private int seuil = 10;
+    private int seuil;
 
 
     @ManyToOne
