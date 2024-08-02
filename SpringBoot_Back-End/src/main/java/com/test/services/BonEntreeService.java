@@ -46,6 +46,7 @@ public class BonEntreeService {
             fournisseur = fournisseurRepository.save(fournisseur);
             bonEntree.setFournisseur(fournisseur);
         }
+        bonEntree.setStatut("En cours");
         return bonEntreeRepository.save(bonEntree);
     }
 

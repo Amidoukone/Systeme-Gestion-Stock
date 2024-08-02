@@ -15,6 +15,10 @@ export class FournisseurService {
     return this.http.get<Fournisseur[]>(`${this.baseUrl}`);
   }
 
+  getFournisseursForCurrentUser(email: string): Observable<Fournisseur[]> {
+    return this.http.get<Fournisseur[]>(`${this.baseUrl}/current?email=${email}`);
+  }
+
   getFournisseurById(id: number): Observable<Fournisseur> {
     return this.http.get<Fournisseur>(`${this.baseUrl}/${id}`);
   }

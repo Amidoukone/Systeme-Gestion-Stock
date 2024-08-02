@@ -17,12 +17,12 @@ export class BonEntreeListComponent implements OnInit {
   bonEntrees: BonEntree[] = [];
   filteredBonEntrees: BonEntree[] = [];
   bonentreeToDelete: number | null = null;
-  bonentreeToValidate: number | null = null;  // Add this line
+  bonentreeToValidate: number | null = null;  
   private modalRef: NgbModalRef | null = null;
   selectedBonEntree: BonEntree | null = null;
 
   page: number = 1;
-  itemsPerPage: number = 6;  // Nombre d'éléments par page page: number = 1;
+  itemsPerPage: number = 6;  
 
   constructor(
     private bonEntreeService: BonEntreeService,
