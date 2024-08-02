@@ -40,12 +40,12 @@
 
 /* Style for form inputs */
 .form-control {
-  background-color: #f9f9f9; /* Light gray background for inputs */
+  background-color: #251D73; /* Light gray background for inputs */
   border-color: #d1d5db; /* Light gray border color */
 }
 
 .form-control:focus {
-  border-color: #3b82f6; /* Blue border color on focus */
+  border-color: #260efc; /* Blue border color on focus */
   box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2); /* Blue shadow on focus */
 }
 
@@ -56,9 +56,17 @@
 
 /* Style for buttons */
 .btn {
-  background-color: #3b82f6; /* Blue background for buttons */
+  background-color: #2563eb; /* Blue background for buttons */
   color: #ffffff; /* White text color */
   border: none; /* Remove default border */
+}
+
+.btn-primary{
+  background-color: #251D73;
+}
+
+.btn-danger{
+  background-color: red;
 }
 
 .btn:hover {

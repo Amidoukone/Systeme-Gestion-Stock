@@ -33,3 +33,6 @@
     transform: scale(1);
   }
   
+  .container-fluid{
+    background-color: #251D73;
+  }

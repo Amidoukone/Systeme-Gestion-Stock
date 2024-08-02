@@ -17,7 +17,7 @@
 }
 
 #sidebar-wrapper .list-group-item:hover {
-  background-color: #f8f9fa;
+  background-color: #251D73;
   color: #00B7FF;
 }
 
@@ -31,4 +31,9 @@
   #sidebar-wrapper.toggled {
     width: 100%;
   }
+}
+
+
+.list-group, #sidebar-wrapper{
+  background-color: #251D73;
 }

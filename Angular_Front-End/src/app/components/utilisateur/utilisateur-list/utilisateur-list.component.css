@@ -1,15 +1,3 @@
-span{
-  background-color: rgb(106, 106, 241);
-  color: #fff;
-  border-radius: 50%;
-  padding: 10px 10px;
-  font-size: 18px;
-  margin-right: 10px;
-  margin-left: 10px;
-  cursor: pointer;
-}
-
-
 span {
   background-color: #0d6efd;
   color: #fff;
@@ -33,6 +21,12 @@ span {
 
 tr{
   padding: 35px 10px;
+  
+
+}
+
+tr span{
+  background-color:#251D73;
 }
 #table-responsive{
   border: solid 1px;
@@ -55,7 +49,7 @@ tr{
 /* Styles pour l'input */
 input.form-control {
   z-index: 1;
-  background-color: #0d6efd; /* Fond bleu */
+  background-color: #251D73; /* Fond bleu */
   color: #ffffff; /* Texte blanc */
   border-radius: 10px; /* Bords arrondis */
   padding-left: 50px ; /* Espace pour l'icône */
@@ -105,7 +99,7 @@ input::placeholder {
 
 /* Retirer le fond du bouton */
 .btn-danger {
-  background-color: transparent;
+  background-color: red;
   border: none !important;;
 
 }
@@ -138,6 +132,14 @@ input::placeholder {
   color: #1b191a;
 }
 
+.btn-primary{
+  background-color: #251D73;
+}
+
+/* #recherche input{
+  
+  background-color: #251D73;
+} */
 
 /* Assurez-vous que le conteneur principal utilise Flexbox pour aligner les éléments */
 .container {

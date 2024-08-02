@@ -92,10 +92,12 @@
   
   /* Input focus styling */
   .form-control:focus {
-    border-color: #3b82f6; /* Blue border color on focus */
+    border-color: #0d6efd; /* Blue border color on focus */
     box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2); /* Blue shadow on focus */
     outline: none; /* Remove default outline */
   }
+   
+
   
   /* Button container styling */
   .button-container {
@@ -104,7 +106,7 @@
   
   /* Button styling */
   .btn-primary {
-    background-color: #3b82f6; /* Blue background */
+    background-color: #251D73; /* Blue background */
     color: #fff; /* White text */
     border: none; /* Remove default border */
     padding: 0.5rem 1rem; /* Padding inside the button */
@@ -117,7 +119,7 @@
   /* Button hover and focus styling */
   .btn-primary:hover,
   .btn-primary:focus {
-    background-color: #2563eb; /* Darker blue on hover/focus */
+    background-color: #2b18d3; /* Darker blue on hover/focus */
     outline: none; /* Remove default outline on focus */
   }
   

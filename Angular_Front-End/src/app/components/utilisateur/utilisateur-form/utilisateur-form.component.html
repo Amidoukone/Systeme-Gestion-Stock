@@ -33,7 +33,7 @@
     </div>
     <div class="form-group">
       <button type="submit" class="btn btn-primary">{{ isEditMode ? 'Modifier' : 'Ajouter' }}</button>
-      <button class="btn btn-primary m-5" (click)="navigateToBonEntree()">Annuler</button>
+      <button class="btn btn-danger m-5" (click)="navigateToBonEntree()">Annuler</button>
     </div>
     <div *ngIf="successMessage" class="alert alert-success">
       {{ successMessage }}

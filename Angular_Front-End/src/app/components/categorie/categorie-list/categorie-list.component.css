@@ -34,6 +34,11 @@ span {
 tr{
   padding: 35px 10px;
 }
+
+tr span{
+  background-color: #251D73;
+}
+
 #table-responsive{
   border: solid 1px;
   border-radius: 5px;
@@ -55,7 +60,7 @@ tr{
 /* Styles pour l'input */
 input.form-control {
   z-index: 1;
-  background-color: #0d6efd; /* Fond bleu */
+  background-color: #251D73; /* Fond bleu */
   color: #ffffff; /* Texte blanc */
   border-radius: 10px; /* Bords arrondis */
   padding-left: 50px ; /* Espace pour l'icône */
@@ -138,6 +143,10 @@ input::placeholder {
   color: #1b191a;
 }
 
+.btn-primary{
+  background-color: #251D73;
+}
+
 
 /* Assurez-vous que le conteneur principal utilise Flexbox pour aligner les éléments */
 .container {
@@ -164,7 +173,7 @@ input::placeholder {
   border: 1px solid #ddd;
   border-radius: 4px;
   text-decoration: none;
-  color: #007bff;
+  color: #251D73;
 }
 
 .pagination-controls li a:hover {
