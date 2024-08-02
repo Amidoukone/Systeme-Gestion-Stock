@@ -21,6 +21,7 @@
         <th scope="col"><span>#</span></th>
         <th scope="col"><span>Nom de Produit</span></th>
         <th scope="col"><span>Description</span></th>
+        <th scope="col"><span>Seuil</span></th>
         <th scope="col"><span>Quantité</span></th>
         <th scope="col"><span>Catégorie</span></th>
         <th scope="col"><span>Utilisateur N°</span></th>
@@ -33,6 +34,7 @@
         <td>{{ produit.productName }}</td>
         <td>{{ produit.description }}</td>
         <td>{{ produit.quantity }}</td>
+        <td>{{ produit.seuil }}</td>
         <td>{{ produit.categorie.name}}</td>
         <td>{{ produit.createBy}}</td>
         <!--td>
