@@ -32,9 +32,10 @@ public class BonSortieService {
     @Autowired
     private NotificationService notificationService;
 
-    public List<BonSortie> findAll() {
-        return bonSortieRepository.findAll();
+    public List<BonSortie> getBonEntrepotByEntrepot(int entrepotId) {
+        return bonSortieRepository.findAllByEntrepotId(entrepotId);
     }
+
 
     public Optional<BonSortie> findById(int id) {
         return bonSortieRepository.findById(id);

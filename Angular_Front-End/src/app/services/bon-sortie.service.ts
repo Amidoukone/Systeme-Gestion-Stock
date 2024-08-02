@@ -1,9 +1,7 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BonSortie } from '../models/bon-sortie';
-import {Produit} from "../models/produit";
-import {DetailSortie} from "../models/detail-sortie";
 
 @Injectable({
   providedIn: 'root'
@@ -20,9 +18,12 @@ export class BonSortieService {
   getBonSortieById(id: number): Observable<BonSortie> {
     return this.http.get<BonSortie>(`${this.apiUrl}/${id}`);
   }
+  getBonSortiesByEntrepots(entrepotId: number): Observable<BonSortie[]> {
+    return this.http.get<BonSortie[]>(`${this.apiUrl}/entrepot/${entrepotId}`);
+  }
 
-  createBonSortie(bonSortie: BonSortie): Observable<BonSortie> {
-    return this.http.post<BonSortie>(this.apiUrl, bonSortie);
+  createBonSortie(bonSortie: BonSortie, email: string): Observable<BonSortie> {
+    return this.http.post<BonSortie>(`${this.apiUrl}?email=${email}`, bonSortie);
   }
 
   updateBonSortie(id: number, formattedBonSortie: BonSortie): Observable<BonSortie> {

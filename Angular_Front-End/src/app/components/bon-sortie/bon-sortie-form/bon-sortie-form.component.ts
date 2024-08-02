@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
-import { BonSortieService } from '../../../services/bon-sortie.service';
-import { BonSortie } from '../../../models/bon-sortie';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { DetailSortie } from '../../../models/detail-sortie';
-import { MotifService } from '../../../services/motif.service';
-import { Motif } from '../../../models/motif';
-import { AuthService } from '../../../services/auth.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import { format } from 'date-fns';
+import { BonSortie } from '../../../models/bon-sortie';
+import { DetailSortie } from '../../../models/detail-sortie';
+import { Motif } from '../../../models/motif';
 import { Utilisateur } from '../../../models/utilisateur';
+import { AuthService } from '../../../services/auth.service';
+import { BonSortieService } from '../../../services/bon-sortie.service';
+import { MotifService } from '../../../services/motif.service';
 
 @Component({
   selector: 'app-bon-sortie-form',
@@ -68,6 +68,13 @@ export class BonSortieFormComponent implements OnInit {
   }
 
   onSubmit(): void {
+    const currentUserEmail = this.authService.currentUserValue?.email; 
+    if (!currentUserEmail) {
+      this.errorMessage = 'Erreur : utilisateur non authentifié.';
+      setTimeout(() => this.errorMessage = '', 3000);
+      return;
+    }
+
     const selectedMotif = this.motifs.find(motif => motif.id === this.selectedMotifId);
     console.log('Motif sélectionné:', selectedMotif);
     this.bonSortie.detailsSorties = this.detailSortie;
@@ -91,7 +98,7 @@ export class BonSortieFormComponent implements OnInit {
         setTimeout(() => this.errorMessage = '', 3000);
       });
     } else {
-      this.bonSortieService.createBonSortie(formattedBonSortie).subscribe(() => {
+      this.bonSortieService.createBonSortie(formattedBonSortie, currentUserEmail).subscribe(() => {
         this.successMessage = 'Bon de Sortie créé avec succès!';
         setTimeout(() => this.successMessage = '', 3000);
         setTimeout(() => this.router.navigate(['/bon-sortie']), 3000);
@@ -103,7 +110,7 @@ export class BonSortieFormComponent implements OnInit {
     }
   }
 
-  navigateToBonEntree() {
+  navigateToBonSortie() {
     this.router.navigate(['/bon-sortie']);
   }
 }

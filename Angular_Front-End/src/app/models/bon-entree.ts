@@ -1,7 +1,6 @@
-import { Utilisateur } from './utilisateur';
-import { Fournisseur } from './fournisseur';
 import { DetailEntree } from './detail-entree';
-import {Produit} from "./produit";
+import { Fournisseur } from './fournisseur';
+import { Utilisateur } from './utilisateur';
 
 export interface BonEntree {
   id: number;
