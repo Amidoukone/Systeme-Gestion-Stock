@@ -1,5 +1,6 @@
 package com.test.services;
 
+import com.test.entities.Categorie;
 import com.test.entities.Fournisseur;
 import com.test.repositories.FournisseurRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,10 @@ public class FournisseurService {
 
     public int getFournisseursCount() {
         return fournisseurRepository.countFournisseurs();
+    }
+
+    public List<Fournisseur> findByEntrepotId(int entrepotId) {
+        return fournisseurRepository.findByEntrepotId(entrepotId);
     }
 }
 

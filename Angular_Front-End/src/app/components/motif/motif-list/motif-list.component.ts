@@ -38,7 +38,7 @@ export class MotifListComponent implements OnInit {
   
     this.motifService.getMotifsForCurrentUser(email).subscribe(motifs => {
       if (motifs.length === 0) {
-        this.infoMessage = 'Aucune motif trouvée pour cet Entrepot.';
+        this.infoMessage = 'Aucun motif trouvée pour cet Entrepot.';
         setTimeout(() => this.infoMessage = '', 2000);
       } else {
         this.motifs = motifs;

@@ -39,7 +39,7 @@ export class CategorieListComponent implements OnInit {
     this.categorieService.getCategoriesForCurrentUser(email).subscribe(categories => {
       if (categories.length === 0) {
         this.infoMessage = 'Aucune catégorie trouvée pour cet Entrepot.';
-        setTimeout(() => this.infoMessage = '', 3000);
+        setTimeout(() => this.infoMessage = '', 2000);
       } else {
         this.categories = categories;
       }
