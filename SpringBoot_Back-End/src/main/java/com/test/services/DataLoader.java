@@ -49,6 +49,7 @@ private void createUserIfNotFound(String username, String email, String password
         newUser.setPassword(new BCryptPasswordEncoder().encode(password));
         Role role = roleRepository.findByName(roleName).orElse(null);
         newUser.setRole(role);
+        newUser.setCreatedBy(newUser);
         utilisateurRepository.save(newUser);
     }
 }

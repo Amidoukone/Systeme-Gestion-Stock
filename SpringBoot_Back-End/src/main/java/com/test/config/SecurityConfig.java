@@ -62,4 +62,5 @@ public class SecurityConfig {
         authenticationManagerBuilder.authenticationProvider(authenticationProvider());
         return authenticationManagerBuilder.build();
     }
+
 }

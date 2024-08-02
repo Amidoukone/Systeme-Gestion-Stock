@@ -38,22 +38,20 @@ public class AuthService {
     }*/
     public Utilisateur login(String email, String password) {
         try {
-            // Authentication attempt
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(email, password)
             );
 
-            // Log authentication details
+            // Ajoutez des logs pour vérifier le processus d'authentification
+            System.out.println("Authentication: " + authentication);
             System.out.println("Authentication details: " + authentication.getDetails());
+            System.out.println("Authentication principal: " + authentication.getPrincipal());
 
-            // Store authentication in security context
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
-            // Fetch and return user details from the repository
             return utilisateurRepository.findByEmail(email)
-                    .orElseThrow(() -> new RuntimeException("User not found"));
+                    .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
         } catch (Exception e) {
-            // Handle and log exceptions
             System.out.println("Authentication failed: " + e.getMessage());
             throw new RuntimeException("Invalid login credentials");
         }
