@@ -27,10 +27,6 @@ public class Produit {
     @Column(name = "quantity")
     private int quantity;
 
-    @Column(name="seuil")
-    private int seuil;
-
-
     @ManyToOne
     @JoinColumn(name = "categories_id", nullable = false)
     private Categorie categorie;

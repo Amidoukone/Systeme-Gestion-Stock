@@ -12,16 +12,17 @@ export class BonEntreeService {
 
   constructor(private http: HttpClient) { }
 
-  getBonEntrees(): Observable<BonEntree[]> {
-    return this.http.get<BonEntree[]>(`${this.baseUrl}`);
+  getBonEntreesByEntrepots(entrepotId: number): Observable<BonEntree[]> {
+    return this.http.get<BonEntree[]>(`${this.baseUrl}/entrepot/${entrepotId}`);
   }
+  
 
   getBonEntreeById(id: number): Observable<BonEntree> {
     return this.http.get<BonEntree>(`${this.baseUrl}/${id}`);
   }
 
-  createBonEntree(bonEntree: BonEntree): Observable<BonEntree> {
-    return this.http.post<BonEntree>(`${this.baseUrl}`, bonEntree);
+  createBonEntree(bonEntree: BonEntree, email: string): Observable<BonEntree> {
+    return this.http.post<BonEntree>(`${this.baseUrl}?email=${email}`, bonEntree);
   }
 
   updateBonEntree(id: number, bonEntree: BonEntree): Observable<BonEntree> {

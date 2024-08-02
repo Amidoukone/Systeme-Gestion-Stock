@@ -1,16 +1,15 @@
-import {DataChartService} from './../../services/data-chart.service';
-import Chart from 'chart.js/auto';
-import {ChartModule} from 'primeng/chart';
-import {Component, OnInit} from '@angular/core';
-import {RouterOutlet} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { NgxDatatableModule } from "@swimlane/ngx-datatable";
+import { saveAs } from 'file-saver';
+import { ChartModule } from 'primeng/chart';
 import * as XLSX from 'xlsx';
-import {saveAs} from 'file-saver';
-import {DashboardService} from "../../services/dashboard.service";
-import { BonEntreeService } from '../../services/bon-entree.service';
 import { BonEntree } from '../../models/bon-entree';
-import { BonSortieService } from '../../services/bon-sortie.service';
 import { BonSortie } from '../../models/bon-sortie';
-import {NgxDatatableModule} from "@swimlane/ngx-datatable";
+import { BonEntreeService } from '../../services/bon-entree.service';
+import { BonSortieService } from '../../services/bon-sortie.service';
+import { DashboardService } from "../../services/dashboard.service";
+import { DataChartService } from './../../services/data-chart.service';
 
 @Component({
   selector: 'app-root',
@@ -66,9 +65,9 @@ export class DashboardComponent implements OnInit {
     this.getStats();
     this.getSalesByCategory();
     this.loadStockInfo();
-    this.bonEntreeService.getBonEntrees().subscribe(data => {
-      this.bonEntrees = data;
-    });
+    // this.bonEntreeService.getBonEntreesByEntrepots().subscribe(data => {
+    //   this.bonEntrees = data;
+    // });
     this.bonSortieService.getBonSorties().subscribe(data => {
       this.bonSorties = data;
     });

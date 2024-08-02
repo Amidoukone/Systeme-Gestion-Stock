@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BonEntree } from '../../../models/bon-entree';
 import { DetailEntree } from '../../../models/detail-entree';
 import { Produit } from '../../../models/produit';
+import { AuthService } from '../../../services/auth.service';
 import { BonEntreeService } from '../../../services/bon-entree.service';
 import { DetailEntreeService } from '../../../services/detail-entree.service';
 import { ProduitService } from '../../../services/produit.service';
@@ -20,11 +21,14 @@ export class BonEntreeDetailComponent implements OnInit {
   bonEntreeForm: FormGroup;
   produits: Produit[] = [];
   bonEntreeId: number;
+  infoMessage= '';
+  errorMessage= '';
 
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
+    private authService: AuthService,
     private bonEntreeService: BonEntreeService,
     private produitService: ProduitService,
     private detailEntreeService: DetailEntreeService
@@ -38,6 +42,7 @@ export class BonEntreeDetailComponent implements OnInit {
   ngOnInit(): void {
     this.loadProduits();
     this.loadBonEntree();
+    this.addDetail();
   }
 
   get details(): FormArray {
@@ -45,10 +50,26 @@ export class BonEntreeDetailComponent implements OnInit {
   }
 
   loadProduits(): void {
-    this.produitService.getProduits().subscribe(data => {
-      this.produits = data;
-    });
+    const currentUser = this.authService.currentUserValue;
+    if (currentUser && currentUser.entrepot) {
+      const entrepotId = currentUser.entrepot.entrepotId;
+      this.produitService.getProduitsByEntrepot(entrepotId).subscribe(produits => {
+        if (produits.length === 0) {
+          this.infoMessage = 'Aucun produit trouvée pour cet Entrepot.';
+          setTimeout(() => this.infoMessage = '', 2000);
+        }else{
+
+          this.produits = produits;
+        }
+      }, error => {
+        console.error('Erreur lors de la récupération des produits:', error);
+        this.errorMessage = 'Erreur lors de la récupération des produits.';
+      });
+    } else {
+      this.errorMessage = 'Erreur: entrepôt utilisateur non trouvé';
+    }
   }
+
 
   loadBonEntree(): void {
     this.bonEntreeService.getBonEntreeById(this.bonEntreeId).subscribe(data => {
@@ -73,6 +94,8 @@ export class BonEntreeDetailComponent implements OnInit {
   }
 
   onSubmit(): void {
+    const currentUser = this.authService.currentUserValue;
+
     const formValue = this.bonEntreeForm.value;
     formValue.details.forEach((detail: DetailEntree) => {
       detail.bonEntree = { id: this.bonEntreeId } as BonEntree;

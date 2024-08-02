@@ -4,6 +4,7 @@ import { Router, RouterModule } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { BonEntree } from '../../../models/bon-entree';
+import { AuthService } from '../../../services/auth.service';
 import { BonEntreeService } from '../../../services/bon-entree.service';
 
 @Component({
@@ -23,23 +24,42 @@ export class BonEntreeListComponent implements OnInit {
 
   page: number = 1;
   itemsPerPage: number = 6;  
+  errorMessage= '';
+  infoMessage= '';
+
 
   constructor(
     private bonEntreeService: BonEntreeService,
     private modalService: NgbModal,
-    private router: Router
-  ) {}
+    private router: Router,
+    private authService: AuthService,  ) {}
 
   ngOnInit(): void {
     this.loadBonEntrees();
   }
 
   loadBonEntrees(): void {
-    this.bonEntreeService.getBonEntrees().subscribe(data => {
-      this.bonEntrees = data;
-      this.filteredBonEntrees = data;
-    });
+    const currentUser = this.authService.currentUserValue;
+    if (currentUser && currentUser.entrepot) {
+      const entrepotId = currentUser.entrepot.entrepotId;
+      this.bonEntreeService.getBonEntreesByEntrepots(entrepotId).subscribe(data => {
+        console.log('Données reçues:', data); // Debugging
+        if (data.length === 0) {
+          this.infoMessage = 'Aucun Bon Entrees trouvée pour cet Entrepot.';
+          setTimeout(() => this.infoMessage = '', 2000);
+        } else {
+          this.bonEntrees = data;
+          this.filteredBonEntrees = data;
+        }
+      }, error => {
+        console.error('Erreur lors de la récupération des Bon Entrees:', error);
+        this.errorMessage = 'Erreur lors de la récupération des Bon Entrees.';
+      });
+    } else {
+      this.errorMessage = 'Erreur: entrepôt utilisateur non trouvé';
+    }
   }
+  
 
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();

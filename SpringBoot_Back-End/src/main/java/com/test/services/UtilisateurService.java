@@ -1,6 +1,5 @@
 package com.test.services;
 
-import com.test.entities.Categorie;
 import com.test.entities.Entrepot;
 import com.test.entities.Role;
 import com.test.entities.Utilisateur;
@@ -230,8 +229,5 @@ public class UtilisateurService implements UserDetailsService  {
     public Utilisateur findByOneEmail(String email) {
         return utilisateurRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé avec l'email: " + email));
-    }
-    public List<Utilisateur> findByEntrepotId(int entrepotId) {
-        return utilisateurRepository.findByEntrepotId(entrepotId);
     }
 }

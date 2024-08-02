@@ -8,5 +8,4 @@ export class Produit {
   createBy!: number;
   //categories_id: number;
   categorie!: Categorie ;
-  seuil!: number;
 }

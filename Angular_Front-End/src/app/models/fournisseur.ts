@@ -3,4 +3,5 @@ export class Fournisseur {
   fournName: string = '';
   adresse: string = '';
   telephone: string = '';
+  createBy!: number;
 }

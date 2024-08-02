@@ -1,12 +1,10 @@
 package com.test.controllers;
 
-import com.test.entities.BonSortie;
-import com.test.entities.DetailSortie;
-import com.test.entities.Motif;
-import com.test.entities.Produit;
+import com.test.entities.*;
 import com.test.services.BonSortieService;
 import com.test.services.MotifService;
 import com.test.services.ProduitService;
+import com.test.services.UtilisateurService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +27,12 @@ public class BonSortieController {
     @Autowired
     private MotifService motifService;
 
-    @GetMapping
-    public List<BonSortie> getAllBonSorties() {
-        return bonSortieService.findAll();
+    @Autowired
+    private UtilisateurService utilisateurService;
+
+    @GetMapping("entrepot/{entrepotId}")
+    public List<BonSortie> getAllBonEntrees(@PathVariable int entrepotId) {
+        return bonSortieService.getBonEntrepotByEntrepot(entrepotId);
     }
 
     @GetMapping("/{id}")
@@ -42,8 +43,14 @@ public class BonSortieController {
     }
 
     @PostMapping
-    public ResponseEntity<BonSortie> createBonSortie(@RequestBody BonSortie bonSortie) {
+    public ResponseEntity<BonSortie> createBonSortie(@RequestBody BonSortie bonSortie, @RequestParam String email) {
+        Utilisateur utilisateur = utilisateurService.findByOneEmail(email);
+        if (utilisateur == null) {
+            return ResponseEntity.badRequest().body(null);
+        }
 
+        bonSortie.setUtilisateur(utilisateur);
+        bonSortie.setEntrepot(utilisateur.getEntrepot());
         BonSortie createdBonSortie = bonSortieService.save(bonSortie);
         System.out.println(bonSortie);
         return ResponseEntity.ok(createdBonSortie);

@@ -1,6 +1,5 @@
 package com.test.controllers;
 
-import com.test.entities.Categorie;
 import com.test.entities.Utilisateur;
 import com.test.services.AuthService;
 import com.test.services.UtilisateurService;
@@ -66,6 +65,12 @@ public class UtilisateurController {
         List<Utilisateur> utilisateurs = utilisateurService.findByEntrepot(entrepotId);
         return ResponseEntity.ok(utilisateurs);
     }
+    @GetMapping("/current/{email}")
+    public ResponseEntity<List<Utilisateur>> getUtilisateursByUserOrEntrepot(@PathVariable String email) {
+        Utilisateur loggedInUser = utilisateurService.findByEmail(email).orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
+        List<Utilisateur> utilisateurs = utilisateurService.getUtilisateursByUserOrEntrepot(loggedInUser);
+        return ResponseEntity.ok(utilisateurs);
+    }
     @GetMapping
     public ResponseEntity<List<Utilisateur>> getAllUtilisateurs() {
         List<Utilisateur> utilisateurs = utilisateurService.findAll();
@@ -93,13 +98,6 @@ public class UtilisateurController {
     @GetMapping("/allUtilisateurs")
     public ResponseEntity<List<Utilisateur>> getAllUtilisateur() {
         List<Utilisateur> utilisateurs = utilisateurService.findAll();
-        return ResponseEntity.ok(utilisateurs);
-    }
-
-    @GetMapping("/current")
-    public ResponseEntity<List<Utilisateur>> getUtilisateursForCurrentUser(@RequestParam String email) {
-        Utilisateur utilisateur = utilisateurService.findByEmail(email).orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
-        List<Utilisateur> utilisateurs = utilisateurService.findByEntrepotId(utilisateur.getEntrepot().getId());
         return ResponseEntity.ok(utilisateurs);
     }
 }

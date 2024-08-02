@@ -1,18 +1,16 @@
 package com.test.services;
 
-import com.test.entities.BonEntree;
-import com.test.entities.DetailEntree;
-import com.test.entities.Fournisseur;
-import com.test.entities.Produit;
+import com.test.entities.*;
 import com.test.repositories.BonEntreeRepository;
 import com.test.repositories.DetailEntreeRepository;
 import com.test.repositories.FournisseurRepository;
 import com.test.repositories.ProduitRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,11 +27,14 @@ public class BonEntreeService {
     private DetailEntreeRepository detailEntreeRepository;
 
     @Autowired
+    private UtilisateurService utilisateurService;
+
+    @Autowired
     private ProduitRepository produitRepository;
 
-    public List<BonEntree> findAll() {
-        return bonEntreeRepository.findAll();
-    }
+//    public List<BonEntree> findAll(int entrepotId) {
+//        return bonEntreeRepository.findAllByEntrepotId(entrepotId);
+//    }
 
     public Optional<BonEntree> findById(int id) {
         return bonEntreeRepository.findById(id);
@@ -46,7 +47,7 @@ public class BonEntreeService {
             fournisseur = fournisseurRepository.save(fournisseur);
             bonEntree.setFournisseur(fournisseur);
         }
-        bonEntree.setStatut("En cours");
+
         return bonEntreeRepository.save(bonEntree);
     }
 
@@ -73,6 +74,10 @@ public class BonEntreeService {
 
     public void deleteById(int id) {
         bonEntreeRepository.deleteById(id);
+    }
+
+    public List<BonEntree> getBonEntrepotByEntrepot(int entrepotId) {
+        return bonEntreeRepository.findAllByEntrepotId(entrepotId);
     }
 
 }

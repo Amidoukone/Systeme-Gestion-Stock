@@ -23,8 +23,8 @@ export class FournisseurService {
     return this.http.get<Fournisseur>(`${this.baseUrl}/${id}`);
   }
 
-  createFournisseur(fournisseur: Fournisseur): Observable<Fournisseur> {
-    return this.http.post<Fournisseur>(`${this.baseUrl}`, fournisseur);
+  createFournisseur(fournisseur: Fournisseur, email: string): Observable<Fournisseur> {
+    return this.http.post<Fournisseur>(`${this.baseUrl}/create?email=${email}`, fournisseur);
   }
 
   updateFournisseur(id: number, fournisseur: Fournisseur): Observable<Fournisseur> {

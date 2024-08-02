@@ -35,4 +35,8 @@ public class BonSortie {
     @OneToMany(mappedBy = "bonSortie", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<DetailSortie> detailsSorties;
+
+    @ManyToOne
+    @JoinColumn(name = "entrepot_id", nullable = false)
+    private Entrepot entrepot;
 }
