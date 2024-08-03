@@ -20,19 +20,14 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let utilisateur of filteredUtilisateurs | paginate: { itemsPerPage: itemsPerPage, currentPage: page}">
+      <tr *ngFor="let utilisateur of utilisateurs | paginate: { itemsPerPage: itemsPerPage, currentPage: page}">
         <td>{{ utilisateur.id }}</td>
         <td>{{ utilisateur.username }}</td>
         <td>{{ utilisateur.email }}</td>
         <td>{{ utilisateur.role?.name }}</td>
         <td>{{ utilisateur.entrepot?.entrepotName }}</td>
-        <!--td>
-          <button class="btn btn-warning btn-sm" (click)="editUtilisateur(utilisateur.id)">Modifier</button>
-          <button class="btn btn-danger btn-sm" (click)="deleteUtilisateur(utilisateur.id)">Supprimer</button>
-        </td-->
 
         <td>
-
           <button title="Modifier" class="btn btn-warning btn-sm" (click)="editUtilisateur(utilisateur.id)"> <i class="fas fa-edit"></i></button>
           <button title="Supprimer" class="btn btn-danger btn-sm m-2 " (click)="showDeleteConfirmation(deleteModal, utilisateur.id)"><i class="fas fa-trash"></i></button>
         </td>

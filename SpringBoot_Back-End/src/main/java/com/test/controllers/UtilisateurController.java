@@ -65,8 +65,8 @@ public class UtilisateurController {
         List<Utilisateur> utilisateurs = utilisateurService.findByEntrepot(entrepotId);
         return ResponseEntity.ok(utilisateurs);
     }
-    @GetMapping("/current/{email}")
-    public ResponseEntity<List<Utilisateur>> getUtilisateursByUserOrEntrepot(@PathVariable String email) {
+    @GetMapping("/current")
+    public ResponseEntity<List<Utilisateur>> getUtilisateursByUserOrEntrepot(@RequestParam String email) {
         Utilisateur loggedInUser = utilisateurService.findByEmail(email).orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
         List<Utilisateur> utilisateurs = utilisateurService.getUtilisateursByUserOrEntrepot(loggedInUser);
         return ResponseEntity.ok(utilisateurs);

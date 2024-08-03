@@ -24,7 +24,7 @@ export class UtilisateurListComponent implements OnInit {
   utilisateurs: Utilisateur[] = [];
   filteredUtilisateurs: Utilisateur[] = [];
   page: number = 1;
-  itemsPerPage: number = 6;  // Nombre d'éléments par page
+  itemsPerPage: number = 6;
 
   utilisateurToDelete: number | null = null;
   utilisateurToEdit: number | null = null;
@@ -33,30 +33,41 @@ export class UtilisateurListComponent implements OnInit {
 
   constructor(private utilisateurService: UtilisateurService, private router: Router, private authService: AuthService, private modalService: NgbModal) { }
 
-  // ngOnInit(): void {
-  //   this.utilisateurService.getUtilisateurs().subscribe(data => {
-
-  //     this.utilisateurs = data;
-  //     console.log('Utilisateurs loaded:', data);
-  //     this.filteredUtilisateurs = data;
-  //     console.log('Utilisateurs loaded:', this.utilisateurs);
-  //   });
-  // }
-
   ngOnInit(): void {
-    const email = localStorage.getItem('email') || ''; // Vous pouvez obtenir l'email stocké ici
-    this.utilisateurService.getUtilisateursByUserOrEntrepot("bon@bon.bon").subscribe(
-      (data) => {
-        this.utilisateurs = data;
-        if (data.length === 0) {
-          this.errorMessage = 'Aucun utilisateur trouvé pour cet entrepôt.';
+    const currentUser = this.authService.currentUserValue;
+    if (!currentUser || !currentUser.email) {
+      this.errorMessage = 'Erreur: email utilisateur non trouvé';
+      return;
+    }
+    const email = currentUser.email;
+
+    if(email == "admin@example.com"){
+      this.utilisateurService.getUtilisateurs().subscribe(
+        (data) => {
+          this.utilisateurs = data;
+          if (data.length === 0) {
+            this.errorMessage = 'Aucun utilisateur trouvé pour cet entrepôt.';
+          }
+        },
+        (error) => {
+          console.error('Error fetching utilisateurs:', error);
+          this.errorMessage = 'Erreur lors de la récupération des utilisateurs.';
         }
-      },
-      (error) => {
-        console.error('Error fetching utilisateurs:', error);
-        this.errorMessage = 'Erreur lors de la récupération des utilisateurs.';
-      }
-    );
+      );
+    }else{
+      this.utilisateurService.getUtilisateursByUserOrEntrepot(email).subscribe(
+        (data) => {
+          this.utilisateurs = data;
+          if (data.length === 0) {
+            this.errorMessage = 'Aucun utilisateur trouvé pour cet entrepôt.';
+          }
+        },
+        (error) => {
+          console.error('Error fetching utilisateurs:', error);
+          this.errorMessage = 'Erreur lors de la récupération des utilisateurs.';
+        }
+      );
+    }
   }
 
   addUtilisateur(): void {

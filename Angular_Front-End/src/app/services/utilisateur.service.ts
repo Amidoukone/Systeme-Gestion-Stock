@@ -13,27 +13,12 @@ export class UtilisateurService {
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
-  // getUtilisateurs(): Observable<any> {
-  //   return this.http.get<any>(`${this.baseUrl}/current`);
-  // }
-  // getUtilisateurs(): Observable<Utilisateur[]> {
-  //   const currentUser = this.authService.currentUserValue;
-  //   console.log("email :" ,currentUser.email );
-  //   const headers = new HttpHeaders().set('Authorization', `Basic ${btoa(`${currentUser.email}:${currentUser.password}`)}`);
-  //   return this.http.get<Utilisateur[]>(`${this.baseUrl}/current`, { headers });
-  // }
-  // getUtilisateurs(): Observable<Utilisateur[]> {
-  //   const token = localStorage.getItem('token'); // Assurez-vous que le token est stocké dans localStorage
-  //   const headers = new HttpHeaders().set('Authorization', `Basic ${token}`);
-  //   return this.http.get<Utilisateur[]>(`${this.baseUrl}/current`, { headers });
-  // }
-  // getUtilisateursByUserOrEntrepot(): Observable<Utilisateur[]> {
-  //   const token = localStorage.getItem('token');  // Assurez-vous que le token est stocké sous la clé 'token' dans le localStorage
-  //   const headers = new HttpHeaders().set('Authorization', `Basic ${token}`);
-  //   return this.http.get<Utilisateur[]>(`${this.baseUrl}/current`, { headers });
-  // }
   getUtilisateursByUserOrEntrepot(email: string): Observable<Utilisateur[]> { 
-    return this.http.get<Utilisateur[]>(`${this.baseUrl}/current/${email}` );
+    return this.http.get<Utilisateur[]>(`${this.baseUrl}/current?email=${email}` );
+  }
+  
+  getUtilisateurs(): Observable<Utilisateur[]> {
+    return this.http.get<Utilisateur[]>(this.baseUrl);
   }
 
   getUtilisateurById(id: number): Observable<Utilisateur> {

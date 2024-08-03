@@ -19,10 +19,8 @@ export class FournisseurListComponent implements OnInit{
 
   fournisseurs: Fournisseur[] = [];
   filteredFournisseurs: Fournisseur[] = [];
-
   page: number = 1;
-  itemsPerPage: number = 6;  // Nombre d'éléments par page
-
+  itemsPerPage: number = 6;
 
   fournisseurToDelete: number | null = null;
   fournisseurToEdit: number | null = null;
