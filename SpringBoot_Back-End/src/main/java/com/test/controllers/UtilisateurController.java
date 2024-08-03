@@ -3,17 +3,10 @@ package com.test.controllers;
 import com.test.entities.Utilisateur;
 import com.test.services.AuthService;
 import com.test.services.UtilisateurService;
-import jakarta.servlet.http.HttpServletRequest;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -66,11 +59,13 @@ public class UtilisateurController {
         return ResponseEntity.ok(utilisateurs);
     }
     @GetMapping("/current")
-    public ResponseEntity<List<Utilisateur>> getUtilisateursByUserOrEntrepot(@RequestParam String email) {
-        Utilisateur loggedInUser = utilisateurService.findByEmail(email).orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
-        List<Utilisateur> utilisateurs = utilisateurService.getUtilisateursByUserOrEntrepot(loggedInUser);
+    public ResponseEntity<List<Utilisateur>> getUtilisateursForCurrentUser(@RequestParam String email) {
+        Utilisateur utilisateur = utilisateurService.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
+        List<Utilisateur> utilisateurs = utilisateurService.getUtilisateursByUserOrEntrepot(utilisateur);
         return ResponseEntity.ok(utilisateurs);
     }
+
     @GetMapping
     public ResponseEntity<List<Utilisateur>> getAllUtilisateurs() {
         List<Utilisateur> utilisateurs = utilisateurService.findAll();

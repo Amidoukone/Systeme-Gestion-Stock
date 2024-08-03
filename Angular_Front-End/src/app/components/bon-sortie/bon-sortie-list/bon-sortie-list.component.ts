@@ -37,18 +37,6 @@ export class BonSortieListComponent implements OnInit {
     this.loadBonSorties();
   }
 
-  // loadBonSorties(): void {
-  //   this.bonSortieService.getBonSorties().subscribe(data => {
-  //     console.log('BonSorties reçus:', data);
-  //     this.bonSorties = data;
-  //     this.filteredBonSorties = data;
-  //     this.bonSorties.forEach(bonSortie => {
-  //       if (!bonSortie.motif) {
-  //         bonSortie.motif = { createBy: 0, id: 0, title: 'N/A' };
-  //       }
-  //     });
-  //   });
-  // }
   loadBonSorties(): void {
     const currentUser = this.authService.currentUserValue;
     if (currentUser && currentUser.entrepot) {
@@ -117,5 +105,8 @@ export class BonSortieListComponent implements OnInit {
 
   hasDetails(bonSortie: BonSortie): boolean {
     return bonSortie.detailsSorties && bonSortie.detailsSorties.length > 0;
+  }
+  hasRole(role: string): boolean {
+    return this.authService.hasRole(role);
   }
 }

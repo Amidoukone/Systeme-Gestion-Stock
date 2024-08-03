@@ -13,8 +13,7 @@
         <tr>
           <th scope="col"><span>#</span></th>
           <th scope="col"><span>Motif</span></th>
-          <th scope="col"><span>Date</span></th>
-          <th scope="col"><span>Utilisateur</span></th>
+          <th scope="col"><span>Date</span></th> 
           <th scope="col"><span>Actions</span></th>
         </tr>
       </thead>
@@ -22,11 +21,10 @@
         <tr *ngFor="let bonSortie of filteredBonSorties | paginate: { itemsPerPage: itemsPerPage, currentPage: page}">
           <th scope="row">{{ bonSortie.id }}</th>
           <td>{{ bonSortie.motif.title || 'N/A' }}</td>
-          <td>{{ bonSortie.dateSortie | date }}</td>
-          <td>{{ bonSortie.utilisateur.username }}</td>
+          <td>{{ bonSortie.dateSortie | date }}</td> 
           <td>
             <button title="Modifier" class="btn btn-warning btn-sm me-2" routerLink="/edit-bon-sortie/{{ bonSortie.id }}"><i class="fas fa-edit"></i></button>
-            <button title="Supprimer" class="btn btn-danger btn-sm" (click)="showDeleteConfirmation(deleteModal, bonSortie.id)"><i class="fas fa-trash"></i></button>
+            <button *ngIf="hasRole('MANAGER')" title="Supprimer" class="btn btn-danger btn-sm" (click)="showDeleteConfirmation(deleteModal, bonSortie.id)"><i class="fas fa-trash"></i></button>
             <button title="Imprimer" class="btn btn-secondary btn-sm" (click)="printBonSortie(bonSortie.id)"><i class="fas fa-print"></i></button>
             <button *ngIf="!hasDetails(bonSortie)" title="Ajouter Détail" class="btn btn-success btn-sm me-2" (click)="navigateToAddDetail(bonSortie.id)"><i class="fas fa-plus-circle"></i> Détail</button>
             <button title="Voir Détail" class="btn btn-primary btn-sm me-2" (click)="openDetailsModal(detailsModal, bonSortie)"><i class="fas fa-eye"></i> Détails</button>

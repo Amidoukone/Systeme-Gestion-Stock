@@ -7,6 +7,7 @@ import {Router} from "@angular/router";
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import {NgxPaginationModule} from "ngx-pagination";
 import { AuthService } from '../../../services/auth.service';
+import { CurrentUser } from '../../../models/currentUser';
 
 @Component({
   selector: 'app-produit-list',
@@ -27,6 +28,7 @@ export class ProduitListComponent implements OnInit {
   private modalRef: NgbModalRef | null = null;
   errorMessage = '';
   infoMessage = '';
+  currentUser: CurrentUser | null = null;
 
   constructor(private produitService: ProduitService, private authService: AuthService, private router: Router, private modalService: NgbModal) { }
 
@@ -93,6 +95,8 @@ export class ProduitListComponent implements OnInit {
     }
   }
 
-
+  hasRole(role: string): boolean {
+    return this.authService.hasRole(role);
+  }
     protected readonly Produit = Produit;
 }

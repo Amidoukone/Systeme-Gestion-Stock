@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import { AuthService } from '../../../services/auth.service';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { CurrentUser } from '../../../models/currentUser';
 
 @Component({
   selector: 'app-motif-list',
@@ -24,6 +25,7 @@ export class MotifListComponent implements OnInit {
   private modalRef: NgbModalRef | null = null;
   infoMessage: string = '';
   errorMessage: string = '';
+  currentUser: CurrentUser | null = null;
 
 
   constructor(private motifService: MotifService, private router: Router, private authService: AuthService, private modalService: NgbModal) { }
@@ -79,5 +81,7 @@ export class MotifListComponent implements OnInit {
       });
     }
   }
-
+  hasRole(role: string): boolean {
+    return this.authService.hasRole(role);
+  }
 }

@@ -1,16 +1,12 @@
 import {Component, NO_ERRORS_SCHEMA, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UtilisateurService } from '../../../services/utilisateur.service';
-import { Utilisateur } from '../../../models/utilisateur';
-import {HttpClient} from "@angular/common/http";
-import {Router} from "@angular/router";
-import {RoleService} from "../../../services/role.service";
-import {EntrepotService} from "../../../services/entrepot.service";
-import {Role} from "../../../models/role";
-import {Entrepot} from "../../../models/entrepot";
+import { Utilisateur } from '../../../models/utilisateur'; 
+import {Router} from "@angular/router";  
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import { AuthService } from '../../../services/auth.service';
 import {NgxPaginationModule} from "ngx-pagination";
+import { CurrentUser } from '../../../models/currentUser';
 
 @Component({
   selector: 'app-utilisateur-list',
@@ -30,18 +26,20 @@ export class UtilisateurListComponent implements OnInit {
   utilisateurToEdit: number | null = null;
   private modalRef: NgbModalRef | null = null;
   errorMessage = '';
+  currentUser: CurrentUser | null = null;
 
   constructor(private utilisateurService: UtilisateurService, private router: Router, private authService: AuthService, private modalService: NgbModal) { }
 
   ngOnInit(): void {
     const currentUser = this.authService.currentUserValue;
+
     if (!currentUser || !currentUser.email) {
       this.errorMessage = 'Erreur: email utilisateur non trouvé';
       return;
     }
     const email = currentUser.email;
 
-    if(email == "admin@example.com"){
+    if(currentUser.role === 'ADMIN'){
       this.utilisateurService.getUtilisateurs().subscribe(
         (data) => {
           this.utilisateurs = data;
@@ -121,6 +119,8 @@ export class UtilisateurListComponent implements OnInit {
     }
   }
 
-
+  hasRole(role: string): boolean {
+    return this.authService.hasRole(role);
+  }
 
 }

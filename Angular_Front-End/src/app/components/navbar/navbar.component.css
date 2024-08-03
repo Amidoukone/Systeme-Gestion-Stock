@@ -1,38 +1,41 @@
 #sidebar-wrapper {
-    width: 250px;
-    height: 100vh;
-    overflow-y: auto;
-    position: fixed;
-  }
-  
+  width: 250px;
+  height: 100vh;
+  overflow-y: auto;
+  position: fixed;
+}
+
+.topbar {
+  width: calc(100% - 250px);
+  left: 250px;
+  z-index: 1000;
+  transition: width 0.3s;
+}
+
+@media (max-width: 768px) {
   .topbar {
-    width: calc(100% - 250px);
-    left: 250px;
-    z-index: 1000;
+    width: 100%;
+    left: 0;
   }
-  
-  .content {
-    margin-top: 56px; /* height of the navbar */
-    padding: 20px;
-    margin-left: 250px;
-  }
-  
-  .navbar-brand {
-    font-weight: bold;
-  }
-  
-  .dropdown-list {
-    position: absolute;
-    right: 0;
-    top: 100%;
-    z-index: 1000;
-  }
-  
-  .animated--grow-in {
-    transition: all 0.2s ease-in-out;
-    transform: scale(1);
-  }
-  
-  .container-fluid{
-    background-color: #251D73;
-  }
+}
+
+.dropdown-list {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background: rgb(231, 229, 229);
+  z-index: 1000;
+}
+
+.animated--grow-in {
+  transition: all 0.2s ease-in-out;
+  transform: scale(1);
+}
+
+.container-fluid {
+  background-color: #251D73;
+}
+
+.navbar .dropdown-menu {
+  transform: translate3d(0, 0, 0);
+}

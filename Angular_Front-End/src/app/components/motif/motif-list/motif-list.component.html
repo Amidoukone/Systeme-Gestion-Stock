@@ -1,7 +1,7 @@
 <div class="container">
   <h1 class="h2 font-weight-bold mb-4">Liste des Motifs</h1>
   <div class="mb-3 d-flex justify-content-between align-items-center">
-    <button class="btn btn-primary" (click)="addMotif()"> <i class="fas fa-plus-circle"></i>Ajouter Motif</button>
+    <button *ngIf="hasRole('MANAGER')" class="btn btn-primary" (click)="addMotif()"> <i class="fas fa-plus-circle"></i>Ajouter Motif</button>
   </div>
   <div class="table-responsive">
     <div *ngIf="errorMessage" class="alert alert-danger">
@@ -15,7 +15,7 @@
       <tr>
         <th scope="col"><span>#</span></th>
         <th scope="col"><span>Titre du Motif</span></th>
-        <th scope="col"><span>Actions</span></th>
+        <th *ngIf="hasRole('MANAGER')" scope="col"><span>Actions</span></th>
       </tr>
       </thead>
       <tbody>
@@ -23,7 +23,7 @@
         <td>{{ motif.id}}</td>
         <td>{{ motif.title }}</td>
 
-        <td>
+        <td *ngIf="hasRole('MANAGER')">
           <button title="Modifier" class="btn btn-warning btn-sm" (click)="editMotif(motif.id)"> <i class="fas fa-edit"></i>Modifier</button>
           <button title="Supprimer" class="btn btn-danger btn-sm m-2 " (click)="showDeleteConfirmation(deleteModal, motif.id)"><i class="fas fa-trash"></i>Supprimer</button>
         </td>
