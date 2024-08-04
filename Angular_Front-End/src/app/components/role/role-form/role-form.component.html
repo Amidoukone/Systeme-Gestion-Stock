@@ -4,13 +4,24 @@
       <h5 class="card-title">{{ isEditMode ? 'Modifier Rôle' : 'Ajouter Rôle' }}</h5>
     </div>
     <div class="card-body">
+      <!-- Display success message -->
+      <div *ngIf="successMessage" class="alert alert-success" role="alert">
+        {{ successMessage }}
+      </div>
+
+      <!-- Display error message -->
+      <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+        {{ errorMessage }}
+      </div>
+
       <form (ngSubmit)="onSubmit()">
         <div class="mb-3">
           <label for="name" class="form-label">Nom du Rôle</label>
           <input type="text" class="form-control" id="name" name="name" [(ngModel)]="role.name" required>
         </div>
         <div class="d-grid gap-2">
-          <button class="btn btn-primary" type="submit">{{ isEditMode ? 'Modifier' : 'Ajouter' }}</button>
+          <button class="btn btn-primary -5" type="submit">{{ isEditMode ? 'Modifier' : 'Ajouter' }}</button>
+          <button class="btn btn-danger m-5" (click)="navigateToBonEntree()">Annuler</button>
         </div>
       </form>
     </div>

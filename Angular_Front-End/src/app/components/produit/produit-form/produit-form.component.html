@@ -3,8 +3,16 @@
     <div class="card-header">
       <h5 class="card-title">{{ isEditMode ? 'Modifier Produit' : 'Ajouter Produit' }}</h5>
     </div>
-    <div class="card-body">
-      <form id="produitForm" (ngSubmit)="onSubmit($event)">
+    <div class="card-body"> 
+      <div *ngIf="successMessage" class="alert alert-success" role="alert">
+        {{ successMessage }}
+      </div> 
+      
+      <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+        {{ errorMessage }}
+      </div>
+
+      <form id="produitForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
           <div class="mb-3">
             <label for="productName" class="form-label">Nom de Produit</label>
@@ -28,7 +36,8 @@
           </select>
         </div>
         <div class="d-grid gap-2">
-          <button class="btn btn-primary" type="submit">{{ isEditMode ? 'Modifier' : 'Ajouter' }}</button>
+          <button class="btn btn-primary m-auto" type="submit">{{ isEditMode ? 'Modifier' : 'Ajouter' }}</button>
+          <button class="btn btn-danger m-5" (click)="navigateToBonEntree()">Annuler</button>
         </div>
       </form>
     </div>

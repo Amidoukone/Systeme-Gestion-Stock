@@ -3,8 +3,7 @@
   <div class="d-flex justify-content-between align-items-center mb-3">
     <button class="btn btn-primary" (click)="addUtilisateur()"> <i class="fas fa-plus-circle"></i>Ajouter Utilisateur</button>
     <div  class="form-group mb-0 position-relative" id="recherche">
-      <label for="search">Rechercher par Nom d'utilisateur</label>
-      <input id="search" type="text" class="form-control" (keyup)="applyFilter($event)" placeholder="Nom d'utilisateur">
+      <input id="search" type="text" class="form-control" (keyup)="applyFilter($event)" placeholder="Rechercher">
       <i class="fa-solid fa-magnifying-glass"></i>
     </div>
   </div>
@@ -16,32 +15,35 @@
         <th><span>Nom d'utilisateur</span></th>
         <th><span>Email</span></th>
         <th><span>Rôle</span></th>
-        <th><span>Entrepôt</span></th>
+        <th *ngIf="hasRole('ADMIN')"><span>Entrepôt</span></th>
         <th><span>Actions</span></th>
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let utilisateur of filteredUtilisateurs; let i = index">
-        <td>{{ i + 1 }}</td>
+      <tr *ngFor="let utilisateur of utilisateurs | paginate: { itemsPerPage: itemsPerPage, currentPage: page}">
+        <td>{{ utilisateur.id }}</td>
         <td>{{ utilisateur.username }}</td>
         <td>{{ utilisateur.email }}</td>
         <td>{{ utilisateur.role?.name }}</td>
-        <td>{{ utilisateur.entrepot?.entrepotName }}</td>
-        <!--td>
-          <button class="btn btn-warning btn-sm" (click)="editUtilisateur(utilisateur.id)">Modifier</button>
-          <button class="btn btn-danger btn-sm" (click)="deleteUtilisateur(utilisateur.id)">Supprimer</button>
-        </td-->
+        <td *ngIf="hasRole('ADMIN')">{{ utilisateur.entrepot?.entrepotName }}</td>
 
         <td>
-
-          <button class="btn btn-warning btn-sm" (click)="editUtilisateur(utilisateur.id)"> <i class="fas fa-edit"></i>Modifier</button>
-          <button class="btn btn-danger btn-sm m-2 " (click)="showDeleteConfirmation(deleteModal, utilisateur.id)"><i class="fas fa-trash"></i>Supprimer</button>
+          <button title="Modifier" class="btn btn-warning btn-sm" (click)="editUtilisateur(utilisateur.id)"> <i class="fas fa-edit"></i></button>
+          <button title="Supprimer" class="btn btn-danger btn-sm m-2 " (click)="showDeleteConfirmation(deleteModal, utilisateur.id)"><i class="fas fa-trash"></i></button>
         </td>
 
       </tr>
       </tbody>
     </table>
   </div>
+
+
+  <!-- Pagination Controls -->
+  <div class="footer-pagination">
+    <pagination-controls (pageChange)="page = $event"></pagination-controls>
+  </div>
+
+
   <!-- Modal de confirmation de suppression -->
   <ng-template #deleteModal let-modal>
     <div class="modal-header">

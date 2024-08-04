@@ -1,28 +1,3 @@
-<!-- <div class="d-flex col">
-      <app-sidebar #sidebar [isExpanded]="true" *ngIf="authService.currentUserValue"></app-sidebar>
-  <div class="col" >
-    <app-navbar *ngIf="authService.currentUserValue" (sidebarToggle)="sidebar?.toggleSidebar()"></app-navbar>
-    <div class="col">
-      <router-outlet></router-outlet>
-    </div>
-  </div>
-  
-
-</div>
-<app-footer *ngIf="authService.currentUserValue"></app-footer> -->
-
-
-<!-- <div class="d-flex">
-  <app-sidebar></app-sidebar>
-  <div class="col">
-    <app-navbar></app-navbar>
-    <div class="content mt-5">
-      <router-outlet></router-outlet>
-    </div>
-  </div>
-</div>
-<app-footer></app-footer> -->
-
 <div class="d-flex">
   <app-sidebar #sidebar [isExpanded]="true" *ngIf="authService.currentUserValue"></app-sidebar>
   <div class="col content-wrapper">

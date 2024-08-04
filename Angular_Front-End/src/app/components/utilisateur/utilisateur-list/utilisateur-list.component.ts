@@ -1,20 +1,17 @@
 import {Component, NO_ERRORS_SCHEMA, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UtilisateurService } from '../../../services/utilisateur.service';
-import { Utilisateur } from '../../../models/utilisateur';
-import {HttpClient} from "@angular/common/http";
-import {Router} from "@angular/router";
-import {RoleService} from "../../../services/role.service";
-import {EntrepotService} from "../../../services/entrepot.service";
-import {Role} from "../../../models/role";
-import {Entrepot} from "../../../models/entrepot";
+import { Utilisateur } from '../../../models/utilisateur'; 
+import {Router} from "@angular/router";  
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import { AuthService } from '../../../services/auth.service';
+import {NgxPaginationModule} from "ngx-pagination";
+import { CurrentUser } from '../../../models/currentUser';
 
 @Component({
   selector: 'app-utilisateur-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NgxPaginationModule],
   templateUrl: './utilisateur-list.component.html',
   styleUrl: './utilisateur-list.component.css',
   schemas: [ NO_ERRORS_SCHEMA ]
@@ -22,38 +19,53 @@ import { AuthService } from '../../../services/auth.service';
 export class UtilisateurListComponent implements OnInit {
   utilisateurs: Utilisateur[] = [];
   filteredUtilisateurs: Utilisateur[] = [];
+  page: number = 1;
+  itemsPerPage: number = 6;
 
   utilisateurToDelete: number | null = null;
   utilisateurToEdit: number | null = null;
   private modalRef: NgbModalRef | null = null;
   errorMessage = '';
+  currentUser: CurrentUser | null = null;
 
   constructor(private utilisateurService: UtilisateurService, private router: Router, private authService: AuthService, private modalService: NgbModal) { }
 
-  // ngOnInit(): void {
-  //   this.utilisateurService.getUtilisateurs().subscribe(data => {
-
-  //     this.utilisateurs = data;
-  //     console.log('Utilisateurs loaded:', data);
-  //     this.filteredUtilisateurs = data;
-  //     console.log('Utilisateurs loaded:', this.utilisateurs);
-  //   });
-  // }
-
   ngOnInit(): void {
-    const email = localStorage.getItem('email') || ''; // Vous pouvez obtenir l'email stocké ici
-    this.utilisateurService.getUtilisateursByUserOrEntrepot("bon@bon.bon").subscribe(
-      (data) => {
-        this.utilisateurs = data;
-        if (data.length === 0) {
-          this.errorMessage = 'Aucun utilisateur trouvé pour cet entrepôt.';
+    const currentUser = this.authService.currentUserValue;
+
+    if (!currentUser || !currentUser.email) {
+      this.errorMessage = 'Erreur: email utilisateur non trouvé';
+      return;
+    }
+    const email = currentUser.email;
+
+    if(currentUser.role === 'ADMIN'){
+      this.utilisateurService.getUtilisateurs().subscribe(
+        (data) => {
+          this.utilisateurs = data;
+          if (data.length === 0) {
+            this.errorMessage = 'Aucun utilisateur trouvé pour cet entrepôt.';
+          }
+        },
+        (error) => {
+          console.error('Error fetching utilisateurs:', error);
+          this.errorMessage = 'Erreur lors de la récupération des utilisateurs.';
         }
-      },
-      (error) => {
-        console.error('Error fetching utilisateurs:', error);
-        this.errorMessage = 'Erreur lors de la récupération des utilisateurs.';
-      }
-    );
+      );
+    }else{
+      this.utilisateurService.getUtilisateursByUserOrEntrepot(email).subscribe(
+        (data) => {
+          this.utilisateurs = data;
+          if (data.length === 0) {
+            this.errorMessage = 'Aucun utilisateur trouvé pour cet entrepôt.';
+          }
+        },
+        (error) => {
+          console.error('Error fetching utilisateurs:', error);
+          this.errorMessage = 'Erreur lors de la récupération des utilisateurs.';
+        }
+      );
+    }
   }
 
   addUtilisateur(): void {
@@ -107,6 +119,8 @@ export class UtilisateurListComponent implements OnInit {
     }
   }
 
-
+  hasRole(role: string): boolean {
+    return this.authService.hasRole(role);
+  }
 
 }

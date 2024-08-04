@@ -4,13 +4,24 @@
       <h5 class="card-title">{{ isEditMode ? 'Modifier Catégorie' : 'Ajouter Catégorie' }}</h5>
     </div>
     <div class="card-body">
+      <!-- Display success message -->
+      <div *ngIf="successMessage" class="alert alert-success" role="alert">
+        {{ successMessage }}
+      </div>
+
+      <!-- Display error message -->
+      <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+        {{ errorMessage }}
+      </div>
+
       <form (ngSubmit)="onSubmit()">
         <div class="mb-3">
           <label for="name" class="form-label">Nom</label>
           <input type="text" id="name" name="name" class="form-control" [(ngModel)]="categorie.name" required>
         </div>
         <div class="d-flex justify-content-end">
-          <button type="submit" class="btn btn-primary">{{ isEditMode ? 'Modifier' : 'Ajouter' }}</button>
+          <button type="submit" class="btn btn-primary m-auto">{{ isEditMode ? 'Modifier' : 'Ajouter' }}</button>
+          <button class="btn btn-danger " (click)="navigateToBonEntree()">Annuler</button>
         </div>
       </form>
     </div>

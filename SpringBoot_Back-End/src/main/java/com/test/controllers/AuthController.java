@@ -35,7 +35,6 @@ public class AuthController {
         String sessionId = authService.generateSessionId();
 
         Map<String, Object> response = new HashMap<>();
-        response.put("message", "Login successful");
         response.put("token", token);
         response.put("username", utilisateur.getUsername());
         response.put("email", utilisateur.getEmail());
@@ -46,7 +45,7 @@ public class AuthController {
         if (utilisateur.getEntrepot() != null) {
             Map<String, Object> entrepotInfo = new HashMap<>();
             entrepotInfo.put("entrepotId", utilisateur.getEntrepot().getId());
-            entrepotInfo.put("entrepotNom", utilisateur.getEntrepot().getEntrepotName());
+            entrepotInfo.put("entrepotName", utilisateur.getEntrepot().getEntrepotName());
             response.put("entrepot", entrepotInfo);
         }
         return ResponseEntity.ok(response);

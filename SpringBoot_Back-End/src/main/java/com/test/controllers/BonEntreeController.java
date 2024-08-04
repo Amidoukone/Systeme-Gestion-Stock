@@ -1,9 +1,11 @@
 package com.test.controllers;
 
 import com.test.entities.BonEntree;
+import com.test.entities.Utilisateur;
 import com.test.services.BonEntreeService;
 import com.test.services.FournisseurService;
 import com.test.services.ProduitService;
+import com.test.services.UtilisateurService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +28,12 @@ public class BonEntreeController {
     @Autowired
     private FournisseurService fournisseurService;
 
-    @GetMapping
-    public List<BonEntree> getAllBonEntrees() {
-        return bonEntreeService.findAll();
+    @Autowired
+    private UtilisateurService utilisateurService;
+
+    @GetMapping("entrepot/{entrepotId}")
+    public List<BonEntree> getAllBonEntrees(@PathVariable int entrepotId) {
+        return bonEntreeService.getBonEntrepotByEntrepot(entrepotId);
     }
 
     @GetMapping("/{id}")
@@ -39,9 +44,17 @@ public class BonEntreeController {
     }
 
     @PostMapping
-    public ResponseEntity<BonEntree> createBonEntree(@RequestBody BonEntree bonEntree) {
-        BonEntree savedBonEntree = bonEntreeService.save(bonEntree);
-        return ResponseEntity.ok(savedBonEntree);
+    public ResponseEntity<BonEntree> createBonEntree(@RequestBody BonEntree bonEntree, @RequestParam String  email) {
+        Utilisateur utilisateur = utilisateurService.findByOneEmail(email);
+        if (utilisateur == null) {
+            return ResponseEntity.badRequest().body(null);
+        }
+
+        bonEntree.setUtilisateur(utilisateur);
+        bonEntree.setEntrepot(utilisateur.getEntrepot());
+        BonEntree savedBonEntre = bonEntreeService.save(bonEntree);
+
+        return ResponseEntity.ok(savedBonEntre);
     }
 
     @PutMapping("/{id}")
@@ -61,5 +74,11 @@ public class BonEntreeController {
     public ResponseEntity<Void> deleteBonEntree(@PathVariable int id) {
         bonEntreeService.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/valider/{id}")
+    public ResponseEntity<BonEntree> validerBonEntree(@PathVariable Long id) {
+        BonEntree bonEntreeValide = bonEntreeService.validerBonEntree(id);
+        return ResponseEntity.ok(bonEntreeValide);
     }
 }

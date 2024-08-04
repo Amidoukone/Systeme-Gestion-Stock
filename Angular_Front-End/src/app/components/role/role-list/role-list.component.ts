@@ -4,16 +4,19 @@ import { RoleService } from '../../../services/role.service';
 import { Role } from '../../../models/role';
 import { CommonModule } from '@angular/common';
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
+import {NgxPaginationModule} from "ngx-pagination";
 
 @Component({
   selector: 'app-role-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NgxPaginationModule],
   templateUrl: './role-list.component.html',
   styleUrl: './role-list.component.css'
 })
 export class RoleListComponent implements OnInit {
   roles: Role[] = [];
+  page: number = 1;
+  itemsPerPage: number = 6;  // Nombre d'éléments par page
 
   roleToDelete: number | null = null;
   roleToEdit: number | null = null;

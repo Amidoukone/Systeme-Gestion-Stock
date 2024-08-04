@@ -19,10 +19,18 @@ export class ProduitService {
     return this.http.get<Produit>(`${this.apiUrl}/${id}`);
   }
 
-  createProduit(produit: Produit): Observable<Produit> {
-    return this.http.post<Produit>(this.apiUrl, produit);
+  // createProduit(produit: Produit): Observable<Produit> {
+  //   return this.http.post<Produit>(this.apiUrl, produit);
+  // }
+
+  createProduit(produit: Produit, email: string): Observable<Produit> {
+    return this.http.post<Produit>(`${this.apiUrl}/create?email=${email}`, produit);
   }
 
+  getProduitsByEntrepot(entrepotId: number): Observable<Produit[]> {
+    return this.http.get<Produit[]>(`${this.apiUrl}/entrepot/${entrepotId}`);
+  }
+  
   updateProduit(id: number, produit: Produit): Observable<Produit> {
     return this.http.put<Produit>(`${this.apiUrl}/${id}`, produit);
   }

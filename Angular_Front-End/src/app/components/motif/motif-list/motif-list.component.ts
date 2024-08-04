@@ -4,33 +4,54 @@ import { MotifService } from '../../../services/motif.service';
 import { Motif } from '../../../models/motif';
 import { CommonModule } from '@angular/common';
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
+import { AuthService } from '../../../services/auth.service';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { CurrentUser } from '../../../models/currentUser';
 
 @Component({
   selector: 'app-motif-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NgxPaginationModule],
   templateUrl: './motif-list.component.html',
   styleUrls: ['./motif-list.component.css']
 })
 export class MotifListComponent implements OnInit {
   motifs: Motif[] = [];
+  page: number = 1;
+  itemsPerPage: number = 6;
 
   motifToDelete: number | null = null;
   motifToEdit: number | null = null;
   private modalRef: NgbModalRef | null = null;
+  infoMessage: string = '';
+  errorMessage: string = '';
+  currentUser: CurrentUser | null = null;
 
-  constructor(private motifService: MotifService, private router: Router, private modalService: NgbModal) { }
+
+  constructor(private motifService: MotifService, private router: Router, private authService: AuthService, private modalService: NgbModal) { }
 
   ngOnInit(): void {
-    this.loadMotifs();
+    const currentUser = this.authService.currentUserValue;
+    if (!currentUser || !currentUser.email) {
+      this.errorMessage = 'Erreur: email utilisateur non trouvé';
+      return;
+    }
+    const email = currentUser.email;
+  
+    this.motifService.getMotifsForCurrentUser(email).subscribe(motifs => {
+      if (motifs.length === 0) {
+        this.infoMessage = 'Aucun motif trouvée pour cet Entrepot.';
+        setTimeout(() => this.infoMessage = '', 2000);
+      } else {
+        this.motifs = motifs;
+      }
+    }, error => {
+        console.error('Erreur lors de la récupération des catégories:', error);
+        this.errorMessage = 'Erreur lors de la récupération des catégories.';
+      });
+    
   }
 
-  loadMotifs(): void {
-    this.motifService.getMotifs().subscribe(data => {
-      this.motifs = data;
-      console.log('Motifs loaded:', this.motifs);
-    });
-  }
 
   addMotif(): void {
     this.router.navigate(['/add-motif']);
@@ -60,5 +81,7 @@ export class MotifListComponent implements OnInit {
       });
     }
   }
-
+  hasRole(role: string): boolean {
+    return this.authService.hasRole(role);
+  }
 }

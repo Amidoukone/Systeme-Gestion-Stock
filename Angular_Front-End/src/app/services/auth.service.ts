@@ -4,14 +4,17 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
+
   private apiUrl = 'http://localhost:8080/api/utilisateurs';
-  private currentUserSubject: BehaviorSubject<any>;
+  public currentUserSubject: BehaviorSubject<any>;
   public currentUser: Observable<any>;
+
 
   constructor(private http: HttpClient, private router: Router) {
     const storedUser = this.isBrowser() ? localStorage.getItem('currentUser') : null;
@@ -19,27 +22,31 @@ export class AuthService {
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
-  private isBrowser(): boolean {
+
+  public isBrowser(): boolean {
     return typeof window !== 'undefined' && typeof window.localStorage !== 'undefined';
   }
+
 
   public get currentUserValue() {
     return this.currentUserSubject.value;
   }
 
+
   login(email: string, password: string) {
     return this.http.post<any>(`${this.apiUrl}/login`, { email, password })
       .pipe(
-        map(user => {
-          if (user && user.token && this.isBrowser()) {
-            localStorage.setItem('currentUser', JSON.stringify(user));
-            this.currentUserSubject.next(user);
+        map(data => {
+          if (data && data.token && this.isBrowser()) {
+            localStorage.setItem('currentUser', JSON.stringify(data));
+            this.currentUserSubject.next(data);
           }
-          return user;
+          return data;
         }),
         catchError(this.handleError)
       );
   }
+
 
   logout() {
     if (this.isBrowser()) {
@@ -48,6 +55,7 @@ export class AuthService {
     this.currentUserSubject.next(null);
     this.router.navigate(['/login']);
   }
+
 
   private handleError(error: HttpErrorResponse) {
     let errorMessage = 'An unknown error occurred!';
@@ -60,6 +68,7 @@ export class AuthService {
     }
     return throwError(errorMessage);
   }
+
 
   hasRole(role: string): boolean {
     return this.currentUserValue && this.currentUserValue.role && this.currentUserValue.role === role;

@@ -1,0 +1,87 @@
+/* Style for the container and form */
+.container {
+  max-width: 800px; /* Adjust the max-width as needed */
+  margin: 0 auto; /* Center the container */
+}
+
+.bg-white {
+  background-color: #ffffff; /* White background for the form */
+}
+
+.shadow-md {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Light shadow for the card */
+}
+
+.rounded-lg {
+  border-radius: 0.5rem; /* Rounded corners */
+}
+
+/* Style for headers */
+.text-xl {
+  font-size: 1.25rem; /* Larger text size for headings */
+}
+
+/* Style for success and error messages */
+.bg-green-100 {
+  background-color: #d4edda; /* Light green background for success messages */
+}
+
+.text-green-800 {
+  color: #155724; /* Dark green text color */
+}
+
+.bg-red-100 {
+  background-color: #f8d7da; /* Light red background for error messages */
+}
+
+.text-red-800 {
+  color: #721c24; /* Dark red text color */
+}
+
+/* Style for form inputs */
+.form-control {
+  background-color: #251D73; /* Light gray background for inputs */
+  border-color: #d1d5db; /* Light gray border color */
+}
+
+.form-control:focus {
+  border-color: #260efc; /* Blue border color on focus */
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2); /* Blue shadow on focus */
+}
+
+/* Style for labels */
+.text-gray-700 {
+  color: #374151; /* Dark gray color for labels */
+}
+
+/* Style for buttons */
+.btn {
+  background-color: #2563eb; /* Blue background for buttons */
+  color: #ffffff; /* White text color */
+  border: none; /* Remove default border */
+}
+
+.btn-primary{
+  background-color: #251D73;
+}
+
+.btn-danger{
+  background-color: red;
+}
+
+.btn:hover {
+  background-color: #2563eb; /* Darker blue on hover */
+}
+
+.btn:focus {
+  outline: 2px solid #3b82f6; /* Blue outline on focus */
+  outline-offset: 2px; /* Offset outline slightly */
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}

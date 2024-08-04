@@ -3,12 +3,17 @@
   <div class="mb-4 d-flex justify-content-between align-items-center">
     <button class="btn btn-primary" (click)="addFournisseur()"> <i class="fas fa-plus-circle"></i>Ajouter Fournisseur</button>
     <div  class="form-group mb-0 position-relative" id="recherche">
-      <label for="search">Rechercher par Nom</label>
-      <input id="search" type="text" class="form-control" (keyup)="applyFilter($event)" placeholder="Nom du fournisseur">
+      <input id="search" type="text" class="form-control" (keyup)="applyFilter($event)" placeholder="Rechercher">
       <i class="fa-solid fa-magnifying-glass"></i>
     </div>
   </div>
   <div class="table-responsive">
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+    <div *ngIf="infoMessage" class="alert alert-info">
+      {{ infoMessage }}
+    </div>
     <table class="table table-bordered table-striped table-hover w-100">
       <thead>
       <tr>
@@ -20,15 +25,15 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let fournisseur of filteredFournisseurs; let i = index">
-        <td>{{ i + 1 }}</td>
+      <tr *ngFor="let fournisseur of fournisseurs | paginate: { itemsPerPage: itemsPerPage, currentPage: page}">
+        <td>{{ fournisseur.id }}</td>
         <td>{{ fournisseur.fournName }}</td>
         <td>{{ fournisseur.adresse }}</td>
         <td>{{ fournisseur.telephone }}</td>
 
         <td>
-          <button class="btn btn-warning btn-sm" (click)="editFournisseur(fournisseur.id)"> <i class="fas fa-edit"></i>Modifier</button>
-          <button class="btn btn-danger btn-sm m-2 " (click)="showDeleteConfirmation(deleteModal, fournisseur.id)"><i class="fas fa-trash"></i>Supprimer</button>
+          <button title="Modifier" class="btn btn-warning btn-sm" (click)="editFournisseur(fournisseur.id)"> <i class="fas fa-edit"></i></button>
+          <button title="Supprimer" class="btn btn-danger btn-sm m-2 " (click)="showDeleteConfirmation(deleteModal, fournisseur.id)"><i class="fas fa-trash"></i></button>
         </td>
 
       </tr>
@@ -36,6 +41,7 @@
     </table>
   </div>
 
+  <pagination-controls (pageChange)="page = $event"></pagination-controls>
 
    <!-- Modal de confirmation de suppression -->
    <ng-template #deleteModal let-modal>

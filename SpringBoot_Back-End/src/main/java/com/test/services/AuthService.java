@@ -28,12 +28,35 @@ public class AuthService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public Utilisateur login(String email, String password) {
+    /*public Utilisateur login(String email, String password) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(email, password)
         );
+        System.out.println("contenu auth=============="+authentication.getDetails());
         SecurityContextHolder.getContext().setAuthentication(authentication);
         return utilisateurRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
+    }*/
+    public Utilisateur login(String email, String password) {
+        try {
+            // Authentication attempt
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(email, password)
+            );
+
+            // Log authentication details
+            System.out.println("Authentication details: " + authentication.getDetails());
+
+            // Store authentication in security context
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+
+            // Fetch and return user details from the repository
+            return utilisateurRepository.findByEmail(email)
+                    .orElseThrow(() -> new RuntimeException("User not found"));
+        } catch (Exception e) {
+            // Handle and log exceptions
+            System.out.println("Authentication failed: " + e.getMessage());
+            throw new RuntimeException("Invalid login credentials");
+        }
     }
 
     public String generateToken(Utilisateur utilisateur) {

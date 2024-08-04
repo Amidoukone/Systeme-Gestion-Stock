@@ -4,16 +4,20 @@ import { EntrepotService } from '../../../services/entrepot.service';
 import { Entrepot } from '../../../models/entrepot';
 import { Router } from '@angular/router';
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
+import {NgxPaginationModule} from "ngx-pagination";
 
 @Component({
   selector: 'app-entrepot-list',
   standalone: true,
-  imports: [CommonModule],
+    imports: [CommonModule, NgxPaginationModule],
   templateUrl: './entrepot-list.component.html',
   styleUrl: './entrepot-list.component.css'
 })
 export class EntrepotListComponent implements OnInit {
   entrepots: Entrepot[] = [];
+
+  page: number = 1;
+  itemsPerPage: number = 6;  // Nombre d'éléments par page
 
   entrepotsToDelete: number | null = null;
   entrepotsToEdit: number | null = null;

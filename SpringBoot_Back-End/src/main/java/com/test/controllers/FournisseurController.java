@@ -1,7 +1,10 @@
 package com.test.controllers;
 
 import com.test.entities.Fournisseur;
+import com.test.entities.Produit;
+import com.test.entities.Utilisateur;
 import com.test.services.FournisseurService;
+import com.test.services.UtilisateurService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +17,8 @@ public class FournisseurController {
 
     @Autowired
     private FournisseurService fournisseurService;
+    @Autowired
+    private UtilisateurService utilisateurService;
 
     @GetMapping("/count")
     public int getFournisseursCount() {
@@ -32,9 +37,24 @@ public class FournisseurController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping
-    public Fournisseur createFournisseur(@RequestBody Fournisseur fournisseur) {
-        return fournisseurService.save(fournisseur);
+    @PostMapping("/create")
+    public ResponseEntity<Fournisseur> createFournisseur(@RequestBody Fournisseur fournisseur, @RequestParam String email) {
+        Utilisateur utilisateur = utilisateurService.findByOneEmail(email);
+        if (utilisateur == null) {
+            return ResponseEntity.badRequest().body(null);
+        }
+        fournisseur.setCreatedBy(utilisateur);
+        fournisseur.setEntrepot(utilisateur.getEntrepot());
+
+        Fournisseur savedFournisseur = fournisseurService.save(fournisseur);
+        return ResponseEntity.ok(savedFournisseur);
+    }
+
+    @GetMapping("/current")
+    public ResponseEntity<List<Fournisseur>> getCategoriesForCurrentUser(@RequestParam String email) {
+        Utilisateur utilisateur = utilisateurService.findByEmail(email).orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
+        List<Fournisseur> fournisseurs = fournisseurService.findByEntrepotId(utilisateur.getEntrepot().getId());
+        return ResponseEntity.ok(fournisseurs);
     }
 
     @PutMapping("/{id}")

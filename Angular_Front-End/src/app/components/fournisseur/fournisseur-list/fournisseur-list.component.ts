@@ -5,11 +5,13 @@ import { Fournisseur } from '../../../models/fournisseur';
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
+import {NgxPaginationModule} from "ngx-pagination";
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-fournisseur-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NgxPaginationModule],
   templateUrl: './fournisseur-list.component.html',
   styleUrl: './fournisseur-list.component.css'
 })
@@ -17,24 +19,36 @@ export class FournisseurListComponent implements OnInit{
 
   fournisseurs: Fournisseur[] = [];
   filteredFournisseurs: Fournisseur[] = [];
-
+  page: number = 1;
+  itemsPerPage: number = 6;
 
   fournisseurToDelete: number | null = null;
   fournisseurToEdit: number | null = null;
   private modalRef: NgbModalRef | null = null;
+  infoMessage: string = '';
+  errorMessage: string = '';
 
-  constructor(private fournisseurService: FournisseurService, private router: Router,private modalService: NgbModal) { }
+  constructor(private fournisseurService: FournisseurService, private router: Router, private authService: AuthService, private modalService: NgbModal) { }
 
   ngOnInit(): void {
-    this.loadFournisseurs();
-  }
-
-  loadFournisseurs(): void {
-    this.fournisseurService.getFournisseurs().subscribe(data => {
-      this.fournisseurs = data;
-      this.filteredFournisseurs = data;
-      console.log('Fournisseurs loaded:', this.fournisseurs);
-    });
+    const currentUser = this.authService.currentUserValue;
+    if (!currentUser || !currentUser.email) {
+      this.errorMessage = 'Erreur: email utilisateur non trouvé';
+      return;
+    }
+    const email = currentUser.email;
+  
+    this.fournisseurService.getFournisseursForCurrentUser(email).subscribe(fournisseurs => {
+      if (fournisseurs.length === 0) {
+        this.infoMessage = 'Aucune Fournisseurs trouvée pour cet Entrepot.';
+        setTimeout(() => this.infoMessage = '', 2000);
+      } else {
+        this.fournisseurs = fournisseurs;
+      }
+    }, error => {
+        console.error('Erreur lors de la récupération des fournisseurs:', error);
+        this.errorMessage = 'Erreur lors de la récupération des fournisseurs.';
+      });
   }
 
   addFournisseur(): void {

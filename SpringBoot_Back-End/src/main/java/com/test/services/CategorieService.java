@@ -1,6 +1,7 @@
 package com.test.services;
 
 import com.test.entities.Categorie;
+import com.test.entities.Utilisateur;
 import com.test.repositories.CategorieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,10 @@ public class CategorieService {
 
     public void deleteById(int id) {
         categorieRepository.deleteById(id);
+    }
+
+    public List<Categorie> findByEntrepotId(int entrepotId) {
+        return categorieRepository.findByEntrepotId(entrepotId);
     }
 
     //Nombre de categories

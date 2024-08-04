@@ -1,8 +1,6 @@
-
-</div> -->
 <div class="border-start border-end bg-white navbar-light bg-white topbar mb-4 static-top" id="sidebar-wrapper" [ngClass]="{'toggled': !isExpanded}">
-  <div class="sidebar-heading text-center py-4 primary-text fs-4 fw-bold text-uppercase border-bottom" style="background: linear-gradient(to right, #0062E6, #33AEFF);">
-    <img class="mb-2" src="/Logo.png" alt="Logo" style="width: 50px;">
+  <div class="sidebar-heading text-center py-4 primary-text fs-4 fw-bold text-uppercase">
+    <img class="mb-2" src="/royale.png" alt="Logo" style="width: 150px;">
   </div>
   <div class="list-group list-group-flush my-6">
     <a href="/dashboard" class="list-group-item list-group-item-action bg-transparent second-text fw-bold" [ngClass]="{'active': isActive('/dashboard')}">
@@ -28,12 +26,9 @@
     </a>
     <a *ngIf="hasRole('MANAGER') || hasRole('VENDEUR')" href="/produits" class="list-group-item list-group-item-action bg-transparent second-text fw-bold" [ngClass]="{'active': isActive('/produits')}">
       <i class="fas fa-box me-2"></i> Produits
-    </a> 
-    <a *ngIf="hasRole('ADMIN')" href="/utilisateurs" class="list-group-item list-group-item-action bg-transparent second-text fw-bold" [ngClass]="{'active': isActive('/utilisateurs')}">
-      <i class="fas fa-users me-2"></i> Utilisateurs
     </a>
-    <a *ngIf="currentUser" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
-      <i class="fas fa-user me-2"></i> {{ currentUser.email }}
+    <a *ngIf="hasRole('MANAGER') || hasRole('ADMIN')" href="/utilisateurs" class="list-group-item list-group-item-action bg-transparent second-text fw-bold" [ngClass]="{'active': isActive('/utilisateurs')}">
+      <i class="fas fa-users me-2"></i> Utilisateurs
     </a>
   </div>
 </div>

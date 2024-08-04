@@ -34,6 +34,10 @@ span {
 tr{
   padding: 35px 10px;
 }
+
+tr span{
+  background-color: #251D73;
+}
 #table-responsive{
   border: solid 1px;
   border-radius: 5px;
@@ -55,7 +59,7 @@ tr{
 /* Styles pour l'input */
 input.form-control {
   z-index: 1;
-  background-color: #0d6efd; /* Fond bleu */
+  background-color: #251D73; /* Fond bleu */
   color: #ffffff; /* Texte blanc */
   border-radius: 10px; /* Bords arrondis */
   padding-left: 50px ; /* Espace pour l'icône */
@@ -86,7 +90,7 @@ input::placeholder {
   padding: 5px;
   position: absolute;
   left: 10px;
-  top: 29px;
+  top: 35px;
   font-size: 20px;
   cursor: pointer;
   transition: transform 0.3s ease-in-out;
@@ -138,3 +142,18 @@ input::placeholder {
   color: #1b191a;
 }
 
+.btn-primary{
+  background-color: #251D73;
+}
+
+/* Assurez-vous que le conteneur principal a une hauteur minimale pour pousser la pagination en bas */
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.pagination-container {
+  margin-top: auto; /* Pousse la pagination vers le bas */
+  padding: 20px 0;
+}

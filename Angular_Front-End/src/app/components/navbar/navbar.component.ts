@@ -76,6 +76,6 @@ export class NavbarComponent implements OnInit {
   }
 
   getEntrepotName(): string {
-    return this.currentUser && this.currentUser.entrepot ? this.currentUser.entrepot.name : 'RoyalStock';
+    return this.currentUser && this.currentUser.entrepot ? this.currentUser.entrepot.entrepotName : 'RoyalStock';
   }
 }

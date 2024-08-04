@@ -1,14 +1,3 @@
-span{
-  background-color: rgb(106, 106, 241);
-  color: #fff;
-  border-radius: 50%;
-  padding: 10px 10px;
-  font-size: 18px;
-  margin-right: 10px;
-  margin-left: 10px;
-  cursor: pointer;
-}
-
 
 span {
   background-color: #0d6efd;
@@ -34,6 +23,11 @@ span {
 tr{
   padding: 35px 10px;
 }
+
+tr span{
+  background-color:#251D73;
+}
+
 #table-responsive{
   border: solid 1px;
   border-radius: 5px;
@@ -55,7 +49,7 @@ tr{
 /* Styles pour l'input */
 input.form-control {
   z-index: 1;
-  background-color: #0d6efd; /* Fond bleu */
+  background-color: #251D73; /* Fond bleu */
   color: #ffffff; /* Texte blanc */
   border-radius: 10px; /* Bords arrondis */
   padding-left: 50px ; /* Espace pour l'icône */
@@ -132,9 +126,61 @@ input::placeholder {
 
 }
 
+.btn-primary{
+  background-color: #251D73;
+}
+
 .btn-secondary{
   background-color: transparent;
   border: none !important;
   color: #1b191a;
 }
 
+
+/* Assurez-vous que le conteneur principal utilise Flexbox pour aligner les éléments */
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Pour s'assurer que le contenu remplit toute la hauteur de la page */
+}
+
+/* Style de la pagination */
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.pagination-controls li {
+  margin: 0 5px;
+}
+
+.pagination-controls li a {
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  text-decoration: none;
+  color: #007bff;
+}
+
+.pagination-controls li a:hover {
+  background-color: #e9ecef;
+}
+
+.pagination-controls li.active a {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.pagination-controls li.disabled a {
+  pointer-events: none;
+  color: #6c757d;
+}
+
+/* Pour garantir que la pagination reste en bas */
+.footer-pagination {
+  margin-top: auto;
+  padding: 20px 0;
+}

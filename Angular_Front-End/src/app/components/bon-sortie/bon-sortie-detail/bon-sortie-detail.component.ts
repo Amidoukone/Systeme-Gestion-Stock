@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BonSortie } from '../../../models/bon-sortie';
 import { DetailSortie } from '../../../models/detail-sortie';
 import { Produit } from '../../../models/produit';
+import { AuthService } from '../../../services/auth.service';
 import { BonSortieService } from '../../../services/bon-sortie.service';
 import { DetailSortieService } from '../../../services/detail-sortie.service';
 import { ProduitService } from '../../../services/produit.service';
@@ -20,6 +21,8 @@ export class BonSortieDetailComponent implements OnInit {
   bonSortieForm: FormGroup;
   produits: Produit[] = [];
   bonSortieId: number;
+  infoMessage= '';
+  errorMessage= '';
 
   constructor(
     private fb: FormBuilder,
@@ -27,7 +30,8 @@ export class BonSortieDetailComponent implements OnInit {
     private router: Router,
     private bonSortieService: BonSortieService,
     private produitService: ProduitService,
-    private detailSortieService: DetailSortieService
+    private detailSortieService: DetailSortieService,
+    private authService: AuthService
   ) {
     this.bonSortieId = +this.route.snapshot.paramMap.get('id')!;
     this.bonSortieForm = this.fb.group({
@@ -38,6 +42,7 @@ export class BonSortieDetailComponent implements OnInit {
   ngOnInit(): void {
     this.loadProduits();
     this.loadBonSortie();
+    this.addDetail();
   }
 
   get details(): FormArray {
@@ -45,9 +50,24 @@ export class BonSortieDetailComponent implements OnInit {
   }
 
   loadProduits(): void {
-    this.produitService.getProduits().subscribe(data => {
-      this.produits = data;
-    });
+    const currentUser = this.authService.currentUserValue;
+    if (currentUser && currentUser.entrepot) {
+      const entrepotId = currentUser.entrepot.entrepotId;
+      this.produitService.getProduitsByEntrepot(entrepotId).subscribe(produits => {
+        if (produits.length === 0) {
+          this.infoMessage = 'Aucun produit trouvée pour cet Entrepot.';
+          setTimeout(() => this.infoMessage = '', 2000);
+        }else{
+
+          this.produits = produits;
+        }
+      }, error => {
+        console.error('Erreur lors de la récupération des produits:', error);
+        this.errorMessage = 'Erreur lors de la récupération des produits.';
+      });
+    } else {
+      this.errorMessage = 'Erreur: entrepôt utilisateur non trouvé';
+    }
   }
 
   loadBonSortie(): void {
@@ -67,6 +87,7 @@ export class BonSortieDetailComponent implements OnInit {
       prix: [detail?.prix || '', Validators.required]
     }));
   }
+  
 
   removeDetail(index: number): void {
     this.details.removeAt(index);
@@ -80,4 +101,7 @@ export class BonSortieDetailComponent implements OnInit {
     });
     this.router.navigate(['/bon-sortie']);
   }
+  // isDetailsPresent(): boolean {
+  //   return this.details.length > 0;
+  // }
 }

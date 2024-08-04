@@ -25,7 +25,7 @@ public class BonSortie {
 
     @ManyToOne
     @JoinColumn(name = "motif_id", nullable = false)
-    @JsonBackReference
+    //@JsonBackReference
     private Motif motif;
 
     @ManyToOne
@@ -35,4 +35,8 @@ public class BonSortie {
     @OneToMany(mappedBy = "bonSortie", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<DetailSortie> detailsSorties;
+
+    @ManyToOne
+    @JoinColumn(name = "entrepot_id", nullable = false)
+    private Entrepot entrepot;
 }
