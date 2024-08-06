@@ -2,17 +2,22 @@
   width: 250px;
   position: fixed;
   height: 100%;
+  min-heigth : 250px;
   overflow-y: auto;
+
 }
 
 #sidebar-wrapper .list-group-item {
   border: none;
-  border-left: 4px solid transparent;
+  color : white;
+  border: 4px solid transparent;
+
 }
+
 
 #sidebar-wrapper .list-group-item.active {
   background-color: #0062E6;
-  color: rgb(39, 96, 163);
+  color: rgb(255, 255, 163);
   border-left-color: #33AEFF;
 }
 
@@ -36,4 +41,8 @@
 
 .list-group, #sidebar-wrapper{
   background-color: #251D73;
+}
+.logo{
+  background: #251D73;
+  border: none;
 }

@@ -1,14 +1,14 @@
-<nav class="navbar navbar-expand navbar-light bg-white topbar fixed-top">
+<nav class="navbar navbar-expand navbar-light topbar fixed-top " id="navColor">
   <div class="container-fluid">
     <button class="btn btn-link d-md-none rounded-circle" type="button" (click)="toggleSidebar()">
       <i class="fas fa-bars"></i>
     </button>
-    <a class="navbar-brand text-primary ">{{ getEntrepotName() }}</a>
+    <a class="navbar-brand text-white ">{{ getEntrepotName() }}</a>
     <div class="collapse navbar-collapse">
       <ul class="navbar-nav ms-auto">
         <!-- Nav Item - Alerts -->
-        <li class="nav-item dropdown no-arrow">
-          <button class="nav-link dropdown-toggle text-primary" (click)="toggleNotifications()">
+        <li class="nav-item dropdown no-arrow ">
+          <button class="nav-link dropdown-toggle text-white" (click)="toggleNotifications()">
             <i class="fas fa-bell"></i>
           </button>
           <!-- Dropdown - Notifications -->
@@ -24,7 +24,7 @@
 
         <!-- Nav Item - User Information -->
         <li class="nav-item dropdown no-arrow">
-          <button *ngIf="currentUser" class="nav-link dropdown-toggle text-primary" (click)="toggleProfile()">
+          <button *ngIf="currentUser" class="nav-link dropdown-toggle text-white" (click)="toggleProfile()">
             <i class="fas fa-user-circle"></i> {{ currentUser.username }}
           </button>
           <!-- Dropdown - User Information -->
@@ -46,7 +46,7 @@
   </div>
 </nav>
 
-<!-- 
+<!--
 <nav class="navbar navbar-expand-lg navbar-light bg-white topbar fixed-top">
   <div class="container-fluid">
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,11 +54,11 @@
     </button>
     <a class="navbar-brand text-primary ">{{ getEntrepotName() }}</a>
     <div class="collapse navbar-collapse" id="navbarContent">
-      <ul class="navbar-nav ms-auto"> 
+      <ul class="navbar-nav ms-auto">
         <li class="nav-item dropdown no-arrow">
           <button class="nav-link dropdown-toggle text-primary" id="alertsDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" (click)="toggleNotifications()">
             <i class="fas fa-bell"></i>
-          </button> 
+          </button>
           <div *ngIf="showNotifications" class="dropdown-menu dropdown-menu-end animated--grow-in" aria-labelledby="alertsDropdown">
             <h6 class="dropdown-header">Notifications</h6>
             <a *ngFor="let notification of notifications" class="dropdown-item d-flex align-items-center" [ngClass]="{'text-muted': notification.read}">
@@ -67,11 +67,11 @@
               <button *ngIf="!notification.read" class="btn btn-link ms-auto text-primary" (click)="markAsRead(notification)">Marquer comme lu</button>
             </a>
           </div>
-        </li> 
+        </li>
         <li class="nav-item dropdown no-arrow">
           <button *ngIf="currentUser" class="nav-link dropdown-toggle text-primary" id="userDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" (click)="toggleProfile()">
             <i class="fas fa-user-circle"></i> {{ currentUser.username }}
-          </button> 
+          </button>
           <div *ngIf="showProfile" class="dropdown-menu dropdown-menu-end shadow animated--grow-in" aria-labelledby="userDropdown">
             <a class="dropdown-item" href="/user-profile">
               <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> Mon Profil

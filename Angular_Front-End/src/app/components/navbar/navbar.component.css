@@ -4,7 +4,9 @@
   overflow-y: auto;
   position: fixed;
 }
-
+#navColor{
+   background-color: #251D73;
+ }
 .topbar {
   width: calc(100% - 250px);
   left: 250px;
