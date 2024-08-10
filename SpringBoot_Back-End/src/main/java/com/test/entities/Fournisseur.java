@@ -23,6 +23,12 @@ public class Fournisseur {
     @Column(name = "adresse")
     private String adresse;
 
+    @Column
+    private Status statut;
+
+    @Column
+    private String domaineActivite;
+
     @Column(name = "telephone")
     private String telephone;
 

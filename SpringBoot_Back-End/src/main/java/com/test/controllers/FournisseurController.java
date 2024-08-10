@@ -64,6 +64,9 @@ public class FournisseurController {
                     fournisseur.setFournName(fournisseurDetails.getFournName());
                     fournisseur.setAdresse(fournisseurDetails.getAdresse());
                     fournisseur.setTelephone(fournisseurDetails.getTelephone());
+                    fournisseur.setAdresse(fournisseurDetails.getAdresse());
+                    fournisseur.setStatut(fournisseurDetails.getStatut());
+                    fournisseur.setDomaineActivite(fournisseurDetails.getDomaineActivite());
                     Fournisseur updatedFournisseur = fournisseurService.save(fournisseur);
                     return ResponseEntity.ok().body(updatedFournisseur);
                 }).orElse(ResponseEntity.notFound().build());

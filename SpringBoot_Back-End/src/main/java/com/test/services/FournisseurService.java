@@ -2,6 +2,7 @@ package com.test.services;
 
 import com.test.entities.Categorie;
 import com.test.entities.Fournisseur;
+import com.test.entities.Status;
 import com.test.repositories.FournisseurRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,5 +39,6 @@ public class FournisseurService {
     public List<Fournisseur> findByEntrepotId(int entrepotId) {
         return fournisseurRepository.findByEntrepotId(entrepotId);
     }
+
 }
 
