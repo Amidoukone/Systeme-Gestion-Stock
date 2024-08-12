@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ProduitService } from '../../../services/produit.service';
-import { CategorieService } from '../../../services/categorie.service';
-import { Produit } from '../../../models/produit';
-import { Categorie } from '../../../models/categorie';
-import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Categorie } from '../../../models/categorie';
+import { Produit } from '../../../models/produit';
 import { AuthService } from '../../../services/auth.service';
+import { CategorieService } from '../../../services/categorie.service';
+import { ProduitService } from '../../../services/produit.service';
 
 @Component({
   selector: 'app-produit-form',
@@ -19,9 +19,11 @@ export class ProduitFormComponent implements OnInit {
   categories: Categorie[] = [];
   produit: Produit = {} as Produit;
   isEditMode: boolean = false;
+  // qrCodeUrl: string = '';
   selectedCategoryId: number | null = null;
   successMessage: string = '';
   errorMessage: string = '';
+  qrCodeUrl: string | undefined;
 
   constructor(
     private produitService: ProduitService,
@@ -121,7 +123,6 @@ export class ProduitFormComponent implements OnInit {
   //     setTimeout(() => this.errorMessage = '', 3000);
   //   }
   // }
-
   onSubmit(): void {
     const currentUser = this.authService.currentUserValue;
     if (!currentUser || !currentUser.email) {
@@ -129,11 +130,12 @@ export class ProduitFormComponent implements OnInit {
       return;
     }
     const email = currentUser.email;
-
+  
     if (this.selectedCategoryId !== null) {
       this.produit.categorie = { id: this.selectedCategoryId } as Categorie;
-
-      this.produitService.createProduit(this.produit, email).subscribe(() => {
+  
+      this.produitService.createProduit(this.produit, email).subscribe((result) => {
+        this.qrCodeUrl = result.qrCode; 
         this.successMessage = 'Produit ajouté avec succès!';
         setTimeout(() => this.successMessage = '', 2000);
         setTimeout(() => this.router.navigate(['/produits']), 2000);
@@ -147,6 +149,33 @@ export class ProduitFormComponent implements OnInit {
       setTimeout(() => this.errorMessage = '', 2000);
     }
   }
+  
+
+  // onSubmit(): void {
+  //   const currentUser = this.authService.currentUserValue;
+  //   if (!currentUser || !currentUser.email) {
+  //     this.errorMessage = 'Erreur: email utilisateur non trouvé';
+  //     return;
+  //   }
+  //   const email = currentUser.email;
+
+  //   if (this.selectedCategoryId !== null) {
+  //     this.produit.categorie = { id: this.selectedCategoryId } as Categorie;
+
+  //     this.produitService.createProduit(this.produit, email).subscribe(() => {
+  //       this.successMessage = 'Produit ajouté avec succès!';
+  //       setTimeout(() => this.successMessage = '', 2000);
+  //       setTimeout(() => this.router.navigate(['/produits']), 2000);
+  //     }, error => {
+  //       console.error('Erreur lors de l\'ajout du produit:', error);
+  //       this.errorMessage = 'Erreur lors de l\'ajout du produit.';
+  //       setTimeout(() => this.errorMessage = '', 2000);
+  //     });
+  //   } else {
+  //     this.errorMessage = 'La catégorie doit être sélectionnée.';
+  //     setTimeout(() => this.errorMessage = '', 2000);
+  //   }
+  // }
 
   navigateToBonEntree() {
     this.router.navigate(['/produits']);

@@ -8,4 +8,6 @@ export class Produit {
   createBy!: number;
   //categories_id: number;
   categorie!: Categorie ;
+  qrCode!: string; // Ajout de la propriété qrCode
+
 }

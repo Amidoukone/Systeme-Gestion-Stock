@@ -195,3 +195,16 @@ input::placeholder {
   margin-top: auto;
   padding: 20px 0;
 }
+
+@media print {
+  /* Masquer les éléments non nécessaires à l'impression */
+  .no-print {
+    display: none;
+  }
+
+  /* Assurer que le QR code est bien centré et de bonne taille */
+  .print-qr-code {
+    text-align: center;
+    margin: 20px;
+  }
+}

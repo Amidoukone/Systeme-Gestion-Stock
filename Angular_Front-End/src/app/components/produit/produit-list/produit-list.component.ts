@@ -1,12 +1,11 @@
-import {Component, NO_ERRORS_SCHEMA, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProduitService } from '../../../services/produit.service';
+import { Component, OnInit } from '@angular/core';
+import { Router } from "@angular/router";
+import { NgbModal, NgbModalRef } from "@ng-bootstrap/ng-bootstrap";
+import { NgxPaginationModule } from "ngx-pagination";
 import { Produit } from '../../../models/produit';
-import {HttpClient} from "@angular/common/http";
-import {Router} from "@angular/router";
-import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
-import {NgxPaginationModule} from "ngx-pagination";
 import { AuthService } from '../../../services/auth.service';
+import { ProduitService } from '../../../services/produit.service';
 
 @Component({
   selector: 'app-produit-list',
@@ -21,7 +20,7 @@ export class ProduitListComponent implements OnInit {
 
   page: number = 1;
   itemsPerPage: number = 6;  // Nombre d'éléments par page
-
+ 
   produitsToDelete: number | null = null;
   produitsToEdit: number | null = null;
   private modalRef: NgbModalRef | null = null;
@@ -32,6 +31,7 @@ export class ProduitListComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadProduits();
+
   }
 
   loadProduits(): void {
@@ -45,6 +45,8 @@ export class ProduitListComponent implements OnInit {
         }else{
 
           this.produits = produits;
+          console.log(this.produits);
+
         }
       }, error => {
         console.error('Erreur lors de la récupération des produits:', error);
@@ -68,6 +70,10 @@ export class ProduitListComponent implements OnInit {
       this.produits = this.produits.filter(p => p.id !== id);
       this.filteredProduits = this.filteredProduits.filter(p => p.id !== id);
     });
+  }
+
+  printQRCode(): void {
+    window.print();
   }
 
   applyFilter(event: Event): void {

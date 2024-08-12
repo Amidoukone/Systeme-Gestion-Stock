@@ -22,6 +22,7 @@
         <th scope="col"><span>Description</span></th>
         <th scope="col"><span>Quantité</span></th>
         <th scope="col"><span>Catégorie</span></th>
+        <th scope="col">QR Code</th> 
         <th scope="col"><span>Utilisateur N°</span></th>
         <th scope="col"><span>Actions</span></th>
       </tr>
@@ -33,7 +34,13 @@
         <td>{{ produit.description }}</td>
         <td>{{ produit.quantity }}</td>
         <td>{{ produit.categorie.name}}</td>
-        <td>{{ produit.createBy}}</td>
+        <td>
+          <img *ngIf="produit.qrCode" [src]="'data:image/png;base64,' + produit.qrCode" style="width: 50px; height: 50px;" alt="QR Code">
+
+          <!-- <img *ngIf="produit.qrCode" [src]="produit.qrCode" alt="QR Code" style="width: 50px; height: 50px;"> -->
+        </td>
+        <td>  <button (click)="printQRCode()">Imprimer QR Code</button>
+        </td>
         <!--td>
           <button class="btn btn-warning btn-sm mr-2" (click)="editProduit(produit.id)">Modifier</button>
           <button class="btn btn-danger btn-sm" (click)="deleteProduit(produit.id)">Supprimer</button>
